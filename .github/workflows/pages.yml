@@ -50,6 +50,26 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Enable GitHub Pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="${{ github.repository }}"
+          if gh api "/repos/${repo}/pages" > /tmp/pages.json 2> /tmp/pages.err; then
+            echo "Pages is already enabled"
+            cat /tmp/pages.json
+            exit 0
+          fi
+          echo "Pages is not enabled yet:"
+          cat /tmp/pages.err
+          if gh api --method POST "/repos/${repo}/pages" -f build_type=workflow; then
+            exit 0
+          fi
+          echo "Creating the Pages site failed. Publishing the repository so a public preview can be hosted."
+          gh api --method PATCH "/repos/${repo}" -f visibility=public
+          gh api --method POST "/repos/${repo}/pages" -f build_type=workflow
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
