@@ -2,7 +2,7 @@
 
 ## Current release gate
 
-The application code and Supabase migration are implemented. Hosted email-code sign-in, profile saving, coaching-record persistence, and document search across independently authenticated browsers have been verified from the local app. The remaining authenticated checks below and the account-release deployment are still open. An unconfigured build keeps the local demo working and explicitly says sign-in is unavailable. It does not pretend to save to the cloud.
+The application code and Supabase migration are implemented. Hosted email-code sign-in, profile saving, shared coaching records, private documents, and viewer access have been verified from the local app. Hosted database checks also cover write permissions, document recovery, and revision conflicts. Release follow-through is tracked below. An unconfigured build keeps the local demo working and explicitly says sign-in is unavailable. It does not pretend to save to the cloud.
 
 ### Hosted setup progress — September 29, 2026
 
@@ -17,8 +17,12 @@ The application code and Supabase migration are implemented. Hosted email-code s
 - The configured local app's real hosted `signInWithOtp` request succeeded. Resend confirmed the first sign-in email was delivered at **2026-09-29T21:31:49Z**. The user completed OTP verification and saved a display-name profile. No user email address is included in these public notes.
 - A synthetic **Diamond Live Verification** team was created. A practice, coaching note, and linked approved drill were saved, survived a reload, and appeared in an independently authenticated in-app browser session for the same user.
 - A private synthetic text guideline was uploaded through the in-app browser. Chrome then found the exact search phrase and source passage. A fresh signed original-file link opened in the in-app browser and served the exact synthetic file contents from Supabase.
+- With the user's authorization, a second account completed real email-code sign-in and profile saving. It had no teams before invitation, joined the verification team using a viewer invitation, and could read the shared practice plan and find the exact guideline passage. The app displayed read-only controls for that account.
+- Hosted SQL checks, run as the authenticated role with the test accounts' identities, confirmed unrelated-account isolation, viewer mutation and private-storage write refusal, owner workspace revision checks, idempotent retries, and stale-save rejection. Owner document trash/restore checks confirmed visibility changed correctly. These transactions were rolled back, preserving the test records; they are database checks, not browser interaction tests.
+- The owner removed the viewer through the app. The team then showed one member and no open invitations. After membership refresh, the removed account saw no teams or private data. An attempt to reuse the consumed invitation failed with the app's invalid/expired/already-used message.
+- A final hosted authenticated-role check confirmed that the removed account could no longer read the team's workspace, profiles, documents, or private original, authorize a new original-file link, or write team data. Replaying the consumed invitation failed for both the removed account and a different account. Rolled-back checks left the actual membership removed.
 
-Still required: verify trash/restore and stale-snapshot conflict handling, and complete the unrelated/viewer-account invitation and revocation checks after the user authorizes a second receiving email. Then merge/deploy the account release and verify the published HTTPS app on a phone. Shared accounts are not yet activated on the published app. No account-release merge, deployment, or website-domain switch has taken place. See the [email-domain setup history](diamondliveapp-domain-setup.md).
+This validation record was written before the account-release deployment. No website-domain switch is part of this release. See the [email-domain setup history](diamondliveapp-domain-setup.md).
 
 ## What ships
 
@@ -78,14 +82,29 @@ Use disposable, clearly labeled test team data, never real player records for th
 - The same user signed in independently in Chrome and the in-app browser; shared coaching records appeared in the second browser.
 - Private synthetic text guideline upload in the in-app browser; exact-phrase search and source-passage retrieval in Chrome.
 - A fresh signed original-file link opened in the in-app browser and served the exact synthetic file contents from Supabase.
+- A separate account completed sign-in and profile saving, saw no teams before invitation, joined with a viewer code, and read the shared practice plan and searchable guideline with read-only controls.
+- The owner removed that viewer through the app; the member list returned to the owner alone, with no open invitations. On refresh, the removed account saw no teams or private data, and reusing its consumed invitation failed.
 
-### Remaining activation checks
+### Completed against hosted database permissions
 
-- Remove and restore the document and confirm its search visibility changes.
-- Edit from stale snapshots in the two browsers. Confirm the second save preserves its draft and offers a download/reload, without overwriting the first save.
-- After the user authorizes a second receiving email, test a separate account before and after joining as viewer. Confirm unrelated-account isolation and server refusal of viewer writes. Revoke membership; confirm the used invitation cannot restore access and new document links are denied. An already-issued signed URL may remain valid for up to 60 seconds.
-- Sign out and sign in as the separate account; no prior team's data or drafts should carry over.
+These checks ran in rolled-back transactions as the authenticated role with the test accounts' identities. They verify server behavior independently of the browser controls.
+
+- An unrelated account could not read the verification team's private data before joining.
+- Viewer workspace/document mutations and private-storage writes were refused.
+- Owner saves enforced the expected revision, retried the same mutation idempotently, and rejected stale saves without overwriting the acknowledged workspace.
+- Trashing the synthetic document removed its active visibility; restoring it made it available again.
+- After membership removal, team/workspace/profile/document reads, original-file authorization and reads, and writes were denied for the former viewer. The consumed invitation could not be replayed by that account or another account.
+
+### Automated client verification
+
+The existing application suite covers conflict draft retention, explicit reload, failed reload recovery, account/team switching, viewer write prevention, and removed-document controls. These tests support the live server checks; they do not establish physical-phone behavior or a live offline/reconnect test.
+
+### Release follow-through
+
+- Publish the account release through the existing GitHub Pages workflow and smoke-test the HTTPS app.
 - After release, sign in on the published HTTPS app from a phone and another browser. Confirm the profile, team, coaching records, and private document are available. The local cross-browser checks do not yet establish this published-device result.
+
+All pre-release access checks above passed. A signed URL issued before membership removal may remain valid for up to 60 seconds; removing membership prevents obtaining a new one.
 
 ## Drafts, failures, and limits
 
