@@ -1,976 +1,761 @@
-/* =========================================================================
-   Voltline Analytics
-   A light, finance-grade dashboard language. Cool platinum canvas, paper
-   cards, deep ink type, and a single electric chartreuse accent.
-   ========================================================================= */
+/* Diamond Live adaptation of the licensed Clinch source.
+ * Tokens and selectors are prefixed cl- and scoped to .coaching-workspace.
+ * Button modifier spelling matches the app component API. Original values
+ * and component rules are retained below; app layout lives in coaching.css.
+ * Copyright © 2026 Uiverse. See LICENSE.md and ATTRIBUTION.md.
+ */
+/* ============================================================
+   Clinch Design System
+   Poster-grade completion & sign-off identity.
+   Ink canvas, volt lime + haze lavender panels, oversized type.
+   ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&display=swap");
 
-/* -------------------------------------------------------------------------
+/* ------------------------------------------------------------
    Tokens
-   ------------------------------------------------------------------------- */
-
-:root {
+   ------------------------------------------------------------ */
+.coaching-workspace {
   /* Color */
-  --vl-canvas: #e6eaee;
-  --vl-canvas-deep: #d8dee5;
-  --vl-paper: #ffffff;
-  --vl-mist: #f2f5f8;
-  --vl-mist-deep: #e8edf2;
-  --vl-ink: #0b1015;
-  --vl-ink-soft: #1a2330;
-  --vl-slate: #6b7785;
-  --vl-slate-soft: #9aa4b1;
-  --vl-hairline: #d6dce3;
-  --vl-hairline-soft: #e4e8ed;
-  --vl-lime: #d6ff3d;
-  --vl-lime-deep: #a8cc22;
-  --vl-lime-soft: #eaffa8;
-  --vl-lime-glow: rgba(214, 255, 61, 0.35);
-  --vl-positive: #2bb673;
-  --vl-negative: #e25555;
+  --cl-color-ink: #0e0e10;
+  --cl-color-lime: #c6f24e;
+  --cl-color-lime-hover: #d7ff6b;
+  --cl-color-lavender: #c3b2f7;
+  --cl-color-chalk: #f4f4f2;
+  --cl-color-surface: #17171b;
+  --cl-color-surface-2: #1f1f25;
+  --cl-color-ash: #8b8b93;
+  --cl-color-hairline: #26262b;
+  --cl-color-coral: #ff6b4a;
 
-  /* Semantic */
-  --vl-bg: var(--vl-canvas);
-  --vl-surface: var(--vl-paper);
-  --vl-surface-inset: var(--vl-mist);
-  --vl-text: var(--vl-ink);
-  --vl-text-muted: var(--vl-slate);
-  --vl-border: var(--vl-hairline);
-  --vl-border-soft: var(--vl-hairline-soft);
-  --vl-accent: var(--vl-lime);
-  --vl-accent-deep: var(--vl-lime-deep);
-  --vl-on-accent: var(--vl-ink);
-  --vl-focus: var(--vl-lime-deep);
+  /* Semantic aliases */
+  --cl-bg: var(--cl-color-ink);
+  --cl-fg: var(--cl-color-chalk);
+  --cl-muted: var(--cl-color-ash);
+  --cl-on-panel: var(--cl-color-ink);
+  --cl-border: var(--cl-color-hairline);
+  --cl-focus: var(--cl-color-lime);
 
-  /* Typography */
-  --vl-font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
-  --vl-font-body: "Inter", system-ui, sans-serif;
-  --vl-font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  /* Branded gradient (hero / signature only) */
+  --cl-gradient-brand: linear-gradient(135deg, var(--cl-color-lavender) 0%, var(--cl-color-lime) 100%);
 
-  --vl-fs-display-xl: 64px;
-  --vl-fs-display-lg: 56px;
-  --vl-fs-display-md: 44px;
-  --vl-fs-h1: 40px;
-  --vl-fs-h2: 30px;
-  --vl-fs-h3: 22px;
-  --vl-fs-h4: 18px;
-  --vl-fs-body-lg: 17px;
-  --vl-fs-body: 15px;
-  --vl-fs-body-sm: 13px;
-  --vl-fs-caption: 12px;
-  --vl-fs-micro: 11px;
+  /* Type */
+  --cl-font-display: "Sen", "Trebuchet MS", "Segoe UI", sans-serif;
+  --cl-font-body: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
 
-  --vl-lh-tight: 1.08;
-  --vl-lh-snug: 1.25;
-  --vl-lh-body: 1.55;
-
-  --vl-tracking-tight: -0.02em;
-  --vl-tracking-display: -0.015em;
-  --vl-tracking-caps: 0.12em;
-
-  /* Spacing scale */
-  --vl-space-0: 0px;
-  --vl-space-1: 4px;
-  --vl-space-2: 8px;
-  --vl-space-3: 12px;
-  --vl-space-4: 16px;
-  --vl-space-5: 20px;
-  --vl-space-6: 24px;
-  --vl-space-7: 32px;
-  --vl-space-8: 40px;
-  --vl-space-9: 56px;
-  --vl-space-10: 72px;
-  --vl-space-11: 96px;
+  --cl-fs-display-xl: clamp(3.5rem, 11vw, 8.5rem);
+  --cl-fs-display-lg: clamp(2.75rem, 7vw, 5rem);
+  --cl-fs-headline-lg: clamp(2rem, 4.5vw, 3rem);
+  --cl-fs-headline-md: clamp(1.6rem, 3vw, 2rem);
+  --cl-fs-title-md: 1.25rem;
+  --cl-fs-body-lg: 1.125rem;
+  --cl-fs-body-md: 1rem;
+  --cl-fs-body-sm: 0.875rem;
+  --cl-fs-label-md: 0.9375rem;
+  --cl-fs-label-sm: 0.8125rem;
 
   /* Radius */
-  --vl-radius-none: 0px;
-  --vl-radius-xs: 6px;
-  --vl-radius-sm: 10px;
-  --vl-radius-md: 12px;
-  --vl-radius-lg: 18px;
-  --vl-radius-xl: 24px;
-  --vl-radius-2xl: 28px;
-  --vl-radius-pill: 999px;
+  --cl-radius-none: 0px;
+  --cl-radius-sm: 8px;
+  --cl-radius-md: 12px;
+  --cl-radius-lg: 20px;
+  --cl-radius-xl: 28px;
+  --cl-radius-full: 999px;
 
-  /* Elevation */
-  --vl-shadow-none: none;
-  --vl-shadow-sm: 0 1px 0 rgba(11, 16, 21, 0.04),
-    0 1px 2px rgba(11, 16, 21, 0.04);
-  --vl-shadow-md: 0 6px 16px rgba(11, 16, 21, 0.05),
-    0 1px 2px rgba(11, 16, 21, 0.04);
-  --vl-shadow-lg: 0 18px 38px rgba(11, 16, 21, 0.06),
-    0 2px 6px rgba(11, 16, 21, 0.04);
-  --vl-shadow-xl: 0 28px 60px rgba(11, 16, 21, 0.08),
-    0 8px 16px rgba(11, 16, 21, 0.05);
-  --vl-shadow-lime: 0 0 0 1px rgba(168, 204, 34, 0.4),
-    0 8px 22px rgba(214, 255, 61, 0.35);
+  /* Spacing */
+  --cl-space-xs: 8px;
+  --cl-space-sm: 12px;
+  --cl-space-md: 20px;
+  --cl-space-lg: 32px;
+  --cl-space-xl: 56px;
+  --cl-space-2xl: 96px;
+  --cl-gutter: 24px;
+  --cl-container: 1200px;
 
-  /* Borders / focus */
-  --vl-stroke: 1px solid var(--vl-border);
-  --vl-stroke-soft: 1px solid var(--vl-border-soft);
-  --vl-focus-ring: 0 0 0 3px rgba(168, 204, 34, 0.35);
+  /* Elevation (flat by default) */
+  --cl-shadow-flat: none;
+  --cl-shadow-lifted: 0 18px 40px -24px rgba(0, 0, 0, 0.65);
+  --cl-ring-focus: 0 0 0 2px var(--cl-color-lime);
 
-  /* Motion */
-  --vl-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --vl-dur-fast: 120ms;
-  --vl-dur: 200ms;
-  --vl-dur-slow: 320ms;
-
-  /* Layout */
-  --vl-container: 1200px;
-  --vl-gutter: var(--vl-space-6);
+  /* Controls */
+  --cl-control-h: 52px;
 }
 
-/* -------------------------------------------------------------------------
+/* ------------------------------------------------------------
    Base
-   ------------------------------------------------------------------------- */
-
-*,
-*::before,
-*::after {
+   ------------------------------------------------------------ */
+.coaching-workspace *,
+.coaching-workspace *::before,
+.coaching-workspace *::after {
   box-sizing: border-box;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
+.coaching-workspace {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
 }
 
-body {
-  font-family: var(--vl-font-body);
-  font-size: var(--vl-fs-body);
-  line-height: var(--vl-lh-body);
-  color: var(--vl-text);
-  background: var(--vl-bg);
+.coaching-workspace {
+  margin: 0;
+  background-color: var(--cl-bg);
+  color: var(--cl-fg);
+  font-family: var(--cl-font-body);
+  font-size: var(--cl-fs-body-md);
+  line-height: 1.6;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-::selection {
-  background: var(--vl-lime);
-  color: var(--vl-ink);
+.coaching-workspace ::selection {
+  background: var(--cl-color-lime);
+  color: var(--cl-color-ink);
 }
 
-a {
-  color: var(--vl-ink);
+.coaching-workspace a {
+  color: var(--cl-color-chalk);
   text-decoration: none;
-  border-bottom: 1px dotted var(--vl-slate);
-  transition: color var(--vl-dur) var(--vl-ease),
-    border-color var(--vl-dur) var(--vl-ease);
-}
-a:hover {
-  color: var(--vl-lime-deep);
-  border-color: var(--vl-lime-deep);
+  transition: color 0.15s ease;
 }
 
-img,
-svg {
-  display: block;
+.coaching-workspace a:hover {
+  color: var(--cl-color-lime);
+}
+
+.coaching-workspace img {
   max-width: 100%;
+  display: block;
 }
 
-/* -------------------------------------------------------------------------
-   Typography primitives
-   ------------------------------------------------------------------------- */
+/* The lime ring inherits each control's own radius; never square off a pill. */
+.coaching-workspace :focus-visible {
+  outline: none;
+  box-shadow: var(--cl-ring-focus);
+}
 
-.vl-display,
-.vl-h1,
-.vl-h2,
-.vl-h3,
-.vl-h4 {
-  font-family: var(--vl-font-display);
-  color: var(--vl-text);
+/* ------------------------------------------------------------
+   Typography
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-display-xl,
+.coaching-workspace .cl-display-lg,
+.coaching-workspace .cl-headline-lg,
+.coaching-workspace .cl-headline-md {
+  font-family: var(--cl-font-display);
+  font-weight: 800;
   margin: 0;
-  letter-spacing: var(--vl-tracking-display);
-  line-height: var(--vl-lh-tight);
-  font-weight: 600;
+  color: var(--cl-fg);
+  text-wrap: balance;
 }
 
-.vl-display {
-  font-size: clamp(40px, 6vw, var(--vl-fs-display-lg));
+.coaching-workspace .cl-display-xl {
+  font-size: var(--cl-fs-display-xl);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.coaching-workspace .cl-display-lg {
+  font-size: var(--cl-fs-display-lg);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+}
+
+.coaching-workspace .cl-headline-lg {
+  font-size: var(--cl-fs-headline-lg);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.coaching-workspace .cl-headline-md {
+  font-size: var(--cl-fs-headline-md);
   font-weight: 700;
-  letter-spacing: var(--vl-tracking-tight);
-}
-.vl-display--xl {
-  font-size: clamp(48px, 7vw, var(--vl-fs-display-xl));
+  line-height: 1.05;
+  letter-spacing: -0.01em;
 }
 
-.vl-h1 {
-  font-size: var(--vl-fs-h1);
+.coaching-workspace .cl-title-md {
+  font-family: var(--cl-font-body);
   font-weight: 700;
-}
-.vl-h2 {
-  font-size: var(--vl-fs-h2);
-  font-weight: 600;
-  line-height: var(--vl-lh-snug);
-}
-.vl-h3 {
-  font-size: var(--vl-fs-h3);
-  font-weight: 600;
-}
-.vl-h4 {
-  font-size: var(--vl-fs-h4);
-  font-weight: 600;
+  font-size: var(--cl-fs-title-md);
+  line-height: 1.2;
+  margin: 0;
+  color: var(--cl-fg);
+  text-wrap: balance;
 }
 
-.vl-body {
-  font-size: var(--vl-fs-body);
-  line-height: var(--vl-lh-body);
-  color: var(--vl-text);
-}
-.vl-body--lg {
-  font-size: var(--vl-fs-body-lg);
-}
-.vl-body--sm {
-  font-size: var(--vl-fs-body-sm);
+.coaching-workspace .cl-body-lg {
+  font-size: var(--cl-fs-body-lg);
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 
-.vl-muted {
-  color: var(--vl-text-muted);
+.coaching-workspace .cl-body-md {
+  font-size: var(--cl-fs-body-md);
+  line-height: 1.6;
+  text-wrap: pretty;
 }
 
-.vl-mono {
-  font-family: var(--vl-font-mono);
-  font-feature-settings: "tnum" 1, "zero" 1;
-  letter-spacing: 0;
+.coaching-workspace .cl-body-sm {
+  font-size: var(--cl-fs-body-sm);
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
-.vl-highlight {
-  color: var(--vl-lime-deep);
-  background: linear-gradient(180deg, transparent 64%, var(--vl-lime) 64%);
-  padding: 0 0.06em;
+.coaching-workspace .cl-text-muted {
+  color: var(--cl-muted);
 }
 
-/* -------------------------------------------------------------------------
+.coaching-workspace .cl-text-lime {
+  color: var(--cl-color-lime);
+}
+
+.coaching-workspace .cl-measure {
+  max-width: 60ch;
+}
+
+/* Oversized type clipped by a panel edge (signature move) */
+.coaching-workspace .cl-type-bleed {
+  overflow: hidden;
+}
+
+.coaching-workspace .cl-type-bleed .cl-display-xl,
+.coaching-workspace .cl-type-bleed .cl-display-lg {
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
    Layout primitives
-   ------------------------------------------------------------------------- */
-
-.vl-container {
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-container {
   width: 100%;
-  max-width: var(--vl-container);
-  margin: 0 auto;
-  padding: 0 var(--vl-gutter);
+  max-width: var(--cl-container);
+  margin-inline: auto;
+  padding-inline: var(--cl-gutter);
 }
 
-.vl-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--vl-space-4);
+/* xl top + xl bottom on neighbours lands the ink gap between major
+   sections near 2xl; 2xl here would double it into a hole. */
+.coaching-workspace .cl-section {
+  padding-block: var(--cl-space-xl);
 }
-.vl-stack--sm { gap: var(--vl-space-2); }
-.vl-stack--lg { gap: var(--vl-space-6); }
-.vl-stack--xl { gap: var(--vl-space-8); }
 
-.vl-row {
+.coaching-workspace .cl-stack > * + * {
+  margin-top: var(--cl-space-md);
+}
+
+.coaching-workspace .cl-stack-lg > * + * {
+  margin-top: var(--cl-space-lg);
+}
+
+.coaching-workspace .cl-cluster {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--vl-space-3);
+  gap: var(--cl-space-sm);
 }
-.vl-row--between { justify-content: space-between; }
-.vl-row--wrap { flex-wrap: wrap; }
 
-.vl-grid {
+.coaching-workspace .cl-grid {
   display: grid;
-  gap: var(--vl-space-5);
-}
-.vl-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.vl-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.vl-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-@media (max-width: 860px) {
-  .vl-grid--2,
-  .vl-grid--3,
-  .vl-grid--4 { grid-template-columns: 1fr; }
+  gap: var(--cl-gutter);
 }
 
-/* -------------------------------------------------------------------------
-   Surfaces
-   ------------------------------------------------------------------------- */
-
-.vl-surface {
-  background: var(--vl-surface);
-  border: var(--vl-stroke);
-  border-radius: var(--vl-radius-lg);
+.coaching-workspace .cl-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.vl-surface--inset {
-  background: var(--vl-surface-inset);
+.coaching-workspace .cl-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.vl-panel {
-  background: var(--vl-paper);
-  border: var(--vl-stroke);
-  border-radius: var(--vl-radius-2xl);
-  padding: var(--vl-space-7);
-  box-shadow: var(--vl-shadow-md);
+/* Deliberate asymmetric split, echoing the identity board */
+.coaching-workspace .cl-split {
+  display: grid;
+  gap: var(--cl-gutter);
+  grid-template-columns: 7fr 5fr;
+  align-items: stretch;
 }
 
-.vl-panel--ink {
-  background: var(--vl-ink);
-  color: var(--vl-paper);
-  border-color: transparent;
-}
-.vl-panel--ink .vl-muted { color: var(--vl-slate-soft); }
-.vl-panel--ink .vl-h1,
-.vl-panel--ink .vl-h2,
-.vl-panel--ink .vl-h3,
-.vl-panel--ink .vl-display { color: var(--vl-paper); }
-
-/* -------------------------------------------------------------------------
-   Card
-   ------------------------------------------------------------------------- */
-
-.vl-card {
-  background: var(--vl-paper);
-  border: var(--vl-stroke);
-  border-radius: var(--vl-radius-lg);
-  padding: var(--vl-space-6);
-  box-shadow: var(--vl-shadow-sm);
-  transition: box-shadow var(--vl-dur) var(--vl-ease),
-    transform var(--vl-dur) var(--vl-ease);
+.coaching-workspace .cl-split-8-4 {
+  grid-template-columns: 8fr 4fr;
 }
 
-.vl-card:hover {
-  box-shadow: var(--vl-shadow-md);
-}
-
-.vl-card__header {
+/* ------------------------------------------------------------
+   Header / footer
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--vl-space-3);
-  margin-bottom: var(--vl-space-4);
-}
-
-.vl-card__title {
-  font-family: var(--vl-font-display);
-  font-size: var(--vl-fs-h4);
-  font-weight: 600;
-  letter-spacing: var(--vl-tracking-display);
-  color: var(--vl-ink);
-  margin: 0;
-}
-
-.vl-card__meta {
-  color: var(--vl-text-muted);
-  font-size: var(--vl-fs-body-sm);
-}
-
-.vl-card--accent {
-  background: var(--vl-lime);
-  border-color: var(--vl-lime-deep);
-  color: var(--vl-ink);
-  box-shadow: var(--vl-shadow-lime);
-}
-
-.vl-card--ink {
-  background: var(--vl-ink);
-  color: var(--vl-paper);
-  border-color: transparent;
-}
-.vl-card--ink .vl-card__title { color: var(--vl-paper); }
-.vl-card--ink .vl-card__meta,
-.vl-card--ink .vl-muted { color: var(--vl-slate-soft); }
-
-/* -------------------------------------------------------------------------
-   Button
-   ------------------------------------------------------------------------- */
-
-.vl-btn {
-  --_h: 44px;
-  appearance: none;
-  border: 0;
+  gap: var(--cl-space-md);
+  height: 72px;
   background: transparent;
-  cursor: pointer;
-  font-family: var(--vl-font-body);
-  font-weight: 600;
-  font-size: var(--vl-fs-body);
-  line-height: 1;
-  letter-spacing: 0;
-  color: var(--vl-ink);
-  height: var(--_h);
-  padding: 0 var(--vl-space-6);
+}
+
+.coaching-workspace .cl-site-header.is-stuck {
+  border-bottom: 1px solid var(--cl-border);
+}
+
+.coaching-workspace .cl-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cl-space-xs);
+  font-family: var(--cl-font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  color: var(--cl-fg);
+}
+
+.coaching-workspace .cl-brand-mark {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  color: var(--cl-color-lime);
+}
+
+.coaching-workspace .cl-brand-mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.coaching-workspace .cl-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--cl-space-lg);
+}
+
+.coaching-workspace .cl-nav a {
+  font-size: var(--cl-fs-label-md);
+  font-weight: 500;
+  color: var(--cl-muted);
+}
+
+.coaching-workspace .cl-nav a:hover {
+  color: var(--cl-fg);
+}
+
+.coaching-workspace .cl-site-footer {
+  padding-block: var(--cl-space-xl);
+  border-top: 1px solid var(--cl-border);
+  color: var(--cl-muted);
+  font-size: var(--cl-fs-body-sm);
+}
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--vl-space-2);
-  border-radius: var(--vl-radius-pill);
-  transition: background var(--vl-dur) var(--vl-ease),
-    color var(--vl-dur) var(--vl-ease),
-    box-shadow var(--vl-dur) var(--vl-ease),
-    transform var(--vl-dur-fast) var(--vl-ease);
+  gap: var(--cl-space-xs);
+  height: var(--cl-control-h);
+  padding: 0 28px;
+  border: 1px solid transparent;
+  border-radius: var(--cl-radius-full);
+  font-family: var(--cl-font-body);
+  font-weight: 700;
+  font-size: var(--cl-fs-label-md);
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.15s ease,
+    color 0.15s ease, border-color 0.15s ease;
+  text-decoration: none;
   white-space: nowrap;
   user-select: none;
 }
 
-.vl-btn:focus-visible {
-  outline: none;
-  box-shadow: var(--vl-focus-ring);
+.coaching-workspace .cl-btn:active {
+  transform: translateY(0);
 }
 
-.vl-btn:disabled,
-.vl-btn[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
+.coaching-workspace .cl-btn--primary {
+  background-color: var(--cl-color-lime);
+  color: var(--cl-color-ink);
 }
 
-.vl-btn--primary {
-  background: var(--vl-lime);
-  color: var(--vl-ink);
-  box-shadow: 0 1px 0 rgba(11, 16, 21, 0.04),
-    0 8px 18px rgba(214, 255, 61, 0.45),
-    inset 0 0 0 1px var(--vl-lime-deep);
-}
-.vl-btn--primary:hover {
-  background: var(--vl-lime-deep);
-  color: var(--vl-ink);
+.coaching-workspace .cl-btn--primary:hover {
+  background-color: var(--cl-color-lime-hover);
+  color: var(--cl-color-ink);
   transform: translateY(-1px);
 }
-.vl-btn--primary:active {
-  transform: translateY(0);
-  background: var(--vl-lime-deep);
+
+.coaching-workspace .cl-btn--secondary {
+  background-color: transparent;
+  color: var(--cl-fg);
+  border-color: var(--cl-fg);
 }
 
-.vl-btn--secondary {
-  background: var(--vl-paper);
-  color: var(--vl-ink);
-  border: var(--vl-stroke);
-}
-.vl-btn--secondary:hover {
-  background: var(--vl-mist);
-  border-color: var(--vl-slate-soft);
+.coaching-workspace .cl-btn--secondary:hover {
+  background-color: rgba(244, 244, 242, 0.08);
+  color: var(--cl-fg);
+  transform: translateY(-1px);
 }
 
-.vl-btn--ghost {
-  background: transparent;
-  color: var(--vl-ink);
-}
-.vl-btn--ghost:hover {
-  background: var(--vl-mist);
+.coaching-workspace .cl-btn--ghost {
+  background-color: transparent;
+  color: var(--cl-fg);
+  padding: 0 20px;
 }
 
-.vl-btn--ink {
-  background: var(--vl-ink);
-  color: var(--vl-paper);
-}
-.vl-btn--ink:hover {
-  background: var(--vl-ink-soft);
+.coaching-workspace .cl-btn--ghost:hover {
+  color: var(--cl-color-lime);
 }
 
-.vl-btn--sm { --_h: 36px; padding: 0 var(--vl-space-4); font-size: var(--vl-fs-body-sm); }
-.vl-btn--lg { --_h: 52px; padding: 0 var(--vl-space-7); font-size: var(--vl-fs-body-lg); }
-.vl-btn--block { width: 100%; }
-
-.vl-btn__icon {
-  width: 16px;
-  height: 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Buttons placed on lime/lavender panels flip to ink outline / ink solid */
+.coaching-workspace .cl-on-panel .cl-btn--primary {
+  background-color: var(--cl-color-ink);
+  color: var(--cl-color-chalk);
 }
-.vl-btn--lg .vl-btn__icon { width: 18px; height: 18px; }
 
-/* -------------------------------------------------------------------------
-   Input / Field
-   ------------------------------------------------------------------------- */
+.coaching-workspace .cl-on-panel .cl-btn--primary:hover {
+  background-color: #000;
+}
 
-.vl-field {
+.coaching-workspace .cl-on-panel .cl-btn--secondary {
+  color: var(--cl-color-ink);
+  border-color: var(--cl-color-ink);
+}
+
+.coaching-workspace .cl-on-panel .cl-btn--secondary:hover {
+  background-color: rgba(14, 14, 16, 0.08);
+}
+
+.coaching-workspace .cl-btn-lg {
+  height: 58px;
+  padding: 0 34px;
+  font-size: 1.0625rem;
+}
+
+/* ------------------------------------------------------------
+   Inputs & form fields
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-field {
   display: flex;
   flex-direction: column;
-  gap: var(--vl-space-2);
+  gap: var(--cl-space-xs);
 }
 
-.vl-label {
-  font-size: var(--vl-fs-body-sm);
-  font-weight: 600;
-  color: var(--vl-ink);
+.coaching-workspace .cl-label {
+  font-size: var(--cl-fs-label-md);
+  font-weight: 700;
+  color: var(--cl-fg);
 }
 
-.vl-help {
-  font-size: var(--vl-fs-caption);
-  color: var(--vl-text-muted);
-}
-
-.vl-input,
-.vl-textarea,
-.vl-select {
-  appearance: none;
-  font-family: var(--vl-font-body);
-  font-size: var(--vl-fs-body);
-  color: var(--vl-ink);
-  background: var(--vl-mist);
-  border: var(--vl-stroke);
-  border-radius: var(--vl-radius-md);
-  padding: 12px 14px;
-  height: 44px;
+.coaching-workspace .cl-input,
+.coaching-workspace .cl-textarea,
+.coaching-workspace .cl-select {
   width: 100%;
-  transition: border-color var(--vl-dur) var(--vl-ease),
-    background var(--vl-dur) var(--vl-ease),
-    box-shadow var(--vl-dur) var(--vl-ease);
+  min-height: var(--cl-control-h);
+  padding: 14px 16px;
+  background-color: var(--cl-color-surface);
+  color: var(--cl-fg);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-md);
+  font-family: var(--cl-font-body);
+  font-size: var(--cl-fs-body-md);
+  line-height: 1.4;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.vl-textarea {
-  height: auto;
-  min-height: 96px;
+.coaching-workspace .cl-textarea {
+  min-height: 120px;
   resize: vertical;
-  line-height: var(--vl-lh-body);
 }
 
-.vl-input::placeholder,
-.vl-textarea::placeholder {
-  color: var(--vl-slate-soft);
+.coaching-workspace .cl-input::placeholder,
+.coaching-workspace .cl-textarea::placeholder {
+  color: var(--cl-muted);
 }
 
-.vl-input:hover,
-.vl-textarea:hover,
-.vl-select:hover {
-  background: var(--vl-paper);
-  border-color: var(--vl-slate-soft);
-}
-
-.vl-input:focus,
-.vl-textarea:focus,
-.vl-select:focus {
+.coaching-workspace .cl-input:focus,
+.coaching-workspace .cl-textarea:focus,
+.coaching-workspace .cl-select:focus {
   outline: none;
-  background: var(--vl-paper);
-  border-color: var(--vl-lime-deep);
-  box-shadow: var(--vl-focus-ring);
+  border-color: var(--cl-color-lime);
+  box-shadow: var(--cl-ring-focus);
 }
 
-.vl-input--mono {
-  font-family: var(--vl-font-mono);
-  letter-spacing: 0;
+/* ------------------------------------------------------------
+   Cards & panels
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-card {
+  background-color: var(--cl-color-surface);
+  color: var(--cl-fg);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-lg);
+  padding: 28px;
 }
 
-.vl-input-group {
+.coaching-workspace .cl-card .cl-card-title {
+  margin: 0 0 var(--cl-space-xs);
+}
+
+.coaching-workspace .cl-card-body {
+  color: var(--cl-muted);
+}
+
+/* Signature color-blocked panels */
+.coaching-workspace .cl-panel {
+  border-radius: var(--cl-radius-xl);
+  padding: 40px;
+  color: var(--cl-color-ink);
+}
+
+.coaching-workspace .cl-panel-lime {
+  background-color: var(--cl-color-lime);
+}
+
+.coaching-workspace .cl-panel-lavender {
+  background-color: var(--cl-color-lavender);
+}
+
+.coaching-workspace .cl-panel-gradient {
+  background: var(--cl-gradient-brand);
+}
+
+.coaching-workspace .cl-panel-slate {
+  background-color: var(--cl-color-surface);
+  color: var(--cl-fg);
+  border: 1px solid var(--cl-border);
+}
+
+/* Panels carry ink text on color; expose helper for text color context */
+.coaching-workspace .cl-panel-lime,
+.coaching-workspace .cl-panel-lavender,
+.coaching-workspace .cl-panel-gradient {
+  --cl-fg: var(--cl-color-ink);
+  --cl-muted: rgba(14, 14, 16, 0.62);
+}
+
+/* Loop mark blown up as a background graphic on a panel */
+.coaching-workspace .cl-panel-mark {
   position: relative;
-  display: flex;
-  align-items: center;
+  overflow: hidden;
 }
 
-.vl-input-group .vl-input {
-  padding-left: 42px;
-}
-
-.vl-input-group__icon {
+.coaching-workspace .cl-panel-mark .cl-mark-bg {
   position: absolute;
-  left: 14px;
-  width: 16px;
-  height: 16px;
-  color: var(--vl-slate);
+  right: -8%;
+  bottom: -18%;
+  width: 46%;
+  color: rgba(14, 14, 16, 0.14);
   pointer-events: none;
 }
 
-/* -------------------------------------------------------------------------
-   Checkbox
-   ------------------------------------------------------------------------- */
+.coaching-workspace .cl-panel-mark .cl-mark-bg svg {
+  width: 100%;
+  height: auto;
+}
 
-.vl-check {
+.coaching-workspace .cl-panel-mark > *:not(.cl-mark-bg) {
+  position: relative;
+}
+
+/* ------------------------------------------------------------
+   Checkbox (the "confirmed" motif at small scale)
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-checkbox {
   display: inline-flex;
   align-items: center;
-  gap: var(--vl-space-3);
+  gap: var(--cl-space-sm);
   cursor: pointer;
-  font-size: var(--vl-fs-body);
-  color: var(--vl-ink);
+  font-size: var(--cl-fs-body-md);
+  color: var(--cl-fg);
   user-select: none;
 }
 
-.vl-check__input {
+.coaching-workspace .cl-checkbox input {
   position: absolute;
   opacity: 0;
-  pointer-events: none;
+  width: 0;
+  height: 0;
 }
 
-.vl-check__box {
-  width: 20px;
-  height: 20px;
-  border-radius: var(--vl-radius-xs);
-  background: var(--vl-paper);
-  border: 1.5px solid var(--vl-hairline);
+.coaching-workspace .cl-checkbox .cl-box {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-sm);
+  background-color: var(--cl-color-surface);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--vl-dur) var(--vl-ease),
-    border-color var(--vl-dur) var(--vl-ease),
-    box-shadow var(--vl-dur) var(--vl-ease);
+  color: var(--cl-color-ink);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.coaching-workspace .cl-checkbox .cl-box::after {
+  content: "";
+  width: 11px;
+  height: 6px;
+  border-left: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(-45deg) translateY(-1px) scale(0);
+  transition: transform 0.15s ease;
+}
+
+.coaching-workspace .cl-checkbox input:checked + .cl-box {
+  background-color: var(--cl-color-lime);
+  border-color: var(--cl-color-lime);
+}
+
+.coaching-workspace .cl-checkbox input:checked + .cl-box::after {
+  transform: rotate(-45deg) translateY(-1px) scale(1);
+}
+
+.coaching-workspace .cl-checkbox input:focus-visible + .cl-box {
+  box-shadow: var(--cl-ring-focus);
+}
+
+/* ------------------------------------------------------------
+   Tabs (segmented pill control)
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  background-color: var(--cl-color-surface);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-full);
+}
+
+.coaching-workspace .cl-tab {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--cl-muted);
+  font-family: var(--cl-font-body);
+  font-weight: 700;
+  font-size: var(--cl-fs-label-md);
+  padding: 9px 20px;
+  border-radius: var(--cl-radius-full);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.coaching-workspace .cl-tab:hover {
+  color: var(--cl-fg);
+}
+
+.coaching-workspace .cl-tab.is-active {
+  background-color: var(--cl-color-lime);
+  color: var(--cl-color-ink);
+}
+
+/* ------------------------------------------------------------
+   Status expression (real states -> brand color)
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--cl-radius-full);
+  font-size: var(--cl-fs-label-sm);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
   flex: none;
 }
 
-.vl-check__box::after {
-  content: "";
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid var(--vl-ink);
-  border-bottom: 2px solid var(--vl-ink);
-  transform: rotate(-45deg) translate(1px, -1px) scale(0);
-  transition: transform var(--vl-dur) var(--vl-ease);
+.coaching-workspace .cl-status-confirmed {
+  background-color: var(--cl-color-lime);
+  color: var(--cl-color-ink);
 }
 
-.vl-check:hover .vl-check__box {
-  border-color: var(--vl-slate);
+.coaching-workspace .cl-status-review {
+  background-color: var(--cl-color-lavender);
+  color: var(--cl-color-ink);
 }
 
-.vl-check__input:focus-visible + .vl-check__box {
-  box-shadow: var(--vl-focus-ring);
-  border-color: var(--vl-lime-deep);
+.coaching-workspace .cl-status-rejected {
+  background-color: rgba(255, 107, 74, 0.16);
+  color: var(--cl-color-coral);
 }
 
-.vl-check__input:checked + .vl-check__box {
-  background: var(--vl-lime);
-  border-color: var(--vl-lime-deep);
-}
-
-.vl-check__input:checked + .vl-check__box::after {
-  transform: rotate(-45deg) translate(1px, -1px) scale(1);
-}
-
-/* -------------------------------------------------------------------------
-   Tabs
-   ------------------------------------------------------------------------- */
-
-.vl-tabs {
+/* ------------------------------------------------------------
+   Icons & misc
+   ------------------------------------------------------------ */
+.coaching-workspace .cl-icon {
   display: inline-flex;
-  align-items: center;
-  background: var(--vl-mist);
-  border: var(--vl-stroke);
-  border-radius: var(--vl-radius-pill);
-  padding: 4px;
-  gap: 2px;
-}
-
-.vl-tab {
-  appearance: none;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--vl-font-body);
-  font-size: var(--vl-fs-body-sm);
-  font-weight: 500;
-  color: var(--vl-text-muted);
-  background: transparent;
-  height: 36px;
-  padding: 0 var(--vl-space-5);
-  border-radius: var(--vl-radius-pill);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--vl-space-2);
-  transition: background var(--vl-dur) var(--vl-ease),
-    color var(--vl-dur) var(--vl-ease);
-  white-space: nowrap;
-}
-
-.vl-tab:hover {
-  color: var(--vl-ink);
-}
-
-.vl-tab[aria-selected="true"],
-.vl-tab.is-active {
-  background: var(--vl-paper);
-  color: var(--vl-ink);
-  box-shadow: var(--vl-shadow-sm);
-  font-weight: 600;
-}
-
-.vl-tab__icon {
-  width: 14px;
-  height: 14px;
-}
-
-/* Underline variant */
-.vl-tabs--underline {
-  background: transparent;
-  border: 0;
-  border-bottom: var(--vl-stroke);
-  padding: 0;
-  border-radius: 0;
-  gap: var(--vl-space-6);
-}
-
-.vl-tabs--underline .vl-tab {
-  background: transparent;
-  border-radius: 0;
-  padding: 0 0 14px;
-  height: auto;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-}
-
-.vl-tabs--underline .vl-tab[aria-selected="true"],
-.vl-tabs--underline .vl-tab.is-active {
-  background: transparent;
-  border-bottom-color: var(--vl-lime-deep);
-  color: var(--vl-ink);
-  box-shadow: none;
-}
-
-/* -------------------------------------------------------------------------
-   Chips / badges
-   ------------------------------------------------------------------------- */
-
-.vl-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--vl-space-2);
-  height: 28px;
-  padding: 0 12px;
-  border-radius: var(--vl-radius-pill);
-  background: var(--vl-mist);
-  border: var(--vl-stroke);
-  color: var(--vl-ink);
-  font-size: var(--vl-fs-caption);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.vl-chip--lime {
-  background: var(--vl-lime);
-  border-color: var(--vl-lime-deep);
-  color: var(--vl-ink);
-}
-
-.vl-chip--ink {
-  background: var(--vl-ink);
-  border-color: var(--vl-ink);
-  color: var(--vl-paper);
-}
-
-.vl-chip__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--vl-radius-pill);
-  background: var(--vl-lime-deep);
-}
-
-.vl-delta {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--vl-font-mono);
-  font-size: var(--vl-fs-caption);
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: var(--vl-radius-pill);
-  background: var(--vl-lime);
-  color: var(--vl-ink);
-  letter-spacing: 0;
-}
-
-.vl-delta--down {
-  background: var(--vl-mist);
-  color: var(--vl-negative);
-}
-
-/* -------------------------------------------------------------------------
-   KPI / Sparkline tile (signature element)
-   ------------------------------------------------------------------------- */
-
-.vl-kpi {
-  position: relative;
-  background: var(--vl-paper);
-  border: var(--vl-stroke);
-  border-radius: var(--vl-radius-lg);
-  padding: var(--vl-space-5) var(--vl-space-6) var(--vl-space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--vl-space-4);
-  overflow: hidden;
-}
-
-.vl-kpi__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--vl-space-3);
-}
-
-.vl-kpi__ticker {
-  font-family: var(--vl-font-mono);
-  font-size: var(--vl-fs-caption);
-  color: var(--vl-slate);
-  letter-spacing: var(--vl-tracking-caps);
-  text-transform: uppercase;
-}
-
-.vl-kpi__value {
-  font-family: var(--vl-font-display);
-  font-weight: 600;
-  font-size: 36px;
-  letter-spacing: var(--vl-tracking-display);
+  font-size: 24px;
   line-height: 1;
-  color: var(--vl-ink);
+  color: currentColor;
 }
 
-.vl-kpi__value-mono {
-  font-family: var(--vl-font-mono);
-  font-weight: 500;
-  font-size: 32px;
-  letter-spacing: -0.01em;
-  color: var(--vl-ink);
+.coaching-workspace .cl-icon-sm {
+  font-size: 20px;
 }
 
-.vl-kpi__foot {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: var(--vl-space-3);
-}
-
-.vl-kpi--ink {
-  background: var(--vl-ink);
-  color: var(--vl-paper);
-  border-color: transparent;
-}
-.vl-kpi--ink .vl-kpi__ticker { color: var(--vl-slate-soft); }
-.vl-kpi--ink .vl-kpi__value,
-.vl-kpi--ink .vl-kpi__value-mono { color: var(--vl-paper); }
-
-/* Sparkline / waterfall bars */
-.vl-spark {
-  display: flex;
-  align-items: end;
-  gap: 4px;
-  height: 56px;
-}
-
-.vl-spark__bar {
-  flex: 1;
-  background: var(--vl-mist-deep);
-  border-radius: 3px;
-  min-height: 6px;
-  transition: background var(--vl-dur) var(--vl-ease);
-}
-
-.vl-spark__bar--lime { background: var(--vl-lime); }
-.vl-spark__bar--lime-deep { background: var(--vl-lime-deep); }
-.vl-spark__bar--ink { background: var(--vl-ink); }
-
-.vl-kpi--ink .vl-spark__bar { background: rgba(255, 255, 255, 0.08); }
-.vl-kpi--ink .vl-spark__bar--lime { background: var(--vl-lime); }
-
-/* -------------------------------------------------------------------------
-   Navigation / Header
-   ------------------------------------------------------------------------- */
-
-.vl-nav {
-  display: flex;
-  align-items: center;
-  gap: var(--vl-space-4);
-  background: var(--vl-ink);
-  color: var(--vl-paper);
-  border-radius: var(--vl-radius-pill);
-  padding: 6px 6px 6px var(--vl-space-5);
-  border: 1px solid var(--vl-ink-soft);
-}
-
-.vl-nav__brand {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--vl-space-2);
-  font-family: var(--vl-font-display);
-  font-weight: 700;
-  font-size: var(--vl-fs-body-lg);
-  letter-spacing: var(--vl-tracking-display);
-  color: var(--vl-paper);
-}
-
-.vl-nav__brand-mark {
-  width: 26px;
-  height: 26px;
-  border-radius: var(--vl-radius-pill);
-  background: var(--vl-lime);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--vl-ink);
-}
-
-.vl-nav__list {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.vl-nav__link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--vl-space-2);
-  height: 36px;
-  padding: 0 14px;
-  border-radius: var(--vl-radius-pill);
-  font-size: var(--vl-fs-body-sm);
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  border: 0;
-  transition: background var(--vl-dur) var(--vl-ease),
-    color var(--vl-dur) var(--vl-ease);
-}
-
-.vl-nav__link:hover {
-  color: var(--vl-paper);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: transparent;
-}
-
-.vl-nav__link.is-active {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--vl-paper);
-}
-
-.vl-nav__spacer { flex: 1; }
-
-/* -------------------------------------------------------------------------
-   Decorative orb (echoes the floating ellipse motif)
-   ------------------------------------------------------------------------- */
-
-.vl-orb {
-  position: absolute;
-  border-radius: 999px;
-  filter: blur(0.2px);
-  pointer-events: none;
-}
-
-.vl-orb--lime {
-  background: radial-gradient(60% 60% at 35% 30%, #f3ff80 0%, var(--vl-lime) 55%, var(--vl-lime-deep) 100%);
-  box-shadow: 0 20px 60px rgba(168, 204, 34, 0.35);
-}
-
-.vl-orb--ink {
-  background: radial-gradient(60% 60% at 35% 30%, #2a3340 0%, var(--vl-ink) 70%);
-  box-shadow: 0 20px 60px rgba(11, 16, 21, 0.25);
-}
-
-/* -------------------------------------------------------------------------
-   Utility
-   ------------------------------------------------------------------------- */
-
-.vl-divider {
+.coaching-workspace .cl-divider {
   height: 1px;
-  background: var(--vl-border);
+  background: var(--cl-border);
   border: 0;
-  width: 100%;
+  margin-block: var(--cl-space-lg);
 }
 
-.vl-sr-only {
+.coaching-workspace .cl-arrow-mark {
+  display: inline-block;
+  width: 64px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+}
+
+.coaching-workspace .cl-arrow-mark::after {
+  content: "";
   position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  white-space: nowrap;
+  right: 0;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
 }
 
-[data-lucide] {
-  width: 1em;
-  height: 1em;
-  stroke-width: 1.75;
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .coaching-workspace .cl-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .coaching-workspace .cl-split,
+  .coaching-workspace .cl-split-8-4 {
+    grid-template-columns: 1fr;
+  }
+  .coaching-workspace .cl-section {
+    padding-block: var(--cl-space-lg);
+  }
 }
+
+@media (max-width: 600px) {
+  .coaching-workspace .cl-grid-2,
+  .coaching-workspace .cl-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .coaching-workspace .cl-panel {
+    padding: 28px;
+  }
+  .coaching-workspace .cl-nav {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coaching-workspace * {
+    transition: none !important;
+  }
+}
+
+
+/* App heading aliases; numbers use Clinch body type with tabular figures. */
+.coaching-workspace :is(.cl-h1, .cl-h2, .cl-h3) { margin: 0; font-family: var(--cl-font-display); font-weight: 800; color: var(--cl-fg); text-wrap: balance; letter-spacing: -.03em; }
+.coaching-workspace .cl-h1 { font-size: var(--cl-fs-display-lg); line-height: .98; }
+.coaching-workspace .cl-h2 { font-size: var(--cl-fs-headline-lg); line-height: 1.05; }
+.coaching-workspace .cl-h3 { font-size: var(--cl-fs-headline-md); line-height: 1.12; }
+.coaching-workspace .cl-mono { font-family: var(--cl-font-body); font-variant-numeric: tabular-nums; }
