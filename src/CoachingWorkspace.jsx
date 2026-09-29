@@ -1,20 +1,26 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import { Button, Modal, Field } from './WorkspaceUI.jsx';
 import { Link } from 'react-router';
 import { DownloadSimple as ArrowDownToLine, ArrowRight, BookOpen, CalendarDots as CalendarDays, Check, CheckCircle as CheckCircle2, CaretDown as ChevronDown, Clock as Clock3, Diamond, SquaresFour as LayoutDashboard, MapPin, Plus, MagnifyingGlass as Search, Target, X } from '@phosphor-icons/react';
 import { COACHING_RULES } from './coachingRules.js';
 const GuidelinesLibrary = lazy(() => import('./GuidelinesLibrary.jsx').then((module) => ({ default: module.GuidelinesLibrary })));
 
-const VIEWS = [['home', 'Overview', LayoutDashboard], ['schedule', 'Schedule', CalendarDays], ['coaching', 'Coaching', Target], ['rules', 'Rules', BookOpen]];
+const ScoutingWorkspace = lazy(() => import('./ScoutingWorkspace.jsx').then((module) => ({ default: module.ScoutingWorkspace })));
+
+const VIEWS = [['home', 'Overview', LayoutDashboard], ['schedule', 'Schedule', CalendarDays], ['coaching', 'Coaching', Target], ['rules', 'Rules', BookOpen], ['scouting', 'Scouting', Diamond]];
 const uid = () => crypto.randomUUID();
 const dateLabel = (date, options = { weekday: 'short', month: 'short', day: 'numeric' }) => new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'UTC' }).format(new Date(`${date}T12:00:00Z`));
 const timeLabel = (time) => { const [hour, minute] = time.split(':').map(Number); return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`; };
 const sortEvents = (a, b) => `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`);
 
-export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRepository, authorName = 'Coach', authorId }) {
+export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRepository, authorName = 'Coach', authorId, scoutingRepository, canScout = true, onScoutingPendingChange }) {
   const { data, setData, saveError, loadError, retrySave, exportData } = store;
   const [teamId, setTeamId] = useState('angels-demo');
-  const [view, setView] = useState('home');
+  const [requestedView, setView] = useState('home');
+  const view = requestedView === 'scouting' && !canScout ? 'home' : requestedView;
+  const [scoutingVisited, setScoutingVisited] = useState(false);
+  const [scoutingPending, setScoutingPending] = useState(false);
+  const scoutingChange = useCallback((pending) => { setScoutingPending(pending); onScoutingPendingChange?.(pending); }, [onScoutingPendingChange]);
   const [eventFilter, setEventFilter] = useState('all');
   const [query, setQuery] = useState('');
   const [modal, setModal] = useState(null);
@@ -32,7 +38,7 @@ export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRep
   const openNotes = observations.filter((item) => item.status === 'open');
   const show = (kind, item = null) => { setFormError(''); setModal({ kind, item }); };
   const close = () => setModal(null);
-  const navigate = (next) => { setView(next); setMessage(''); setQuery(''); };
+  const navigate = (next) => { if (next === 'scouting') setScoutingVisited(true); setView(next); setMessage(''); setQuery(''); };
   const save = (updater, text) => { setData(updater); setMessage(text); close(); };
   const context = { teamId: team.id, seasonId: team.seasonId };
   const disabled = Boolean(loadError) || store.readOnly;
@@ -96,7 +102,7 @@ export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRep
 
   return <div className="coaching-workspace">
     <a className="cw-skip" href="#coaching-main">Skip to workspace</a>
-    <header className="cw-header"><div className="cw-nav-shell"><Link to="/" className="cw-brand" onClick={() => navigate('home')}><Diamond size={23} weight="bold" /><span>Diamond Live</span></Link><nav aria-label="Coaching workspace">{VIEWS.map(([key, label, Icon]) => <button key={key} aria-current={view === key ? 'page' : undefined} onClick={() => navigate(key)}><Icon size={16} />{label}</button>)}</nav></div><div className="cw-team-select"><label className="cw-sr-only" htmlFor="team-select">Team and season</label><select id="team-select" value={team.id} onChange={(e) => { setTeamId(e.target.value); close(); setMessage(''); }} aria-label="Team and season">{data.teams.map((item) => <option value={item.id} key={item.id}>{item.name}{store.mode === 'cloud' ? '' : ' · Demo'}</option>)}</select><ChevronDown size={16} /></div>{accountButton}</header>
+    <header className="cw-header"><div className="cw-nav-shell"><Link to="/" className="cw-brand" onClick={() => navigate('home')}><Diamond size={23} weight="bold" /><span>Diamond Live</span></Link><nav aria-label="Coaching workspace">{VIEWS.filter(([key]) => key !== 'scouting' || canScout).map(([key, label, Icon]) => <button key={key} aria-current={view === key ? 'page' : undefined} onClick={() => navigate(key)}><Icon size={16} />{label}</button>)}</nav></div><div className="cw-team-select"><label className="cw-sr-only" htmlFor="team-select">Team and season</label><select id="team-select" value={team.id} onChange={(e) => { setTeamId(e.target.value); close(); setMessage(''); }} aria-label="Team and season">{data.teams.map((item) => <option value={item.id} key={item.id}>{item.name}{store.mode === 'cloud' ? '' : ' · Demo'}</option>)}</select><ChevronDown size={16} /></div>{accountButton}</header>
     <div className="cw-context"><span>{team.league} <span className="cw-context-divider">/</span> {team.division}</span><span>{team.season}</span></div>
     <main id="coaching-main" tabIndex={-1}>
       {syncBar}
@@ -107,9 +113,10 @@ export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRep
         <section className="cw-hero"><div className="cw-hero-main"><h1>This week with<br /><span>the {team.name}.</span></h1><p>A little preparation. A better day on the field.</p><Button variant="primary" disabled={disabled} onClick={() => show('observation')}><Plus size={18} /> Add a coaching note</Button></div><div className="cw-next"><span className="cw-next-label"><CalendarDays size={17} />Next practice</span><h2>{nextPractice ? dateLabel(nextPractice.date) : 'Your next session'}</h2><p>{nextPractice ? `${timeLabel(nextPractice.startTime)} – ${timeLabel(nextPractice.endTime)} PT` : 'Build a plan for your team.'}</p><button className="cw-hero-link" onClick={() => show(nextPractice ? 'details' : 'event', nextPractice)} disabled={disabled && !nextPractice}>{nextPractice ? 'Open practice plan' : 'Schedule a practice'}<ArrowRight size={19} /></button></div></section>
         <div className="cw-metrics"><div><span>On the calendar</span><strong>{String(events.length).padStart(2, '0')}</strong><small>{practices.length} practices · {events.length - practices.length} {events.length - practices.length === 1 ? 'game' : 'games'}</small></div><div><span>Open coaching priorities</span><strong>{String(openNotes.length).padStart(2, '0')}</strong><small>Ready for a next step</small></div><div><span>Next practice planned</span><strong>{totalMinutes}<em> min</em></strong><small>{nextActivities.length} activities in the plan</small></div><div><span>Guidelines library</span><strong>55<em> pages</em></strong><small>2026 HVLL bylaws · searchable</small></div></div>
         <div className="cw-main-grid">{EventList()}{Notes({ compact: true })}</div>{Rules({ compact: true })}
-      </> : <><div className="cw-page-heading"><h1 className="cl-h1">{view === 'schedule' ? 'Make room for progress.' : view === 'coaching' ? 'Turn observations into action.' : 'The rules, within reach.'}</h1><p>{team.name} · {view === 'schedule' ? 'Practices and games in one place.' : view === 'coaching' ? 'Review a takeaway, plan the reps, and record how they went.' : 'Find the source. Read the rule. Prepare your team.'}</p></div>{view === 'schedule' ? EventList() : view === 'coaching' ? Notes({}) : <Suspense fallback={<p role="status">Opening the guidelines library…</p>}><GuidelinesLibrary key={guidelinesRepository?.scopeKey ?? 'local'} division={team.division} repository={guidelinesRepository ?? undefined} /></Suspense>}</>}
+      </> : view !== 'scouting' ? <><div className="cw-page-heading"><h1 className="cl-h1">{view === 'schedule' ? 'Make room for progress.' : view === 'coaching' ? 'Turn observations into action.' : 'The rules, within reach.'}</h1><p>{team.name} · {view === 'schedule' ? 'Practices and games in one place.' : view === 'coaching' ? 'Review a takeaway, plan the reps, and record how they went.' : 'Find the source. Read the rule. Prepare your team.'}</p></div>{view === 'schedule' ? EventList() : view === 'coaching' ? Notes({}) : <Suspense fallback={<p role="status">Opening the guidelines library…</p>}><GuidelinesLibrary key={guidelinesRepository?.scopeKey ?? 'local'} division={team.division} repository={guidelinesRepository ?? undefined} /></Suspense>}</> : null}
+      {scoutingVisited && canScout && <div hidden={view !== 'scouting'}><Suspense fallback={<p role="status">Opening scouting…</p>}><ScoutingWorkspace key={`${authorId ?? 'demo'}:${team.id}`} team={team} repository={scoutingRepository} authorName={authorName} authorId={authorId} onPendingChange={scoutingChange} /></Suspense></div>}
     </main>
-    <footer className="cw-footer"><span>{store.mode === 'cloud' ? 'Private team workspace' : 'Demo workspace · Sample events and notes'} · {loadError ? 'Editing paused' : saveError ? 'Changes not saved' : store.mode === 'cloud' ? (store.pending ? 'Saving changes…' : 'Shared with team members') : 'Stored on this device'}</span><div><button className="cw-text-button" onClick={exportData}><ArrowDownToLine size={15} />Backup</button><Link to="/demo">Open Hawks scoring demo <ArrowRight size={15} /></Link></div></footer>
+    <footer className="cw-footer"><span>{store.mode === 'cloud' ? 'Private team workspace' : 'Demo workspace · Sample events and notes'} · {loadError ? 'Editing paused' : saveError ? 'Changes not saved' : store.mode === 'cloud' ? (store.pending ? 'Saving changes…' : 'Shared with team members') : 'Stored on this device'}</span><div><button className="cw-text-button" onClick={exportData}><ArrowDownToLine size={15} />Backup</button><Link to="/demo" onClick={(event) => { if (scoutingPending) { event.preventDefault(); navigate('scouting'); setMessage('Finish or discard your scouting form, and resolve pending saves before opening the scoring demo.'); } }}>Open Hawks scoring demo <ArrowRight size={15} /></Link></div></footer>
     {modal && <Modal title={{ event: 'Add an event', observation: 'Capture a coaching note', activity: 'Review & plan a practice activity', details: modal.item?.title, rule: modal.item?.title }[modal.kind]} onClose={close}>
       {formError && <p role="alert" className="cw-alert">{formError}</p>}
       {modal.kind === 'event' && <form onSubmit={submitEvent} className="cw-form"><div className="cw-form-pair"><Field label="Event type"><select className="cl-select" name="type"><option value="practice">Practice</option><option value="game">Game</option></select></Field><Field label="Date"><input className="cl-input" name="date" type="date" defaultValue="2026-09-30" required /></Field></div><Field label="Event name"><input className="cl-input" name="title" maxLength={100} placeholder="Practice focus or game matchup" required /></Field><div className="cw-form-pair"><Field label="Start time (Pacific)"><input className="cl-input" name="startTime" type="time" defaultValue="16:30" required /></Field><Field label="End time (Pacific)"><input className="cl-input" name="endTime" type="time" defaultValue="17:30" required /></Field></div><Field label="Location"><input className="cl-input" name="location" maxLength={120} required /></Field><Field label="Preparation notes"><textarea className="cl-textarea" name="notes" maxLength={1500} /></Field><p className="cw-footnote">For {team.name} · {team.season} · America/Los_Angeles</p><Button type="submit" variant="primary" disabled={disabled}>Save event</Button></form>}

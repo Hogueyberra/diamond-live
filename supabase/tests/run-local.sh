@@ -14,5 +14,13 @@ pg_ctl -D "$task_pg/data" -l "$task_pg/server.log" -o "-h '' -k $task_pg/socket 
 export PGHOST="$task_pg/socket" PGPORT=55439 PGDATABASE=postgres
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/mock-supabase.sql"
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/migrations/202609300001_shared_workspace.sql"
+# This legacy baseline was future-dated and uses a 12-digit ID. Apply it first,
+# then every CLI-generated additive migration in filename order.
+for task_migration in "$task_root"/supabase/migrations/*.sql; do
+  case "$task_migration" in */202609300001_shared_workspace.sql) continue ;; esac
+  psql -X -v ON_ERROR_STOP=1 -f "$task_migration"
+done
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/security.sql"
-printf '\nShared storage SQL isolation, validation, and retry tests passed.\n'
+psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/scouting-security.sql"
+SCOUTING_TEST_DIRECTORY="$task_pg" sh "$task_root/supabase/tests/scouting-concurrency.sh"
+printf '\nShared storage and scouting SQL isolation, validation, and retry tests passed.\n'
