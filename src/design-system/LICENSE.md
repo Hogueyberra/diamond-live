@@ -2,7 +2,7 @@
 
 **Uiverse Design System License v1**
 
-Voltline Analytics ("the Pack") is a commercial design-system package sold through
+Clinch ("the Pack") is a commercial design-system package sold through
 Uiverse Design (design.uiverse.io). Copyright © 2026 Uiverse. All rights
 reserved.
 

@@ -4,25 +4,29 @@ Coaching workspace prototype for the **Angels, Huntington Valley Little League M
 
 The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`. Its simplified scoring rules are demo rules; it is not ready to serve as the Angels' official scorebook.
 
-## Current implementation — September 28, 2026
+## Current implementation — September 29, 2026
 
 The coaching workspace has **Overview, Schedule, Coaching, and Rules** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
-Uses the licensed **Voltline Analytics** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
+Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
 
-Three Minor B rule references cover playing-time rotation, continuous batting, and pitching innings. Each cites a section and page of the [official public 2026 HVLL bylaws](https://dt5602vnjxv0c.cloudfront.net/portals/20562/docs/2026/2026%20hvll%20bylaws.pdf), linked from the [HVLL Document Center](https://www.hvll.org/Default.aspx?tabid=1297730). The app opens that external source. User-uploaded PDF files and rendered page images are excluded from the deployed assets. References are marked **Source checked · Coach review pending**; complete rule enforcement remains future work.
+The Rules view searches **204 source sections** from the complete substantive text of the **2026 HVLL Bylaws and Local Rules** (PDF pages 2–55; the table of contents is omitted). It covers all seven listed divisions, general playing rules, policies, tournaments, and safety. Filter by division, document, and year; search words or quoted phrases; open the full original passage and its page citation. Division filters retain general sections, whose own conditions still need to be read.
+
+The [league’s official PDF](https://dt5602vnjxv0c.cloudfront.net/portals/20562/docs/2026/2026%20hvll%20bylaws.pdf), linked from its [Document Center](https://www.hvll.org/Default.aspx?tabid=1297730), was downloaded and verified byte-for-byte against the supplied source on September 29. Only its searchable text is bundled; the PDF is linked externally. Separate Little League rulebooks, fall supplements, and subsequent updates are not included.
+
+**Add document** reads PDF, UTF-8 text, and Markdown locally, previews the extracted text, and saves the original and index in IndexedDB. Limits are 20 MB and 150 PDF pages. Searchable-text PDFs are required; scanned-page gaps are reported. Duplicate imports and failed saves are surfaced. Imports stay in the current browser, survive reloads, and can be removed from Documents. They do not sync between devices or upload to a server. See [guidelines library](docs/guidelines-library.md).
 
 Coaching edits persist in a separate browser store. Failed saves retain session changes and provide retry and JSON backup controls; invalid saved data pauses editing. Backup import/restore is not implemented. This is local storage, not shared storage or cloud backup.
 
-Still to build: real Angels schedule and roster, event editing and cancellation, authenticated shared access, full season management, automated insights, video, and restoring exported backups. Coaching currently starts from human observations. Streaming will later add evidence for coaching and postgame takeaways; full GameChanger parity remains a longer-term backlog. These notes describe local implementation, not a deployment or production-readiness claim.
+Still to build: real Angels schedule and roster, event editing and cancellation, authenticated shared access, full season management, automated insights, video, and restoring exported backups. Coaching currently starts from human observations. Streaming will later add evidence for coaching and postgame takeaways; full GameChanger parity remains a longer-term backlog. The public preview remains a demonstration workspace; real shared team use still requires authentication and shared storage.
 
 - Repository: [Hogueyberra/diamond-live](https://github.com/Hogueyberra/diamond-live)
 
-## Deployment preparation
+## Web preview
 
-The current coaching build is being prepared for [GitHub Pages](https://hogueyberra.github.io/diamond-live/). Publication of this revision and live verification are pending. The existing Pages workflow installs dependencies, runs tests, and builds the app with the `/diamond-live/` base path.
+[Open Diamond Live](https://hogueyberra.github.io/diamond-live/). GitHub Pages publishes the `main` branch after automated tests and a production build, using the `/diamond-live/` base path. This Clinch/guidelines revision is ready for the release workflow; verify the deployed version after the workflow completes.
 
-After deployment, verify the coaching home at phone width, a direct scorebook link and refresh, the external official rulebook link, and saving/reloading a coaching note. Earlier local screenshots are historical evidence; they do not verify the deployed revision or its updated external source links. Browser data stays on the device where it was entered, so a phone has its own local workspace.
+Browser data stays on the device and browser where it was entered. The included official bylaws are available to every visitor; personal imports and coaching notes remain local.
 
 ## Run locally
 

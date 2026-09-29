@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
     react(),
     {
       name: "spa-404-fallback",
-      closeBundle() {
+      writeBundle() {
         copyIndexTo404(resolve("dist"));
       },
     },
