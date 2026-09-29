@@ -15,3 +15,6 @@ output/playwright/
 docs/coaching-workspace-plan.md
 docs/uiverse-integration.md
 design-qa.md
+
+# Supabase CLI cache.
+supabase/.temp/

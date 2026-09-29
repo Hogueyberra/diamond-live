@@ -6,7 +6,7 @@ The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`.
 
 ## Current implementation — September 29, 2026
 
-The coaching workspace has **Overview, Schedule, Coaching, and Rules** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
+The coaching workspace has **Overview, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
 Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
 
@@ -46,7 +46,7 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 
 ## Routes
 
-- `/` coaching workspace with Overview, Schedule, Coaching, and Rules tabs
+- `/` coaching workspace with Overview, Schedule, Coaching, Rules, and Scouting tabs
 - `/demo` original Saturday board for the role you are viewing as
 - `/lineup` batting order, positions, and who has arrived
 - `/scorebook` count, diamond, complete pitch history, and audited undo
@@ -66,3 +66,9 @@ This is single-device storage, not cloud backup. Use one tab for scoring. Shared
 Supabase integration adds email-code sign-in, profiles, private teams, coach/viewer permissions, invitation codes, shared coaching records, and private guideline files. Cloud access is enabled only when a real project has been migrated and configured. See [setup and live verification](docs/shared-storage-setup.md).
 
 The signed-out demo continues using browser storage. Signed-in teams begin empty, sync every 15 seconds/on focus, and reject stale saves instead of overwriting another device. Guidelines refresh every 30 seconds; existing browser imports are shared only through an explicit review/upload action. Shared document removal is recoverable. Unsynced coaching drafts are tab-local until the server acknowledges them.
+
+## Coach scouting and development
+
+The **Scouting** tab provides private draft boards, player profiles, dated assessments, ten separate 1–10 skill ratings, coach observations, and development goals. Infield, Outfield, and Hitting each contribute one-third of the overall score; all ten skills must be observed to rank a player. The latest assessment submission from each coach counts once. Practice logs record effort without automatically raising ratings. See [scouting behavior, privacy, and setup](docs/scouting.md).
+
+Only owners and coaches can access team scouting. Evaluations use a separate Supabase table and guarded RPCs, independent of the viewer-readable coaching workspace. Cloud drafts stay in memory until acknowledged, with retry/export/conflict recovery. Signed-out scouting contains clearly labeled synthetic examples saved only in that browser. Player/family progress views and video evidence remain future work.
