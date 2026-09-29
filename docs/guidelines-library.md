@@ -29,9 +29,9 @@ Empty searches browse passages, with the selected division first. Matching words
 
 PDF imports are indexed by page. Text/Markdown imports are indexed in text passages without fabricated page numbers. Limits: 20 MB and 150 PDF pages. Scanned PDFs need OCR before import; no OCR service is called. Password-protected files must be unlocked by their owner. Identical files are detected by content hash rather than overwritten.
 
-## Storage and privacy
+## Local and shared storage
 
-Imported documents are parsed locally and stored in IndexedDB. Document bytes and search text are not sent to a server. Parsing loads a PDF worker bundled with the app. Original files are exposed only as temporary local blob URLs. Clearing browser data removes imports; keep your original files. Imports and coaching notes do not sync between devices.
+In the signed-out demo, imported documents are parsed locally and stored in IndexedDB. Document bytes and search text are not sent to a server. Parsing loads a PDF worker bundled with the app. Original files are exposed only as temporary local blob URLs. Clearing browser data removes imports; keep your original files. Local demo imports and coaching notes do not sync between devices.
 
 The included league source is published with the app and available on phones and computers. New shared official sources should be checked for provenance, year, division, coverage, and extraction accuracy before they are added to the included index. User uploads are not automatically published.
 
@@ -39,4 +39,4 @@ The included league source is published with the app and available on phones and
 
 The separate Little League rulebook, any applicable fall-season or tournament supplements, and coaching practice guidelines have not yet been supplied. The 2026 source year does not itself confirm every provision applies to the demo fall season. Add those documents before calling the library complete for the Angels' actual season. Known internal source questions are retained in the source metadata and shown beside affected passages; the app does not choose an interpretation.
 
-Shared team libraries, account permissions, synchronization, and approval/version history require the next backend phase. Current search and document import are usable within the stated browser-local scope.
+When a Supabase project is configured, signed-in teams use private shared libraries. Upload review identifies the selected team; both the original and extracted text are uploaded after confirmation. Existing browser imports can be shared individually from Documents. Viewers read shared documents; owners/coaches add, remove, and restore them. Documents refresh every 30 seconds/on focus. Original links are requested on click and expire after 60 seconds. Shared removal is recoverable from Removed documents. See [account setup](shared-storage-setup.md). Formal source approval/version history remains future work.

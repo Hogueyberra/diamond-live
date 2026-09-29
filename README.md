@@ -18,7 +18,7 @@ The [league’s official PDF](https://dt5602vnjxv0c.cloudfront.net/portals/20562
 
 Coaching edits persist in a separate browser store. Failed saves retain session changes and provide retry and JSON backup controls; invalid saved data pauses editing. Backup import/restore is not implemented. This is local storage, not shared storage or cloud backup.
 
-Still to build: real Angels schedule and roster, event editing and cancellation, authenticated shared access, full season management, automated insights, video, and restoring exported backups. Coaching currently starts from human observations. Streaming will later add evidence for coaching and postgame takeaways; full GameChanger parity remains a longer-term backlog. The public preview remains a demonstration workspace; real shared team use still requires authentication and shared storage.
+Still to build: real Angels schedule and roster, event editing and cancellation, full season management, automated insights, video, and restoring exported backups. Coaching currently starts from human observations. Streaming will later add evidence for coaching and postgame takeaways; full GameChanger parity remains a longer-term backlog. An unconfigured public preview remains a demonstration workspace; shared team use activates after the Supabase setup and live verification below.
 
 - Repository: [Hogueyberra/diamond-live](https://github.com/Hogueyberra/diamond-live)
 
@@ -60,3 +60,9 @@ Every accepted action has a stable game/event identity and an ordered record. Th
 The browser library keeps reset games, and **Download game records** exports the whole library as JSON. Import/restore from downloaded JSON is not implemented yet. Legacy saved games migrate as checkpoints with their earlier play history explicitly unavailable. Failed writes display an unsaved warning and retry; invalid or unsupported saved data opens a recovery screen without overwriting the game.
 
 This is single-device storage, not cloud backup. Use one tab for scoring. Shared scoring, authentication, offline synchronization, HVLL rule enforcement, broadcasting, and video highlights remain future work. The coaching rules library is a reference layer and does not change the scoring engine. See [the event model and remaining rules](docs/event-model.md).
+
+## Accounts and shared storage
+
+Supabase integration adds email-code sign-in, profiles, private teams, coach/viewer permissions, invitation codes, shared coaching records, and private guideline files. Cloud access is enabled only when a real project has been migrated and configured. See [setup and live verification](docs/shared-storage-setup.md).
+
+The signed-out demo continues using browser storage. Signed-in teams begin empty, sync every 15 seconds/on focus, and reject stale saves instead of overwriting another device. Guidelines refresh every 30 seconds; existing browser imports are shared only through an explicit review/upload action. Shared document removal is recoverable. Unsynced coaching drafts are tab-local until the server acknowledges them.

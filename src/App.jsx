@@ -4,9 +4,11 @@ import { routerBasename } from "./base.js";
 import { FIXTURE, ROLES, playerById } from "./data.js";
 import { Family, Film, Lineup, Saturday, Scorebook } from "./screens.jsx";
 import { GameBoundary, GameProvider, useGame } from "./state.jsx";
-import { CoachingWorkspace } from "./CoachingWorkspace.jsx";
+import { WorkspaceGateway } from "./WorkspaceGateway.jsx";
 import { INITIAL_COACHING_DATA } from "./coachingData.js";
 import { useCoachingStore } from "./coachingStore.js";
+import { useAccount } from "./useAccount.js";
+import { useSharedWorkspace } from "./useSharedWorkspace.js";
 
 const LINKS = [
   ["/demo", "Saturday"],
@@ -132,10 +134,12 @@ function Shell() {
 
 export function AppRoutes() {
   const coachingStore = useCoachingStore(INITIAL_COACHING_DATA);
+  const account = useAccount();
+  const shared = useSharedWorkspace(account.repository, account.teams.find((team) => team.id === account.activeTeamId), account.user?.id);
   return (
     <GameProvider>
       <Routes>
-        <Route path="/" element={<CoachingWorkspace store={coachingStore} />} />
+        <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
         <Route element={<GameBoundary><Shell /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />

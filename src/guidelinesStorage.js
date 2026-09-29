@@ -39,7 +39,7 @@ function boundedString(value, maximum, required = false) {
   return typeof value === "string" && value.length <= maximum && (!required || value.trim().length > 0);
 }
 
-function validateDocument(doc) {
+export function validateDocument(doc) {
   if (!doc || !boundedString(doc.id, 160, true) || !boundedString(doc.title, 200, true)
     || !boundedString(doc.fileName, 255, true) || !boundedString(doc.division, 100, true)
     || !boundedString(doc.year, 4) || (doc.year !== "" && !/^\d{4}$/.test(doc.year))
