@@ -1,4 +1,6 @@
-:root {
+/* The original scoring demo stays scoped to its own shell. */
+.legacy-game {
+& {
   color-scheme: dark;
   --field: #10281c;
   --field-2: #173728;
@@ -20,7 +22,7 @@
 
 * { box-sizing: border-box; }
 
-body {
+& {
   margin: 0;
   min-height: 100vh;
   background:
@@ -44,6 +46,8 @@ button:focus-visible, a:focus-visible, select:focus-visible, textarea:focus-visi
   margin: 0 auto;
   padding: 22px 0 48px;
 }
+
+.app > a.reset { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 18px; text-decoration: none; }
 
 .top { display: flex; flex-direction: column; gap: 14px; }
 
@@ -166,6 +170,11 @@ h2 { margin: 0 0 8px; color: var(--ink); font-size: 1.7rem; }
   margin: 16px 0;
   overflow-x: auto;
 }
+
+.save-state { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 0.85rem; }
+.save-state .reset { color: var(--chalk); border-color: rgba(244, 239, 228, 0.35); }
+.lock button { margin-left: 8px; }
+.voided-play { text-decoration: line-through; color: var(--muted); }
 
 .nav a {
   color: var(--chalk);
@@ -369,4 +378,6 @@ footer {
   .strip { grid-template-columns: 1fr 1fr; }
   .situation { grid-column: 1 / -1; order: -1; }
   .strip > div:last-of-type { text-align: right; }
+}
+
 }

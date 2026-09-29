@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { BrowserRouter, NavLink, Navigate, Outlet, Route, Routes } from "react-router";
+import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes } from "react-router";
 import { routerBasename } from "./base.js";
 import { FIXTURE, ROLES, playerById } from "./data.js";
 import { Family, Film, Lineup, Saturday, Scorebook } from "./screens.jsx";
-import { GameProvider, useGame } from "./state.jsx";
+import { GameBoundary, GameProvider, useGame } from "./state.jsx";
+import { CoachingWorkspace } from "./CoachingWorkspace.jsx";
+import { INITIAL_COACHING_DATA } from "./coachingData.js";
+import { useCoachingStore } from "./coachingStore.js";
 
 const LINKS = [
-  ["/", "Saturday"],
+  ["/demo", "Saturday"],
   ["/lineup", "Lineup"],
   ["/scorebook", "Scorebook"],
   ["/film", "Film"],
@@ -53,11 +56,12 @@ function ScoreStrip() {
 }
 
 function Shell() {
-  const { role, setRole, reset } = useGame();
+  const { role, setRole, reset, saveError, actionError, saved, retrySave, exportGames } = useGame();
   const [flash, setFlash] = useState("");
 
   return (
-    <div className="app">
+    <div className="legacy-game"><div className="app">
+      <Link className="reset" to="/">Back to coaching home</Link>
       <header className="top">
         <div className="top-row">
           <div className="brand">
@@ -72,7 +76,7 @@ function Shell() {
             type="button"
             onClick={() => {
               reset();
-              setFlash("Saturday morning restored.");
+              setFlash("Saturday morning restored. Previous game kept on this device.");
             }}
           >
             Reset Saturday
@@ -95,6 +99,17 @@ function Shell() {
         </div>
       </header>
       <ScoreStrip />
+      <div className="save-state">
+        <span>{saved ? "Saved on this device" : "Changes not yet saved"} · Single-device demo</span>
+        <button type="button" className="reset" onClick={exportGames}>Download game records</button>
+      </div>
+      {saveError && (
+        <div className="lock" role="alert">
+          {saveError} Keep this tab open or download your game records.
+          <button type="button" onClick={retrySave}>Retry saving</button>
+        </div>
+      )}
+      {actionError && <p className="lock" role="alert">{actionError}</p>}
       {flash ? (
         <p className="flash" role="status">
           {flash}
@@ -111,16 +126,18 @@ function Shell() {
         <Outlet />
       </main>
       <footer>Demo Saturday for the Hawks. Not a live feed.</footer>
-    </div>
+    </div></div>
   );
 }
 
 export function AppRoutes() {
+  const coachingStore = useCoachingStore(INITIAL_COACHING_DATA);
   return (
     <GameProvider>
       <Routes>
-        <Route element={<Shell />}>
-          <Route index element={<Saturday />} />
+        <Route path="/" element={<CoachingWorkspace store={coachingStore} />} />
+        <Route element={<GameBoundary><Shell /></GameBoundary>}>
+          <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />
           <Route path="scorebook" element={<Scorebook />} />
           <Route path="film" element={<Film />} />

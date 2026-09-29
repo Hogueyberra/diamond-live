@@ -237,15 +237,17 @@ const PITCHES = [
 ];
 
 export function Scorebook() {
-  const { state, role, dispatch } = useGame();
+  const { state, role, dispatch, record, canUndoPitch } = useGame();
   const scoring = can(role, "score") && state.status === "live";
+  const voided = new Set(record.events.filter((event) => event.type === "pitch-voided").map((event) => event.targetEventId));
+  const plays = record.events.filter((event) => event.play || event.type === "pitch-voided");
   const due = state.half === "bottom" ? state.lineup.map(playerName) : [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `Breakers ${n}`);
   const dueIndex = state.half === "bottom" ? state.hawksBatterIndex % state.lineup.length : state.breakersBatterIndex % 9;
 
   return (
     <div className="stack">
       <section className="paper scorebook">
-        <p className="kicker">Official book</p>
+        <p className="kicker">Demo scorebook</p>
         <h2>Scorebook</h2>
         <div className="diamond-wrap">
           <div className="diamond" aria-hidden="true">
@@ -285,7 +287,7 @@ export function Scorebook() {
           ))}
         </div>
         {can(role, "undo") && (
-          <button type="button" disabled={!state.past.length} onClick={() => dispatch({ type: "undo" })}>
+          <button type="button" disabled={!canUndoPitch} onClick={() => dispatch({ type: "undo" })}>
             Undo last pitch
           </button>
         )}
@@ -299,10 +301,22 @@ export function Scorebook() {
             </li>
           ))}
         </ol>
-        <h2>Tape</h2>
-        <ol className="tape">
-          {state.log.map((line, index) => (
-            <li key={`${line}-${index}`}>{line}</li>
+        <h2>Play-by-play</h2>
+        {record.origin === "legacy-snapshot" && <p>Imported game totals. Play history before this import is unavailable.</p>}
+        {!plays.length && <p>No pitches recorded in this game yet.</p>}
+        <ol className="tape" aria-label="Complete play history">
+          {plays.map((event) => (
+            <li key={event.id}>
+              {event.play ? (
+                <>
+                  <span className={voided.has(event.id) ? "voided-play" : undefined}>
+                    #{event.sequence} · {event.play.half === "top" ? "Top" : "Bot"} {event.play.inning}: {event.play.batterName} · {event.play.outcome}
+                    {event.play.runs > 0 ? ` · ${event.play.runs} ${event.play.runs === 1 ? "run" : "runs"}` : ""}
+                  </span>
+                  {voided.has(event.id) && <strong> · Undone</strong>}
+                </>
+              ) : <>#{event.sequence} · Undid pitch #{record.events.find((pitch) => pitch.id === event.targetEventId).sequence}</>}
+            </li>
           ))}
         </ol>
       </section>

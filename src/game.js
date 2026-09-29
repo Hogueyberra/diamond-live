@@ -48,7 +48,7 @@ export function inningLabel(state) {
   return `${state.half === "top" ? "Top" : "Bot"} ${state.inning}`;
 }
 
-export function batterLabel(state, players = PLAYERS) {
+export function batterLabel(state, players = state.players ?? PLAYERS) {
   if (state.half === "bottom") {
     const id = state.lineup[state.hawksBatterIndex % state.lineup.length];
     const player = players.find((item) => item.id === id);
@@ -126,12 +126,12 @@ function applyHit(bases, result) {
 function endHalf(state) {
   const cleared = { ...state, outs: 0, balls: 0, strikes: 0, bases: [false, false, false] };
   if (state.half === "top") {
-    if (state.inning >= FIXTURE.innings && state.homeScore > state.visitorScore) {
+    if (state.inning >= (state.fixture ?? FIXTURE).innings && state.homeScore > state.visitorScore) {
       return addLog({ ...cleared, status: "final" }, "Hawks lead after 6. No bottom. Final.");
     }
     return addLog({ ...cleared, half: "bottom" }, `End of the top of the ${state.inning}. Hawks hit.`);
   }
-  if (state.inning >= FIXTURE.innings) {
+  if (state.inning >= (state.fixture ?? FIXTURE).innings) {
     return addLog({ ...cleared, status: "final" }, "Six innings in the book. Final.");
   }
   return addLog({ ...cleared, half: "top", inning: state.inning + 1 }, `End of the bottom of the ${state.inning}.`);
@@ -142,7 +142,7 @@ function afterPlay(state) {
   if (
     state.status === "live" &&
     state.half === "bottom" &&
-    state.inning >= FIXTURE.innings &&
+    state.inning >= (state.fixture ?? FIXTURE).innings &&
     state.homeScore > state.visitorScore
   ) {
     return addLog({ ...state, status: "final" }, "Walk-off. Hawks take it.");
