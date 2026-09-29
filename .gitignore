@@ -3,3 +3,12 @@ dist
 .DS_Store
 *.local
 .vite
+.playwright-cli/
+output/playwright/
+
+# Private reference uploads stay off the public site and repository.
+.local-reference/
+# Local planning and capture notes are not part of the public app.
+docs/coaching-workspace-plan.md
+docs/uiverse-integration.md
+design-qa.md
