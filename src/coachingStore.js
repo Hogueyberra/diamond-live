@@ -82,6 +82,12 @@ function prepare(data) {
   return { data: JSON.parse(serialized), serialized };
 }
 
+// Used at the cloud boundary as well as for local backups. Never display a
+// partially read or structurally invalid workspace as an empty saved team.
+export function validateCoachingData(data) {
+  return prepare(data).data;
+}
+
 function load(initialData) {
   const fallback = prepare(initialData);
   let raw;

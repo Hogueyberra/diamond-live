@@ -1,0 +1,50 @@
+.coaching-workspace.account-host { min-height: 0; max-width: none; margin: 0; padding: 0; background: transparent; }
+.ac-panel, .ac-section, .ac-signin, .ac-setup { display: grid; gap: 24px; min-width: 0; }
+.ac-panel h3 { margin: 0; font-size: 22px; line-height: 1.25; letter-spacing: -.025em; }
+.ac-panel p { line-height: 1.6; }
+.ac-panel .cw-alert, .ac-panel .cw-success { margin-bottom: 0; }
+.ac-panel .cl-select { appearance: auto; }
+.ac-panel :is(.cl-input,.cl-select) { font-size: 16px; }
+.coaching-workspace .ac-tabs { display: flex; padding: 5px; gap: 4px; width: 100%; }
+.coaching-workspace .ac-tabs .cl-tab { flex: 1; min-height: 48px; padding: 10px 12px; font-size: 14px; white-space: normal; }
+.ac-eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--cl-color-lavender); }
+.ac-signin > p, .ac-setup > p, .ac-muted { color: #bbb9c6; font-size: 15px; }
+.ac-email-destination { display: grid; gap: 10px; border-left: 3px solid var(--cl-color-lavender); padding: 6px 0 6px 18px; overflow-wrap: anywhere; }
+.ac-email-destination .cw-text-button { justify-self: start; }
+.coaching-workspace .ac-code-input { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .08em; }
+.ac-signout, .ac-subsection { border-top: 1px solid #414149; padding-top: 24px; }
+.ac-signout { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.ac-signout p, .ac-empty p { color: #b5b5be; font-size: 14px; }
+.ac-signout .cl-btn { flex-shrink: 0; }
+.ac-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.ac-actions .cl-btn { flex: 1 1 170px; }
+.ac-team-summary { padding: 20px; display: grid; gap: 8px; border: 1px solid #494153; border-radius: var(--cl-radius-md); background: #25212d; }
+.ac-team-summary > strong { font-size: 22px; line-height: 1.2; }
+.ac-team-summary p { color: #c4bdce; font-size: 14px; }
+.ac-role { display: inline-flex; width: fit-content; padding: 2px 10px; background: #373142; border: 1px solid #635773; border-radius: var(--cl-radius-full); font-size: 12px; text-transform: capitalize; color: #e2d6f5; }
+.ac-empty { display: grid; gap: 12px; padding: 8px 0; }
+.ac-invite-form { gap: 16px; }
+.ac-new-invite { display: grid; gap: 12px; padding: 24px; border-radius: var(--cl-radius-lg); background: #232d18; border: 1px solid #637b35; }
+.ac-new-invite .ac-eyebrow { color: #d4f39e; }
+.ac-new-invite p { font-size: 13px; color: #d5ddc8; }
+.ac-invite-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 25px; line-height: 1.4; letter-spacing: .1em; overflow-wrap: anywhere; user-select: all; color: var(--cl-color-lime); }
+.ac-new-invite .cl-btn { justify-self: start; }
+.ac-access-list { display: grid; gap: 16px; min-width: 0; }
+.ac-access-list h3 span { font-size: 14px; margin-left: 8px; color: #b5b5be; font-weight: 400; }
+.ac-access-list ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.ac-access-list li { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 18px; border: 1px solid #414149; border-radius: var(--cl-radius-md); }
+.ac-access-list li > div:first-child { display: grid; gap: 7px; min-width: 0; overflow-wrap: anywhere; }
+.ac-access-list li p, .ac-access-list > p { color: #b5b5be; font-size: 13px; }
+.ac-access-list li > .cl-btn { font-size: 13px; padding: 12px 16px; }
+.ac-confirm { display: grid; gap: 14px; flex-basis: 100%; padding-top: 8px; }
+.ac-confirm p { color: #f0c9bf !important; }
+.ac-loading { color: #c4bdce; }
+@media (max-width: 480px) {
+  .ac-panel { gap: 20px; }
+  .coaching-workspace .ac-tabs .cl-tab { padding-inline: 8px; font-size: 13px; }
+  .ac-signout { align-items: stretch; flex-direction: column; }
+  .ac-panel .cw-form-pair { grid-template-columns: 1fr; }
+  .ac-new-invite { padding: 18px; }
+  .ac-invite-code { font-size: 22px; }
+  .ac-panel .cw-form > .cl-btn { width: 100%; }
+}

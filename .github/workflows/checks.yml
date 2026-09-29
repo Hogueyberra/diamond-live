@@ -1,0 +1,29 @@
+name: Check application and team permissions
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+  database-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install isolated test database tools
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql postgresql-contrib
+      - name: Check team isolation, permissions, conflicts, and document lifecycle
+        run: PATH="$(pg_config --bindir):$PATH" sh supabase/tests/run-local.sh
