@@ -4,6 +4,17 @@
 
 The application code and Supabase migration are implemented. Live account creation and cross-device synchronization require a Supabase project, the migration, email delivery, and public browser configuration. An unconfigured build keeps the local demo working and explicitly says sign-in is unavailable. It does not pretend to save to the cloud.
 
+### Hosted setup progress — September 29, 2026
+
+- Supabase project `Diamand Demo` (`dzhilnvlsrsfkeezaomi`) is connected and healthy. The initial migration was run successfully through the SQL Editor.
+- All six application tables have RLS enabled. The `diamond-guidelines` bucket is private with a 20 MB file limit.
+- The Site URL is `https://hogueyberra.github.io/diamond-live/`. Email signup and confirmation are enabled; anonymous sign-in is disabled.
+- The public project URL and publishable key are configured in ignored `.env.local` and the matching GitHub repository Actions variables. The production build succeeds with that configuration.
+- Live signed-out HTTP checks return permission denied for team reads and the profile RPC. Requests for `diamond_private` return `PGRST106` (invalid schema), confirming the helper schema is not exposed by the Data API.
+- Security advisor notices were reviewed: `team_invites` intentionally has no client table grants or RLS policies, and its guarded RPCs provide access. All 16 application RPCs deliberately use `SECURITY DEFINER`, with fixed empty search paths and authenticated execution only. Profile operations are scoped to `auth.uid()`; team operations enforce membership/role checks. Hosted ACL inspection confirms anonymous execution is denied for all 16. See the [function advisor](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable) and [RLS policy advisor](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy). The existing disposable local database security suite passes; this is not a substitute for signed-in hosted tests.
+
+Still required: verify an email-sending domain, configure Resend SMTP, change both code email templates, complete signed-in live checks below, and merge/deploy the account release. Shared accounts are not yet activated on the published app.
+
 ## What ships
 
 - Email one-time-code sign-in and sign-out. No app-managed passwords.
@@ -23,8 +34,8 @@ Workspace updates are checked every 15 seconds and when the tab regains focus or
 1. Create or select the Diamond Live project in the user's own Supabase organization. A new account may require the user to accept the provider terms. Do not put credentials in this repository or chat.
 2. Run `supabase/migrations/202609300001_shared_workspace.sql` in the project's SQL Editor, or apply it through the Supabase CLI migration workflow. This migration creates app tables, a private `diamond-guidelines` bucket, permissions, and RPC functions in one transaction. Use a fresh app project or inspect name collisions before applying to an existing database.
 3. In Authentication, enable Email. Keep email verification enabled and anonymous sign-ins disabled.
-4. Configure a real SMTP sender for team use. Supabase's default sender only delivers to project-organization members and is currently limited to two messages/hour; it is suitable for an initial owner check, not inviting the coaching staff. Configure the sender domain and its required DNS records with the email provider.
-5. In the Magic Link email template, include the code with `{{ .Token }}`. For example:
+4. Configure a real SMTP sender. Supabase's default sender only delivers to project-organization members and is currently limited to two messages/hour. On this project's Free dashboard, email template editing is also locked until custom SMTP is configured, so complete this before testing the app's email-code sign-in. Configure the sender domain and its required DNS records with the email provider. The app can keep its GitHub Pages address while a separate domain is used for email.
+5. In BOTH the **Confirm sign up** and **Magic Link** email templates, include the code with `{{ .Token }}`. New/unconfirmed users receive the signup-confirmation template; returning confirmed users receive the Magic Link template. For example:
 
    ```html
    <h2>Your Diamond Live sign-in code</h2>
@@ -39,7 +50,7 @@ Workspace updates are checked every 15 seconds and when the tab regains focus or
 9. For GitHub Pages, set repository Actions **variables** with those same two names. The existing workflow injects them at build time. Re-run the Pages deployment to activate the configuration. Never put an `sb_secret_*`, service-role JWT, database password, or SMTP password into `VITE_*`.
 10. Complete the live checks below before calling shared storage available.
 
-[Official passwordless email documentation](https://supabase.com/docs/guides/auth/auth-email-passwordless) · [Custom SMTP](https://supabase.com/docs/guides/auth/auth-smtp) · [Storage access controls](https://supabase.com/docs/guides/storage/security/access-control)
+[Official passwordless email documentation](https://supabase.com/docs/guides/auth/auth-email-passwordless) · [Auth routing for new/unconfirmed users](https://github.com/supabase/auth/blob/master/internal/api/magic_link.go#L64-L119) · [Custom SMTP](https://supabase.com/docs/guides/auth/auth-smtp) · [Storage access controls](https://supabase.com/docs/guides/storage/security/access-control)
 
 ## First owner flow
 
