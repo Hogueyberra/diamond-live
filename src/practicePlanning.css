@@ -1,0 +1,46 @@
+.practice-planner { min-width:0; }
+.practice-planner h4 { font-family:var(--cl-font-display, 'Sen', sans-serif); font-size:1.15rem; margin:0 0 .7rem; }
+.practice-planner p { line-height:1.6; }
+.pp-summary,.pp-actions,.pp-block-time,.pp-assignment,.pp-block-controls { display:flex; align-items:center; gap:.65rem; flex-wrap:wrap; }
+.pp-summary { justify-content:space-between; font-size:.8rem; }
+.pp-status { border:1px solid var(--cl-border,#39393e); border-radius:999px; padding:.35rem .7rem; color:var(--cl-muted,#a8a6b1); }
+.pp-status.is-released { background:#c6f24e; border-color:#c6f24e; color:#0e0e10; }
+.pp-intro,.pp-capacity { font-size:.84rem; color:var(--cl-muted,#a8a6b1); }
+.pp-actions { margin:1rem 0; }
+.pp-actions .cl-btn { white-space:normal; }
+.pp-timeline { padding:0; margin:1.5rem 0; list-style:none; }
+.pp-timeline .pp-block { border-left:3px solid #c3b2f7; padding:1.2rem; margin:0 0 1rem; border-radius:0 14px 14px 0; }
+.pp-block-time { justify-content:space-between; color:#c3b2f7; font-size:.8rem; margin-bottom:.85rem; }
+.pp-audience { font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; color:#c3b2f7; }
+.pp-done { display:flex; align-items:center; gap:.3rem; font-size:.75rem; color:#c6f24e; }
+.pp-instructions,.pp-library { margin:1rem 0; border-top:1px solid var(--cl-border,#39393e); border-bottom:1px solid var(--cl-border,#39393e); padding:1rem 0; }
+.pp-instructions summary,.pp-library summary { cursor:pointer; font-size:.88rem; font-weight:700; }
+.pp-instructions li { padding:.35rem 0; line-height:1.6; }
+.pp-instructions a,.pp-library a { color:#c3b2f7; font-size:.8rem; text-underline-offset:3px; }
+.pp-cue { background:#c3b2f71a; padding:.7rem; border-radius:8px; }
+.pp-assignment { margin:1rem 0; font-size:.85rem; justify-content:space-between; }
+.pp-assignment .cl-field { flex:1; }
+.pp-block-controls { margin:1rem 0; align-items:flex-end; }
+.pp-block-controls .cl-field { width:100px; }
+.pp-block-controls .cl-btn { padding:.75rem; min-width:40px; }
+.pp-empty { padding:1.2rem; border:1px dashed var(--cl-border,#39393e); border-radius:12px; color:var(--cl-muted,#a8a6b1); font-size:.85rem; }
+.pp-empty h4 { color:var(--cl-text,#f8f7fa); }
+.pp-suggestions { margin:2rem 0 1rem; padding-top:1.4rem; border-top:1px solid var(--cl-border,#39393e); }
+.pp-suggestions>p,.pp-review>p,.pp-library>p { color:var(--cl-muted,#a8a6b1); font-size:.85rem; }
+.pp-eyebrow { color:#c3b2f7; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:.7rem; }
+.pp-suggestion-grid { display:grid; gap:.8rem; margin:1rem 0; }
+.pp-suggestion { background:#c3b2f70d; border:1px solid var(--cl-border,#39393e); padding:1rem; border-radius:12px; }
+.pp-suggestion>span { font-size:.7rem; color:#c3b2f7; }
+.pp-suggestion h5 { font-size:1rem; margin:.55rem 0; }
+.pp-suggestion p { font-size:.82rem; color:var(--cl-muted,#a8a6b1); }
+.pp-library-grid { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; margin:1rem 0; }
+.pp-library-grid button { background:none; color:inherit; text-align:left; border:1px solid var(--cl-border,#39393e); border-radius:9px; padding:.8rem; cursor:pointer; }
+.pp-library-grid button:disabled { opacity:.5; cursor:default; }
+.pp-library-grid span { display:block; font-size:.7rem; color:var(--cl-muted,#a8a6b1); margin-top:.35rem; }
+.pp-review { border:1px solid #c3b2f7; border-radius:14px; padding:1.2rem; margin-top:1.5rem; }
+.pp-review h4:focus { outline:none; }
+.practice-planner button:focus-visible,.practice-planner summary:focus-visible { outline:2px solid #c6f24e; outline-offset:4px; }
+@media(max-width:520px) { .pp-summary { align-items:flex-start; flex-direction:column; } .pp-library-grid { grid-template-columns:1fr; } .pp-timeline .pp-block,.pp-review { padding:1rem .8rem; } .pp-block-time { align-items:flex-start; } .pp-actions>.cl-btn { flex:1 1 170px; } }
+.pp-unsaved { font-size:.7rem; color:#c3b2f7; }
+.cw-dialog:has(.practice-planner) .cw-dialog-heading { position:sticky; top:-32px; z-index:2; margin:-32px -32px 24px; padding:22px 32px 16px; background:var(--cl-color-surface,#161618); border-bottom:1px solid var(--cl-border,#39393e); }
+@media(max-width:600px) { .cw-dialog:has(.practice-planner) .cw-dialog-heading { top:-24px; margin:-24px -20px 20px; padding:16px 20px; } }

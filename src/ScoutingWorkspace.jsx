@@ -16,12 +16,22 @@ function Score({ value, label = 'Overall', small = false }) {
   return <span className={`sc-score ${small ? 'sc-score--small' : ''} ${value == null ? 'sc-score--empty' : ''}`} aria-label={`${label}: ${value == null ? 'not fully observed' : `${fmt(value)} out of 10`}`}><strong>{fmt(value)}</strong>{!small && <span>{label} / 10</span>}</span>;
 }
 
-export function ScoutingWorkspace({ team, repository, authorId, authorName = 'Coach', onPendingChange }) {
+export function ScoutingWorkspace(props) {
+  return props.store ? <ScoutingContent {...props} /> : <ConnectedScouting {...props} />;
+}
+
+function ConnectedScouting(props) {
+  const { team, repository, authorId } = props;
+  const store = useScouting({ repository, scopeKey: team.id, demo: !repository, authorId: repository ? authorId : DEMO_SCOUTING_AUTHOR_ID });
+  return <ScoutingContent {...props} store={store} />;
+}
+
+function ScoutingContent({ team, repository, authorId, authorName = 'Coach', onPendingChange, store, playerRequest, onPlanPractice }) {
   const actorId = repository ? authorId : DEMO_SCOUTING_AUTHOR_ID;
   const actorName = repository ? authorName : 'Sample Coach';
-  const store = useScouting({ repository, scopeKey: team.id, demo: !repository, authorId: actorId });
   const [selectedSession, setSelectedSession] = useState('');
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  useEffect(() => { if (playerRequest !== undefined) setSelectedPlayer(playerRequest?.id ?? null); }, [playerRequest]);
   const headingRef = useRef(null);
   useEffect(() => { headingRef.current?.focus({ preventScroll: true }); headingRef.current?.scrollIntoView?.({ block: 'start' }); }, [selectedPlayer]);
   const [query, setQuery] = useState('');
@@ -99,6 +109,7 @@ export function ScoutingWorkspace({ team, repository, authorId, authorName = 'Co
     <div className="sc-heading"><div><h1 ref={headingRef} tabIndex={-1} className="cl-h1">{player ? player.name : <>See potential.<br /><span>Build progress.</span></>}</h1><p>{player ? `#${player.number || '—'}${player.age ? ` · Age ${player.age}` : ''}${player.positions ? ` · ${player.positions}` : ''}` : 'A clearer draft board. A useful next step for every player.'}</p></div>{player ? <Score value={score.overall} /> : <div className="sc-heading-mark" aria-hidden="true"><ChartLineUp size={64} weight="light" /><span>OBSERVE · PRACTICE · REASSESS</span></div>}</div>
     {!repository && <p className="sc-demo-note">These are synthetic examples. Sign in and choose your team for private, shared evaluations. Sample records are never uploaded.</p>}
     <div className="sc-toolbar"><div className="sc-session"><Field label="Assessment"><select className="cl-select" aria-label="Assessment" value={session?.id ?? ''} onChange={(event) => { setSelectedSession(event.target.value); setMessage(''); }}>{!sessions.length && <option value="">Create your first assessment</option>}{sessions.map((item) => <option key={item.id} value={item.id}>{item.name} · {dateText(item.date)}</option>)}</select></Field></div><Button disabled={disabled} onClick={() => openForm({ type: 'session', name: '', date: today() })}><Plus size={17} />New assessment</Button><Button onClick={() => openForm({ type: 'rubric' })}>Scoring guide</Button></div>
+    {onPlanPractice && <div className="sc-actions"><Button onClick={() => onPlanPractice(player?.id)}>Plan practice from these ratings <ArrowRight size={17} /></Button></div>}
     <div className="sc-status" role="status"><span className={store.pending ? 'is-pending' : ''}>{store.pending ? (store.status === 'saving' ? 'Saving evaluation changes…' : 'Unsaved changes in this tab') : repository ? 'Shared with this team’s coaches' : 'Browser-only demo'}</span><button onClick={() => store.refresh().catch(() => {})} disabled={disabled}>Refresh</button></div>
     {(store.pending && store.error) ? recovery() : store.error && <p className="cw-alert" role="alert">{store.error}</p>}
     {message && <p className="cw-success" role="status"><Check size={17} /> {message}</p>}

@@ -46,10 +46,12 @@ export function createWorkspaceSync({ repository, teamId, canWrite, onChange, on
         operation ??= { data: copy(state.data), revision: state.revision, id: uuid() };
         const record = read(await repository.saveWorkspace(teamId, operation.revision, operation.data, operation.id));
         if (!alive) return;
+        if (record.revision <= operation.revision) throw new Error('The team save was not acknowledged by the server. Retry the saved draft.');
         confirmed = record.data;
         const pending = !same(state.data, operation.data);
+        if (pending && !same(record.data, operation.data)) throw Object.assign(new Error('Another device changed the team after the saved request. Review your remaining draft before continuing.'), { code: 'CONFLICT' });
         operation = null;
-        emit({ revision: record.revision, updatedAt: record.updatedAt, pending, status: pending ? 'saving' : 'synced', error: '' });
+        emit({ data: pending ? state.data : record.data, revision: record.revision, updatedAt: record.updatedAt, pending, status: pending ? 'saving' : 'synced', error: '' });
       }
     } catch (error) {
       const conflict = error.code === 'CONFLICT' || error.code === 'DL_CONFLICT' || /revision conflict|workspace_conflict|changed on another device/i.test(error.message ?? '');
@@ -69,6 +71,19 @@ export function createWorkspaceSync({ repository, teamId, canWrite, onChange, on
     void flush();
     return true;
   }
+  async function save(update, expectedRevision) {
+    if (!alive || !allowed || !state.data) throw new Error('This team is not available for editing.');
+    if (busy || state.pending || ['loading', 'load-error', 'conflict'].includes(state.status)) throw new Error('Resolve the current team save before making another change.');
+    if (expectedRevision !== undefined && expectedRevision !== state.revision) throw new Error('The team changed while this plan was open. Reopen the practice to review the latest version.');
+    const candidate = validateCoachingData(typeof update === 'function' ? update(copy(state.data)) : update);
+    if (candidate.teams.length !== 1 || !same(candidate.teams[0], state.data.teams[0])) throw new Error('Team details must be changed through team settings.');
+    if (same(candidate, state.data)) return state;
+    emit({ data: candidate, pending: true });
+    await flush();
+    if (!alive) throw new Error('The active team changed before the save could be confirmed.');
+    if (state.pending) throw new Error(state.error || 'Changes have not been confirmed as saved.');
+    return state;
+  }
   async function loadLatest() {
     if (busy) throw new Error('Wait for the current save to finish.');
     // Caller must get explicit confirmation; preserve draft if reload fails.
@@ -84,6 +99,6 @@ export function createWorkspaceSync({ repository, teamId, canWrite, onChange, on
     allowed = Boolean(next);
     if (!allowed && state.pending) emit({ status: 'error', error: 'Your access is now read-only. Your unsynced draft is still here; download it before loading the latest team version.' });
   }
-  return { start: refresh, refresh, setData, setCanWrite, retry: () => state.pending ? flush() : refresh(), loadLatest,
+  return { start: refresh, refresh, setData, save, setCanWrite, retry: () => state.pending ? flush() : refresh(), loadLatest,
     getState: () => state, dispose: () => { alive = false; confirmed = null; operation = null; state = { ...state, data: null }; } };
 }

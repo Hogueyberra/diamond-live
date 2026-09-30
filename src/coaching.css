@@ -169,7 +169,7 @@ body { margin: 0; min-width: 320px; background: #0e0e10; }
   .cw-header { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 18px; }
   .cw-nav-shell { gap: 18px; }
   .coaching-workspace .cw-brand { width: auto; font-size: 24px; }
-  .cw-nav-shell nav { width: 100%; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 2px; }
+  .cw-nav-shell nav { width: 100%; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px; }
   .cw-nav-shell nav button { padding: 0 5px; justify-content: center; min-height: 44px; font-size: 13px; }
   .cw-team-select { margin: 0; justify-self: start; }
   .cw-team-select select { height: 44px; }
