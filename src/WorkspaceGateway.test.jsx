@@ -12,6 +12,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock('./supabaseClient.js', () => ({ supabase: mocks.client }));
 vi.mock('./cloudGuidelines.js', () => ({ createCloudGuidelinesRepository: vi.fn(() => ({ scopeKey: 'guidelines-test' })) }));
 vi.mock('./scoutingRepository.js', () => ({ createScoutingRepository: mocks.createRepository }));
+vi.mock('./HomePage.jsx', () => ({ HomePage: ({ onSignIn, onExploreDemo }) => <main><h1>Diamond Live public home</h1><button onClick={onSignIn}>Sign in</button><button onClick={onExploreDemo}>Explore demo</button></main> }));
 vi.mock('./ScoutingWorkspace.jsx', () => ({ ScoutingWorkspace: (props) => {
   mocks.scout(props);
   useEffect(() => () => props.onPendingChange?.(false), [props.onPendingChange]);
@@ -20,14 +21,14 @@ vi.mock('./ScoutingWorkspace.jsx', () => ({ ScoutingWorkspace: (props) => {
 vi.mock('./AccountPanel.jsx', () => ({ AccountPanel: ({ account }) => {
   const [error, setError] = useState('');
   const run = async (action) => { try { await action(); setError(''); } catch (failure) { setError(failure.message); } };
-  return <section aria-label="Account test boundary">{error && <p role="alert">{error}</p>}<button onClick={() => run(() => account.setActiveTeamId('other-team'))}>Switch test team</button><button onClick={() => run(() => account.signOut())}>Sign out test account</button><button onClick={() => run(() => account.createTeam({ name: 'New team' }))}>Create test team</button><button onClick={() => run(() => account.joinTeam('code'))}>Join test team</button></section>;
+  return <section aria-label="Account test boundary">{error && <p role="alert">{error}</p>}<button onClick={() => run(() => account.setActiveTeamId('other-team'))}>Switch test team</button><button onClick={() => run(() => account.signOut())}>Sign out test account</button><button onClick={() => run(() => account.createTeam({ name: 'New team' }))}>Create test team</button><button onClick={() => run(() => account.joinTeam('code'))}>Join test team</button><button onClick={() => run(() => account.verifyCode('coach@example.com', '12345678'))}>Verify test code</button></section>;
 } }));
 
 const team = (role = 'owner', id = 'team-one') => ({ id, name: 'Test Angels', league: 'HVLL', division: 'Minor B', season: 'Fall 2026', seasonId: 'season-one', role });
 function account(role = 'owner', id = 'team-one') {
   return { user: { id: 'coach-one' }, profile: { display_name: 'Test Coach' }, teams: [team(role, id)], activeTeamId: id,
     loading: false, error: '', reload: vi.fn().mockResolvedValue(undefined), setActiveTeamId: vi.fn(),
-    createTeam: vi.fn(), joinTeam: vi.fn(), signOut: vi.fn() };
+    createTeam: vi.fn(), joinTeam: vi.fn(), signOut: vi.fn(), verifyCode: vi.fn() };
 }
 function shared(accountValue) {
   return { mode: 'cloud', status: 'synced', pending: false, readOnly: accountValue.teams[0]?.role === 'viewer',
@@ -36,7 +37,7 @@ function shared(accountValue) {
 }
 const localStore = { data: INITIAL_COACHING_DATA, setData: vi.fn() };
 const latestScouting = () => mocks.scout.mock.calls.at(-1)[0];
-const app = (current, sharedValue = shared(current)) => <MemoryRouter><WorkspaceGateway account={current} shared={sharedValue} localStore={localStore} /></MemoryRouter>;
+const app = (current, sharedValue = shared(current), demoPreview = false) => <MemoryRouter><WorkspaceGateway account={current} shared={sharedValue} localStore={localStore} demoPreview={demoPreview} /></MemoryRouter>;
 beforeEach(() => {
   vi.clearAllMocks();
   mocks.load.mockResolvedValue({ data: {}, revision: 0, updatedAt: null });
@@ -106,9 +107,43 @@ describe('scouting account and navigation boundary', () => {
 
   it('offers the explicitly local demo only while signed out', async () => {
     const signedOut = { ...account(), user: null, profile: null, teams: [], activeTeamId: null };
-    render(app(signedOut));
+    render(app(signedOut, shared(signedOut), true));
     fireEvent.click(screen.getByRole('button', { name: 'Scouting', exact: true })); await screen.findByText('Scouting demo');
     expect(mocks.createRepository).not.toHaveBeenCalled(); expect(latestScouting().repository).toBeNull();
     expect(latestScouting().authorId).toBeUndefined();
+  });
+
+  it('does not mount local scouting or create its repository on the public homepage', () => {
+    const signedOut = { ...account(), user: null, profile: null, teams: [], activeTeamId: null };
+    render(app(signedOut));
+    expect(screen.getByRole('heading', { name: 'Diamond Live public home' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Scouting', exact: true })).toBeNull();
+    expect(mocks.createRepository).not.toHaveBeenCalled();
+    expect(mocks.scout).not.toHaveBeenCalled();
+    expect(localStore.setData).not.toHaveBeenCalled();
+  });
+
+  it.each(['Home', 'Diamond Live'])('keeps an unfinished demo scouting draft when %s is used to return home', async (label) => {
+    const signedOut = { ...account(), user: null, profile: null, teams: [], activeTeamId: null };
+    render(app(signedOut, shared(signedOut), true));
+    fireEvent.click(screen.getByRole('button', { name: 'Scouting', exact: true })); await screen.findByText('Scouting demo');
+    fireEvent.click(screen.getByRole('button', { name: 'Start pending scouting' }));
+    fireEvent.click(screen.getByRole(label === 'Home' ? 'button' : 'link', { name: label, exact: true }));
+    expect((await screen.findByRole('alert')).textContent).toContain('unsaved team or scouting changes');
+    expect(screen.getByRole('region', { name: 'Scouting test boundary' })).toBeTruthy();
+  });
+
+  it('requires a pending demo scouting draft to be resolved before verifying sign-in', async () => {
+    const signedOut = { ...account(), user: null, profile: null, teams: [], activeTeamId: null };
+    render(app(signedOut, shared(signedOut), true));
+    fireEvent.click(screen.getByRole('button', { name: 'Scouting', exact: true })); await screen.findByText('Scouting demo');
+    fireEvent.click(screen.getByRole('button', { name: 'Start pending scouting' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Sign in', exact: true }));
+    fireEvent.click(screen.getByRole('button', { name: 'Verify test code' }));
+    expect((await screen.findByRole('alert')).textContent).toContain('unsaved team or scouting changes');
+    expect(signedOut.verifyCode).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Resolve pending scouting' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Verify test code' }));
+    expect(signedOut.verifyCode).toHaveBeenCalledWith('coach@example.com', '12345678');
   });
 });

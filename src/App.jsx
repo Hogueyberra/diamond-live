@@ -57,13 +57,13 @@ function ScoreStrip() {
   );
 }
 
-function Shell() {
+function Shell({ coachingHome }) {
   const { role, setRole, reset, saveError, actionError, saved, retrySave, exportGames } = useGame();
   const [flash, setFlash] = useState("");
 
   return (
     <div className="legacy-game"><div className="app">
-      <Link className="reset" to="/">Back to coaching home</Link>
+      <Link className="reset" to={coachingHome}>Back to coaching home</Link>
       <header className="top">
         <div className="top-row">
           <div className="brand">
@@ -140,7 +140,8 @@ export function AppRoutes() {
     <GameProvider>
       <Routes>
         <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
-        <Route element={<GameBoundary><Shell /></GameBoundary>}>
+        <Route path="preview" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} demoPreview />} />
+        <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />
           <Route path="scorebook" element={<Scorebook />} />

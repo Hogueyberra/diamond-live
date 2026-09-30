@@ -7,12 +7,15 @@ import App from "./App.jsx";
 import { COACHING_KEY } from "./coachingStore.js";
 import { RECORDS_KEY, ROLE_KEY } from "./state.jsx";
 
+// This suite exercises the local demo, independent of the developer's live account configuration.
+vi.mock('./supabaseClient.js', () => ({ supabase: null, cloudConfigured: false, configError: null }));
+
 const originalShowModal = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "showModal");
 const originalClose = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "close");
 
 beforeEach(() => {
   localStorage.clear();
-  window.history.replaceState(null, "", "/");
+  window.history.replaceState(null, "", "/preview");
   Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
     configurable: true,
     value() { this.setAttribute("open", ""); },

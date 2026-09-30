@@ -6,6 +6,8 @@ The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`.
 
 ## Current implementation — September 29, 2026
 
+Signed-out visitors begin on the public homepage: **Great seasons. Lifelong athletes.** It introduces the current coaching tools through an interactive product tour, explains three setup steps, and connects the product to long-term player development. **Start your team** opens email sign-in; **Explore the demo** opens `/preview`. Signed-in users enter their private team workspace. See the [homepage brief](docs/homepage-brief.md) and [original image notes](docs/homepage-imagery.md).
+
 The coaching workspace has **Overview, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
 Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
@@ -24,7 +26,7 @@ Still to build: real Angels schedule and roster, event editing and cancellation,
 
 ## Web preview
 
-[Open Diamond Live](https://hogueyberra.github.io/diamond-live/). GitHub Pages publishes the `main` branch after automated tests and a production build, using the `/diamond-live/` base path. This Clinch/guidelines revision is ready for the release workflow; verify the deployed version after the workflow completes.
+[Open Diamond Live](https://hogueyberra.github.io/diamond-live/). GitHub Pages publishes the `main` branch after automated tests and a production build, using the `/diamond-live/` base path. The release workflow tests and builds each published revision; sign out or use a private browser window to see the public homepage.
 
 Browser data stays on the device and browser where it was entered. The included official bylaws are available to every visitor; personal imports and coaching notes remain local.
 
@@ -46,7 +48,8 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 
 ## Routes
 
-- `/` coaching workspace with Overview, Schedule, Coaching, Rules, and Scouting tabs
+- `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
+- `/preview` explicit browser-local coaching demo with Overview, Schedule, Coaching, Rules, and Scouting tabs
 - `/demo` original Saturday board for the role you are viewing as
 - `/lineup` batting order, positions, and who has arrived
 - `/scorebook` count, diamond, complete pitch history, and audited undo
