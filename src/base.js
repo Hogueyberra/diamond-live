@@ -19,3 +19,11 @@ export function routerBasename(baseUrl = "/") {
   if (!baseUrl || baseUrl === "/") return "/";
   return baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
 }
+
+// Older bookmarks can retain the repository prefix after the website moves to
+// its own domain. Return a root-relative path, never a protocol-relative URL.
+export function legacyProjectPath(pathname) {
+  const prefix = PAGES_BASE.slice(0, -1);
+  if (pathname !== prefix && !pathname.startsWith(`${prefix}/`)) return null;
+  return `/${pathname.slice(prefix.length).replace(/^\/+/, "")}`;
+}

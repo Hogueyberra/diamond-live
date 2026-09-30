@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizeBase, resolveBase, routerBasename, PAGES_BASE } from "./base.js";
+import { legacyProjectPath, normalizeBase, resolveBase, routerBasename, PAGES_BASE } from "./base.js";
 
 describe("base path", () => {
   it("uses the site root for local dev and the Pages path for builds", () => {
@@ -18,5 +18,20 @@ describe("base path", () => {
     expect(routerBasename("/")).toBe("/");
     expect(routerBasename("/diamond-live/")).toBe("/diamond-live");
     expect(routerBasename("/diamond-live")).toBe("/diamond-live");
+  });
+});
+
+
+describe("legacy project bookmarks", () => {
+  it.each([
+    ["/diamond-live", "/"],
+    ["/diamond-live/", "/"],
+    ["/diamond-live/preview", "/preview"],
+    ["/diamond-live/scorebook", "/scorebook"],
+    ["/diamond-live//example.com", "/example.com"],
+    ["/preview", null],
+    ["/diamond-live-other/preview", null],
+  ])("maps %s to %s without redirecting outside the origin", (pathname, expected) => {
+    expect(legacyProjectPath(pathname)).toBe(expected);
   });
 });

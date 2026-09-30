@@ -8,7 +8,7 @@ The application code and Supabase migration are implemented. Hosted email-code s
 
 - Supabase project `Diamand Demo` (`dzhilnvlsrsfkeezaomi`) is connected and healthy. The initial migration was run successfully through the SQL Editor.
 - All six application tables have RLS enabled. The `diamond-guidelines` bucket is private with a 20 MB file limit.
-- The Site URL is `https://hogueyberra.github.io/diamond-live/`. Email signup and confirmation are enabled; anonymous sign-in is disabled.
+- At the September 29 setup, the Site URL was `https://hogueyberra.github.io/diamond-live/`. The custom-domain cutover targets `https://diamondliveapp.com`; see the [domain setup record](diamondliveapp-domain-setup.md). Email signup and confirmation are enabled; anonymous sign-in is disabled.
 - The public project URL and publishable key are configured in ignored `.env.local` and the matching GitHub repository Actions variables. The production build succeeds with that configuration.
 - Live signed-out HTTP checks return permission denied for team reads and the profile RPC. Requests for `diamond_private` return `PGRST106` (invalid schema), confirming the helper schema is not exposed by the Data API.
 - Security advisor notices were reviewed: `team_invites` intentionally has no client table grants or RLS policies, and its guarded RPCs provide access. All 16 application RPCs deliberately use `SECURITY DEFINER`, with fixed empty search paths and authenticated execution only. Profile operations are scoped to `auth.uid()`; team operations enforce membership/role checks. Hosted ACL inspection confirms anonymous execution is denied for all 16. See the [function advisor](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable) and [RLS policy advisor](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy). The existing disposable local database security suite passes; this is not a substitute for signed-in hosted tests.
@@ -22,7 +22,7 @@ The application code and Supabase migration are implemented. Hosted email-code s
 - The owner removed the viewer through the app. The team then showed one member and no open invitations. After membership refresh, the removed account saw no teams or private data. An attempt to reuse the consumed invitation failed with the app's invalid/expired/already-used message.
 - A final hosted authenticated-role check confirmed that the removed account could no longer read the team's workspace, profiles, documents, or private original, authorize a new original-file link, or write team data. Replaying the consumed invitation failed for both the removed account and a different account. Rolled-back checks left the actual membership removed.
 
-This validation record was written before the account-release deployment. No website-domain switch is part of this release. See the [email-domain setup history](diamondliveapp-domain-setup.md).
+This validation record was written before the account-release deployment. No website-domain switch was part of that account release. See the [email-domain setup history](diamondliveapp-domain-setup.md).
 
 ## What ships
 
@@ -53,7 +53,7 @@ Workspace updates are checked every 15 seconds and when the tab regains focus or
    ```
 
    The app uses `signInWithOtp` + `verifyOtp(type: 'email')` and accepts 6–10 digits. It does not consume magic-link URL callbacks. This project is configured for 8-digit codes, a 600-second expiry, and a 60-second per-user resend interval.
-6. Set the site URL to `https://hogueyberra.github.io/diamond-live/`. If enabling other auth flows later, add only the exact required redirect URLs. This email-code flow does not need a redirect.
+6. Set the Site URL to the deployed website origin. For the custom-domain release, use `https://diamondliveapp.com`; the previous project-site URL was `https://hogueyberra.github.io/diamond-live/`. If enabling other auth flows later, add only the exact required redirect URLs. This email-code flow does not need a redirect.
 7. Copy the project URL and **publishable key** from the project settings. These are public browser configuration, not a service-role key.
 8. For local development, copy `.env.example` to `.env.local` and populate `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`; restart Vite.
 9. For GitHub Pages, set repository Actions **variables** with those same two names. The existing workflow injects them at build time. Re-run the Pages deployment to activate the configuration. Never put an `sb_secret_*`, service-role JWT, database password, or SMTP password into `VITE_*`.

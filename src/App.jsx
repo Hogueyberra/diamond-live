@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes } from "react-router";
-import { routerBasename } from "./base.js";
+import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes, useLocation } from "react-router";
+import { legacyProjectPath, routerBasename } from "./base.js";
 import { FIXTURE, ROLES, playerById } from "./data.js";
 import { Family, Film, Lineup, Saturday, Scorebook } from "./screens.jsx";
 import { GameBoundary, GameProvider, useGame } from "./state.jsx";
@@ -132,6 +132,11 @@ function Shell({ coachingHome }) {
   );
 }
 
+function LegacyProjectRedirect() {
+  const location = useLocation();
+  return <Navigate replace to={{ pathname: legacyProjectPath(location.pathname) ?? '/', search: location.search, hash: location.hash }} />;
+}
+
 export function AppRoutes() {
   const coachingStore = useCoachingStore(INITIAL_COACHING_DATA);
   const account = useAccount();
@@ -139,6 +144,7 @@ export function AppRoutes() {
   return (
     <GameProvider>
       <Routes>
+        <Route path="diamond-live/*" element={<LegacyProjectRedirect />} />
         <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
         <Route path="preview" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} demoPreview />} />
         <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>

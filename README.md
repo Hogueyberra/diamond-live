@@ -26,9 +26,11 @@ Still to build: real Angels schedule and roster, event editing and cancellation,
 
 ## Web preview
 
-[Open Diamond Live](https://hogueyberra.github.io/diamond-live/). GitHub Pages publishes the `main` branch after automated tests and a production build, using the `/diamond-live/` base path. The release workflow tests and builds each published revision; sign out or use a private browser window to see the public homepage.
+The website address prepared for the custom-domain release is [diamondliveapp.com](https://diamondliveapp.com/). GitHub Pages continues to host the app; no paid hosting plan is needed. The domain cutover and HTTPS verification are tracked in the [domain setup record](docs/diamondliveapp-domain-setup.md). The previous address is [Diamond Live on GitHub Pages](https://hogueyberra.github.io/diamond-live/).
 
-Browser data stays on the device and browser where it was entered. The included official bylaws are available to every visitor; personal imports and coaching notes remain local.
+The release workflow publishes `main` after tests and a production build. Its base path defaults to `/` for the custom domain; repository variable `VITE_BASE_PATH` can override it for rollback or another host. Sign out or use a private browser window to see the public homepage.
+
+Signed-in shared records remain in the existing Supabase project. A different website origin requires a new sign-in; browser-local demo records, unsynced drafts, and unshared document imports do not transfer automatically. Export or explicitly share needed local data before cutover.
 
 ## Run locally
 
@@ -37,14 +39,14 @@ npm ci
 npm run dev
 ```
 
-The dev server uses base path `/`. A production build defaults to `/diamond-live/` so a GitHub Pages project site can load assets and routes. Set `VITE_BASE_PATH` to override that.
+The dev server uses base path `/`. For the custom-domain production build, use `VITE_BASE_PATH=/ npm run build`; the Pages and PR-check workflows default to that root path. A manual build without the variable retains `/diamond-live/` for the original project-site deployment.
 
 ```bash
 npm test
 npm run build
 ```
 
-The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep link such as `/diamond-live/scorebook` still opens the app.
+The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep link such as `/scorebook` still opens the app. Old `/diamond-live/…` bookmarks are normalized to the corresponding root route with their query and fragment preserved. The original GitHub URL redirect must be verified during cutover.
 
 ## Routes
 

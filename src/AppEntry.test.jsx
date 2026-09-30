@@ -27,7 +27,7 @@ function guest(overrides = {}) {
 function signedIn(overrides = {}) {
   return guest({ user: { id: 'private-coach', email: 'coach@example.com' }, profile: { display_name: 'Coach' }, teams: [team], activeTeamId: team.id, ...overrides });
 }
-function Location() { return <output aria-label="Current route">{useLocation().pathname}</output>; }
+function Location() { const location = useLocation(); return <><output aria-label="Current route">{location.pathname}</output><output aria-label="Query and fragment">{location.search}{location.hash}</output></>; }
 const app = (path = '/') => <MemoryRouter initialEntries={[path]}><Location /><AppRoutes /></MemoryRouter>;
 
 beforeEach(() => {
@@ -108,5 +108,27 @@ describe('public homepage and private workspace entry', () => {
     expect(screen.getByRole('heading', { name: 'Private team workspace' })).toBeTruthy();
     expect(mocks.workspace.mock.calls.every(([props]) => props.store === mocks.shared)).toBe(true);
     expect(mocks.shared.setData).not.toHaveBeenCalled();
+  });
+});
+
+
+describe('custom domain legacy bookmarks', () => {
+  it('replaces an old project homepage URL with the canonical root', () => {
+    render(app('/diamond-live/'));
+    expect(screen.getByLabelText('Current route').textContent).toBe('/');
+    expect(screen.getByRole('heading', { name: 'Public Diamond Live homepage' })).toBeTruthy();
+  });
+  it('keeps a demo deep link and query/fragment after dropping the project prefix', () => {
+    render(app('/diamond-live/preview?source=bookmark#practice'));
+    expect(screen.getByLabelText('Current route').textContent).toBe('/preview');
+    expect(screen.getByLabelText('Query and fragment').textContent).toBe('?source=bookmark#practice');
+    expect(screen.getByRole('heading', { name: 'Local demo workspace' })).toBeTruthy();
+    expect(mocks.shared.setData).not.toHaveBeenCalled();
+  });
+  it('still respects signed-in workspace entry from an old homepage bookmark', () => {
+    mocks.account = signedIn(); render(app('/diamond-live'));
+    expect(screen.getByLabelText('Current route').textContent).toBe('/');
+    expect(screen.getByRole('heading', { name: 'Private team workspace' })).toBeTruthy();
+    expect(mocks.local.setData).not.toHaveBeenCalled();
   });
 });
