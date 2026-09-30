@@ -13,7 +13,7 @@ const dateLabel = (date, options = { weekday: 'short', month: 'short', day: 'num
 const timeLabel = (time) => { const [hour, minute] = time.split(':').map(Number); return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`; };
 const sortEvents = (a, b) => `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`);
 
-export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRepository, authorName = 'Coach', authorId, scoutingRepository, canScout = true, onScoutingPendingChange }) {
+export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRepository, authorName = 'Coach', authorId, scoutingRepository, canScout = true, onScoutingPendingChange, onHome }) {
   const { data, setData, saveError, loadError, retrySave, exportData } = store;
   const [teamId, setTeamId] = useState('angels-demo');
   const [requestedView, setView] = useState('home');
@@ -102,7 +102,7 @@ export function CoachingWorkspace({ store, accountButton, syncBar, guidelinesRep
 
   return <div className="coaching-workspace">
     <a className="cw-skip" href="#coaching-main">Skip to workspace</a>
-    <header className="cw-header"><div className="cw-nav-shell"><Link to="/" className="cw-brand" onClick={() => navigate('home')}><Diamond size={23} weight="bold" /><span>Diamond Live</span></Link><nav aria-label="Coaching workspace">{VIEWS.filter(([key]) => key !== 'scouting' || canScout).map(([key, label, Icon]) => <button key={key} aria-current={view === key ? 'page' : undefined} onClick={() => navigate(key)}><Icon size={16} />{label}</button>)}</nav></div><div className="cw-team-select"><label className="cw-sr-only" htmlFor="team-select">Team and season</label><select id="team-select" value={team.id} onChange={(e) => { setTeamId(e.target.value); close(); setMessage(''); }} aria-label="Team and season">{data.teams.map((item) => <option value={item.id} key={item.id}>{item.name}{store.mode === 'cloud' ? '' : ' · Demo'}</option>)}</select><ChevronDown size={16} /></div>{accountButton}</header>
+    <header className="cw-header"><div className="cw-nav-shell"><Link to="/" className="cw-brand" onClick={onHome ?? (() => navigate('home'))}><Diamond size={23} weight="bold" /><span>Diamond Live</span></Link><nav aria-label="Coaching workspace">{VIEWS.filter(([key]) => key !== 'scouting' || canScout).map(([key, label, Icon]) => <button key={key} aria-current={view === key ? 'page' : undefined} onClick={() => navigate(key)}><Icon size={16} />{label}</button>)}</nav></div><div className="cw-team-select"><label className="cw-sr-only" htmlFor="team-select">Team and season</label><select id="team-select" value={team.id} onChange={(e) => { setTeamId(e.target.value); close(); setMessage(''); }} aria-label="Team and season">{data.teams.map((item) => <option value={item.id} key={item.id}>{item.name}{store.mode === 'cloud' ? '' : ' · Demo'}</option>)}</select><ChevronDown size={16} /></div>{accountButton}</header>
     <div className="cw-context"><span>{team.league} <span className="cw-context-divider">/</span> {team.division}</span><span>{team.season}</span></div>
     <main id="coaching-main" tabIndex={-1}>
       {syncBar}
