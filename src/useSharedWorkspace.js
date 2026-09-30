@@ -28,11 +28,12 @@ export function useSharedWorkspace(repository, team, userId) {
   }, [repository, scope]);
   useEffect(() => { controller.current?.setCanWrite(team?.role !== 'viewer'); }, [scope, team?.role]);
   const setData = useCallback((update) => controller.current?.setData(update), []);
+  const save = useCallback((update, expectedRevision) => controller.current ? controller.current.save(update, expectedRevision) : Promise.reject(new Error('Open your team before saving.')), []);
   const retrySave = useCallback(() => controller.current?.retry(), []);
   const loadLatest = useCallback(() => controller.current?.loadLatest(), []);
   const exportData = useCallback(() => { if (state.data) downloadWorkspace(state.data); }, [state.data]);
   const visible = loadedScope === scope ? state : { data: null, status: 'loading', pending: false };
-  return { ...visible, mode: 'cloud', setData, retrySave, exportData, loadLatest,
+  return { ...visible, mode: 'cloud', setData, save, retrySave, exportData, loadLatest,
     readOnly: team?.role === 'viewer' || visible.status === 'conflict',
     loadError: visible.status === 'load-error' ? visible.error : null,
     saveError: ['error', 'offline', 'conflict'].includes(visible.status) ? visible.error : null };

@@ -22,5 +22,7 @@ for task_migration in "$task_root"/supabase/migrations/*.sql; do
 done
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/security.sql"
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/scouting-security.sql"
+psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/practice-security.sql"
 SCOUTING_TEST_DIRECTORY="$task_pg" sh "$task_root/supabase/tests/scouting-concurrency.sh"
-printf '\nShared storage and scouting SQL isolation, validation, and retry tests passed.\n'
+PRACTICE_TEST_DIRECTORY="$task_pg" sh "$task_root/supabase/tests/practice-concurrency.sh"
+printf '\nShared storage, scouting, and practice SQL permissions, validation, and concurrency tests passed.\n'

@@ -1,0 +1,25 @@
+.ti-dialog { display: grid; gap: 20px; min-width: 0; }
+.ti-dialog > p { margin: 0; color: var(--cl-text-secondary, #a8a8ad); line-height: 1.6; }
+.ti-source-help { padding: 18px; border: 1px solid var(--cl-border, #343438); border-radius: 16px; background: var(--cl-surface, #18181b); }
+.ti-source-help summary { cursor: pointer; font-weight: 700; }
+.ti-source-help p { font-size: 14px; line-height: 1.65; }
+.ti-source-help a, .ti-template { color: var(--cl-lime, #c6f24e); text-underline-offset: 4px; }
+.ti-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.ti-template { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14px; }
+.ti-file { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ti-input { font-family: monospace; font-size: 14px; resize: vertical; }
+.ti-totals { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.ti-totals strong { color: var(--cl-lime, #c6f24e); }
+.ti-totals span { color: var(--cl-text-secondary, #a8a8ad); font-size: 13px; }
+.ti-rows { list-style: none; padding: 0; display: grid; gap: 10px; max-height: 390px; overflow-y: auto; }
+.ti-row { padding: 14px; border: 1px solid var(--cl-border, #343438); border-radius: 12px; overflow-wrap: anywhere; }
+.ti-row-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; }
+.ti-row-heading span { color: var(--cl-text-secondary, #a8a8ad); font-size: 12px; }
+.ti-row p { margin: 8px 0 0; font-size: 13px; line-height: 1.5; }
+.ti-row--error { border-color: #e4a29a; }
+.ti-row--duplicate { opacity: .75; }
+.ti-row-error { color: #ffc0b8; }
+.ti-note { white-space: pre-wrap; color: var(--cl-text-secondary, #a8a8ad); }
+.ti-review, .ti-discard { display: grid; gap: 14px; min-width: 0; }
+.ti-discard h3, .ti-discard p { margin: 0; }
+@media (max-width: 560px) { .ti-actions { align-items: stretch; flex-direction: column; } .ti-actions .cl-btn { justify-content: center; width: 100%; } .ti-rows { max-height: 340px; } }

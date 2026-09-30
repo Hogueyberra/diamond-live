@@ -8,7 +8,7 @@ The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`.
 
 Signed-out visitors begin on the public homepage: **Great seasons. Lifelong athletes.** It introduces the current coaching tools through an interactive product tour, explains three setup steps, and connects the product to long-term player development. **Start your team** opens email sign-in; **Explore the demo** opens `/preview`. Signed-in users enter their private team workspace. See the [homepage brief](docs/homepage-brief.md) and [original image notes](docs/homepage-imagery.md).
 
-The coaching workspace has **Overview, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
+The coaching workspace has **Overview, Players, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
 Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
 
@@ -49,7 +49,7 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 ## Routes
 
 - `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
-- `/preview` explicit browser-local coaching demo with Overview, Schedule, Coaching, Rules, and Scouting tabs
+- `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Rules, and Scouting tabs
 - `/demo` original Saturday board for the role you are viewing as
 - `/lineup` batting order, positions, and who has arrived
 - `/scorebook` count, diamond, complete pitch history, and audited undo
@@ -75,3 +75,17 @@ The signed-out demo continues using browser storage. Signed-in teams begin empty
 The **Scouting** tab provides private draft boards, player profiles, dated assessments, ten separate 1–10 skill ratings, coach observations, and development goals. Infield, Outfield, and Hitting each contribute one-third of the overall score; all ten skills must be observed to rank a player. The latest assessment submission from each coach counts once. Practice logs record effort without automatically raising ratings. See [scouting behavior, privacy, and setup](docs/scouting.md).
 
 Only owners and coaches can access team scouting. Evaluations use a separate Supabase table and guarded RPCs, independent of the viewer-readable coaching workspace. Cloud drafts stay in memory until acknowledged, with retry/export/conflict recovery. Signed-out scouting contains clearly labeled synthetic examples saved only in that browser. Player/family progress views and video evidence remain future work.
+
+## Team setup and practice planning
+
+The Overview setup checklist leads coaches through Players → Schedule → Assessments → Practice plan. Players and Scouting share the same coach-only roster and player IDs. The team owner acts as manager.
+
+- **Players → Import roster:** paste names, or upload CSV/TSV/text. Only names are required; review the preview before saving. Same-name duplicates are skipped for review. Existing players can be edited individually.
+- **Schedule → Import schedule:** import a CSV/TSV or an iCalendar `.ics` file. Dates and times are validated and converted to the team's Pacific timezone. Unsupported all-day, overnight, recurring, or ambiguous calendar events are flagged for correction rather than guessed. Imports are one-time copies, not a GameChanger connection.
+- **Scouting:** create a baseline assessment, rate observed skills, and use **Plan practice from these ratings**. Unobserved skills stay blank.
+- **Practice plan:** the manager reviews a suggested team or player drill, edits its instructions, and approves a time block. Each block includes a setup, equipment, steps, coach cue, and success check. Managers can reorder blocks, change durations, assign staff, and open coach sign-up. Assistants can claim an unassigned released block or release their own; managers can override assignments.
+- Ratings and draft rankings remain coach-only. An explicitly approved individual drill shares the selected player's name and instructions with team members. No ratings are copied into shared plans.
+
+The importer links the official [GameChanger calendar instructions](https://help.gc.com/hc/en-us/articles/115005457626-Integrating-Your-Personal-Calendar) and [season stats export instructions](https://help.gc.com/hc/en-us/articles/360043583651-Exporting-Season-Stats). A stats export is only a starting point for preparing a roster; it is not represented as a complete roster export.
+
+See [practice recommendations, permissions, and drill sources](docs/practice-planning.md). Database permission and simultaneous-claim tests run with `supabase/tests/run-local.sh` in an isolated PostgreSQL cluster. The additive `manager_practice_assignments` migration must be applied before publishing this UI.
