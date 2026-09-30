@@ -47,27 +47,51 @@ p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTnKj/NYXlJSxx9RkIUk3OBv03aaadAaAtZgudi0
 1. Publish the account release through the existing GitHub Pages workflow and smoke-test the HTTPS app. See the [shared storage setup guide](shared-storage-setup.md) for the completed browser, hosted database, and automated test evidence.
 2. Verify sign-in and shared records on a physical phone after deployment. Keep the private SMTP credential in the provider settings.
 
-## Website domain migration — prepared September 30, 2026
+## Website domain migration — September 30, 2026
 
-The user approved moving the website to **https://diamondliveapp.com/** before beta invitations. This section records the release preparation; DNS, Pages configuration, certificate readiness, and live sign-in must be verified during cutover before calling the new address ready.
+The user approved moving the website to **https://diamondliveapp.com/** before beta invitations. DNS and Pages configuration are complete, and the root-path app has been deployed. **HTTPS is active and public routes are verified. Final new-origin sign-in and shared-team checks are still in progress.**
 
 ### Application preparation
 
-- Existing [PR #4](https://github.com/Hogueyberra/diamond-live/pull/4) is updated from the current app and resolves its old workflow conflict.
+- [PR #4](https://github.com/Hogueyberra/diamond-live/pull/4) merged as `9bafe8d`, preserving the current app while resolving the old Pages workflow conflict.
 - Pages and PR-build workflows use repository variable `VITE_BASE_PATH`, defaulting to `/`. Public Supabase URL and publishable-key injection are retained.
 - Router paths and assets derive from the build base. The `404.html` fallback remains available for direct route visits.
 - Legacy `/diamond-live/…` URLs are replaced with matching root routes, retaining query strings and fragments. The code never redirects those paths to another origin.
 - Homepage canonical and Open Graph URLs use `https://diamondliveapp.com/`.
 - The same Supabase project, memberships, roster, assessments, schedules, and shared documents are retained. There is no data-copy job in this migration.
 
-### Coordinated cutover checks
+### Completed infrastructure and deployment checks
 
-1. Preserve any needed browser-local demo records, unshared documents, and unsynced drafts while the old origin is still reachable. Cloud records already acknowledged by Supabase do not need to be moved. The app does not automatically restore local backups.
-2. Configure this repository's GitHub Pages custom domain and Porkbun's website DNS, while retaining the Resend and DMARC records above. This repository publishes through GitHub Actions; configure the Pages domain setting rather than relying on a committed `CNAME` file.
-3. Publish the verified root build, check Pages DNS and certificate readiness, and enable HTTPS enforcement when the certificate is ready.
-4. Set Supabase Auth's Site URL to `https://diamondliveapp.com`. The app uses email codes and has no magic-link callback route. Keep any development or legacy redirect exceptions narrowly scoped if another flow needs them.
-5. Verify the public homepage, `/preview`, a direct `/scorebook` visit and refresh, original GitHub links, the email-code sign-in flow, and the signed-in team's shared records. A new origin needs a new browser sign-in.
-6. Record the actual deployment and live verification results before distributing the new beta link.
+- GitHub account-level ownership of `diamondliveapp.com` was verified with a DNS TXT challenge.
+- The repository's Pages custom domain is saved as `diamondliveapp.com`. GitHub Actions remains the publishing source; no repository `CNAME` file is needed.
+- Porkbun's parking ALIAS and wildcard record were replaced by the website records below.
+- The existing Resend DKIM, `send` MX, `send` SPF, `rsend` CNAME, and DMARC records were retained. All five were checked against authoritative DNS and the public resolvers `1.1.1.1` and `8.8.8.8`.
+- Supabase Auth's Site URL is saved as `https://diamondliveapp.com`. The app's existing email-code flow requires no redirect allowlist entries or magic-link callback route.
+- [Pages deployment 36740820184](https://github.com/Hogueyberra/diamond-live/actions/runs/36740820184) completed on September 30 at **15:59:52 UTC**. The custom-domain app first responded over HTTP; HTTPS verification subsequently completed as recorded below.
+
+| Type | Host | Website value |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `hogueyberra.github.io` |
+
+### Completed HTTPS and browser checks
+
+- GitHub Pages approved the certificate for `diamondliveapp.com` and `www.diamondliveapp.com`; its recorded expiry is **December 29, 2026**.
+- The Pages API accepted HTTPS enforcement and reports it enabled.
+- Independent checks at **16:02:50 UTC** on September 30 validated the TLS connection and returned `200` for the HTTPS apex. HTTPS `www`, HTTP apex, and the old GitHub `/preview` URL returned `301` redirects to their corresponding canonical HTTPS destinations.
+- The public homepage rendered at `https://diamondliveapp.com/` in a browser.
+- **Explore the demo** opened `/preview` successfully.
+- Direct entry at `/scorebook` and a page reload both rendered the scoring demo.
+- The former `https://hogueyberra.github.io/diamond-live/preview` link redirected to `https://diamondliveapp.com/preview`.
+- Requesting a sign-in code through the normal app flow succeeded. Code verification remains in progress; no sign-in codes are included in this record.
+
+### Remaining verification
+
+- Complete email-code sign-in on the new origin and confirm access to the existing team's shared records. A new origin needs a new browser sign-in.
+- Record the final sign-in result before distributing the beta link. Browser-local demo records, unshared imports, and unsynced drafts do not move with the domain; shared Supabase records remain in place.
 
 The domain change does not alter the verified email sender or require a paid hosting purchase. For a rollback to the GitHub project URL, restore the Pages domain/DNS configuration and build with `VITE_BASE_PATH=/diamond-live/`; retain the same Supabase data.
 
