@@ -169,7 +169,7 @@ body { margin: 0; min-width: 320px; background: #0e0e10; }
   .cw-header { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 18px; }
   .cw-nav-shell { gap: 18px; }
   .coaching-workspace .cw-brand { width: auto; font-size: 24px; }
-  .cw-nav-shell nav { width: 100%; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 2px; }
+  .cw-nav-shell nav { width: 100%; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px; }
   .cw-nav-shell nav button { padding: 0 5px; justify-content: center; min-height: 44px; font-size: 13px; }
   .cw-team-select { margin: 0; justify-self: start; }
   .cw-team-select select { height: 44px; }
@@ -227,4 +227,24 @@ body { margin: 0; min-width: 320px; background: #0e0e10; }
 }
 @media (prefers-reduced-motion: reduce) {
   .coaching-workspace, .coaching-workspace *, .coaching-workspace *::before, .coaching-workspace *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+.cw-account-button { flex-shrink: 0; max-width: 190px; overflow: hidden; text-overflow: ellipsis; }
+.cw-cloud-status { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 18px; margin-bottom: 24px; border: 1px solid var(--cl-border); border-radius: var(--cl-radius-md); }
+.cw-cloud-status > span { display: flex; gap: 10px; align-items: center; flex: 1; font-size: 14px; min-width: 180px; }
+.cw-cloud-status .cl-btn { min-height: 44px; padding: 10px 16px; }
+.cw-gateway-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--cl-border); }
+.cw-gateway-header > strong { font-size: 24px; }
+.cw-gateway-main { max-width: 660px; margin: 80px auto; display: grid; gap: 24px; }
+.cw-gateway-main h1 { font-family: var(--cl-font-display); font-size: clamp(36px, 6vw, 56px); line-height: 1.08; letter-spacing: -.035em; }
+.cw-gateway-main > p { line-height: 1.7; color: var(--cl-muted); }
+@media (min-width: 601px) and (max-width: 1300px) {
+  .cw-header { flex-wrap: wrap; }
+  .cw-nav-shell { flex-basis: 100%; }
+  .cw-account-button { margin-left: auto; }
+}
+@media (max-width: 600px) {
+  .cw-header { grid-template-columns: minmax(0,1fr) auto; }
+  .cw-nav-shell { grid-column: 1 / -1; }
+  .cw-account-button { min-height: 44px; padding-inline: 14px; max-width: 170px; font-size: 13px; }
+  .cw-gateway-main { margin: 40px auto; }
 }

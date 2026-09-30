@@ -1,0 +1,30 @@
+.coaching-workspace .ts-setup { margin: 24px 0; padding: 28px; border-color: #c6f24e55; }
+.ts-setup-heading,.ts-roster-toolbar,.ts-next { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.ts-eyebrow { color:var(--cl-lime,#c6f24e); font-size:11px; letter-spacing:.1em; font-weight:700; }
+.ts-setup h2 { font-size:clamp(26px,4vw,38px); margin:10px 0; }
+.ts-setup-heading p,.ts-next p,.ts-player-list p { color:#aaa8af; line-height:1.5; margin:8px 0; }
+.ts-progress { white-space:nowrap; color:#c6f24e; padding:10px 16px; border:1px solid #c6f24e66; border-radius:999px; font-size:13px; }
+.ts-steps { list-style:none; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:0; margin:26px 0 0; gap:20px; }
+.ts-steps li { border-top:1px solid #3e3e45; padding-top:18px; display:flex; flex-direction:column; }
+.ts-step-number { color:#c3b2f7; font-size:13px; font-weight:700; }
+.ts-steps h3 { margin:12px 0 0; font-size:17px; }
+.ts-steps p { font-size:13px; color:#aaa8af; line-height:1.6; flex:1; }
+.ts-steps button { display:flex; align-items:center; justify-content:space-between; gap:8px; border:0; background:transparent; color:#c6f24e; padding:10px 0; text-align:left; cursor:pointer; font:inherit; font-size:13px; font-weight:700; }
+.ts-steps .is-done { border-color:#c6f24e80; }
+.ts-steps .is-done .ts-step-number { color:#c6f24e; }
+.ts-actions { display:flex; gap:10px; flex-wrap:wrap; }
+.ts-roster { margin-bottom:36px; }
+.ts-roster-toolbar { margin:24px 0; }
+.ts-roster-toolbar .cl-field { width: min(300px,100%); }
+.ts-empty { text-align:center; padding:44px 24px; }
+.ts-empty>svg { color:#c3b2f7; }
+.ts-empty p { max-width:570px; margin:15px auto; line-height:1.7; color:#aaa8af; }
+.ts-player-list { list-style:none; display:grid; gap:12px; padding:0; }
+.ts-player-list li { display:flex; align-items:center; gap:18px; padding:20px; }
+.ts-player-list h2 { font-size:18px; margin:0; }
+.ts-player-list .ts-actions { margin-left:auto; }
+.ts-jersey { display:grid; place-items:center; min-width:44px; height:44px; border:1px solid #c3b2f766; border-radius:50%; color:#c3b2f7; }
+.ts-next { margin:28px 0; border-top:1px solid #3e3e45; padding-top:24px; }
+.ts-setup button:focus-visible { outline:2px solid #c6f24e; outline-offset:4px; }
+@media(max-width:900px) { .ts-steps { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:560px) { .coaching-workspace .ts-setup { padding:20px; } .ts-setup-heading { align-items:flex-start; } .ts-progress { font-size:11px; padding:8px 10px; } .ts-steps { gap:18px 14px; } .ts-steps h3 { font-size:16px; } .ts-roster-toolbar,.ts-next { align-items:stretch; flex-direction:column; } .ts-roster-toolbar .cl-field { width:100%; } .ts-player-list li { flex-wrap:wrap; gap:12px; } .ts-player-list .ts-actions { width:100%; margin:4px 0 0; } }

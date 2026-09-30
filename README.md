@@ -6,7 +6,9 @@ The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`.
 
 ## Current implementation — September 29, 2026
 
-The coaching workspace has **Overview, Schedule, Coaching, and Rules** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
+Signed-out visitors begin on the public homepage: **Great seasons. Lifelong athletes.** It introduces the current coaching tools through an interactive product tour, explains three setup steps, and connects the product to long-term player development. **Start your team** opens email sign-in; **Explore the demo** opens `/preview`. Signed-in users enter their private team workspace. See the [homepage brief](docs/homepage-brief.md) and [original image notes](docs/homepage-imagery.md).
+
+The coaching workspace has **Overview, Players, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
 Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
 
@@ -18,15 +20,17 @@ The [league’s official PDF](https://dt5602vnjxv0c.cloudfront.net/portals/20562
 
 Coaching edits persist in a separate browser store. Failed saves retain session changes and provide retry and JSON backup controls; invalid saved data pauses editing. Backup import/restore is not implemented. This is local storage, not shared storage or cloud backup.
 
-Still to build: real Angels schedule and roster, event editing and cancellation, authenticated shared access, full season management, automated insights, video, and restoring exported backups. Coaching currently starts from human observations. Streaming will later add evidence for coaching and postgame takeaways; full GameChanger parity remains a longer-term backlog. The public preview remains a demonstration workspace; real shared team use still requires authentication and shared storage.
+Still to build: real Angels schedule and roster, event editing and cancellation, full season management, automated insights, video, and restoring exported backups. Coaching currently starts from human observations. Streaming will later add evidence for coaching and postgame takeaways; full GameChanger parity remains a longer-term backlog. An unconfigured public preview remains a demonstration workspace; shared team use activates after the Supabase setup and live verification below.
 
 - Repository: [Hogueyberra/diamond-live](https://github.com/Hogueyberra/diamond-live)
 
 ## Web preview
 
-[Open Diamond Live](https://hogueyberra.github.io/diamond-live/). GitHub Pages publishes the `main` branch after automated tests and a production build, using the `/diamond-live/` base path. This Clinch/guidelines revision is ready for the release workflow; verify the deployed version after the workflow completes.
+The website address prepared for the custom-domain release is [diamondliveapp.com](https://diamondliveapp.com/). GitHub Pages continues to host the app; no paid hosting plan is needed. The domain cutover and HTTPS verification are tracked in the [domain setup record](docs/diamondliveapp-domain-setup.md). The previous address is [Diamond Live on GitHub Pages](https://hogueyberra.github.io/diamond-live/).
 
-Browser data stays on the device and browser where it was entered. The included official bylaws are available to every visitor; personal imports and coaching notes remain local.
+The release workflow publishes `main` after tests and a production build. Its base path defaults to `/` for the custom domain; repository variable `VITE_BASE_PATH` can override it for rollback or another host. Sign out or use a private browser window to see the public homepage.
+
+Signed-in shared records remain in the existing Supabase project. A different website origin requires a new sign-in; browser-local demo records, unsynced drafts, and unshared document imports do not transfer automatically. Export or explicitly share needed local data before cutover.
 
 ## Run locally
 
@@ -35,18 +39,19 @@ npm ci
 npm run dev
 ```
 
-The dev server uses base path `/`. A production build defaults to `/diamond-live/` so a GitHub Pages project site can load assets and routes. Set `VITE_BASE_PATH` to override that.
+The dev server uses base path `/`. For the custom-domain production build, use `VITE_BASE_PATH=/ npm run build`; the Pages and PR-check workflows default to that root path. A manual build without the variable retains `/diamond-live/` for the original project-site deployment.
 
 ```bash
 npm test
 npm run build
 ```
 
-The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep link such as `/diamond-live/scorebook` still opens the app.
+The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep link such as `/scorebook` still opens the app. Old `/diamond-live/…` bookmarks are normalized to the corresponding root route with their query and fragment preserved. The original GitHub URL redirect must be verified during cutover.
 
 ## Routes
 
-- `/` coaching workspace with Overview, Schedule, Coaching, and Rules tabs
+- `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
+- `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Rules, and Scouting tabs
 - `/demo` original Saturday board for the role you are viewing as
 - `/lineup` batting order, positions, and who has arrived
 - `/scorebook` count, diamond, complete pitch history, and audited undo
@@ -60,3 +65,29 @@ Every accepted action has a stable game/event identity and an ordered record. Th
 The browser library keeps reset games, and **Download game records** exports the whole library as JSON. Import/restore from downloaded JSON is not implemented yet. Legacy saved games migrate as checkpoints with their earlier play history explicitly unavailable. Failed writes display an unsaved warning and retry; invalid or unsupported saved data opens a recovery screen without overwriting the game.
 
 This is single-device storage, not cloud backup. Use one tab for scoring. Shared scoring, authentication, offline synchronization, HVLL rule enforcement, broadcasting, and video highlights remain future work. The coaching rules library is a reference layer and does not change the scoring engine. See [the event model and remaining rules](docs/event-model.md).
+
+## Accounts and shared storage
+
+Supabase integration adds email-code sign-in, profiles, private teams, coach/viewer permissions, invitation codes, shared coaching records, and private guideline files. Cloud access is enabled only when a real project has been migrated and configured. See [setup and live verification](docs/shared-storage-setup.md).
+
+The signed-out demo continues using browser storage. Signed-in teams begin empty, sync every 15 seconds/on focus, and reject stale saves instead of overwriting another device. Guidelines refresh every 30 seconds; existing browser imports are shared only through an explicit review/upload action. Shared document removal is recoverable. Unsynced coaching drafts are tab-local until the server acknowledges them.
+
+## Coach scouting and development
+
+The **Scouting** tab provides private draft boards, player profiles, dated assessments, ten separate 1–10 skill ratings, coach observations, and development goals. Infield, Outfield, and Hitting each contribute one-third of the overall score; all ten skills must be observed to rank a player. The latest assessment submission from each coach counts once. Practice logs record effort without automatically raising ratings. See [scouting behavior, privacy, and setup](docs/scouting.md).
+
+Only owners and coaches can access team scouting. Evaluations use a separate Supabase table and guarded RPCs, independent of the viewer-readable coaching workspace. Cloud drafts stay in memory until acknowledged, with retry/export/conflict recovery. Signed-out scouting contains clearly labeled synthetic examples saved only in that browser. Player/family progress views and video evidence remain future work.
+
+## Team setup and practice planning
+
+The Overview setup checklist leads coaches through Players → Schedule → Assessments → Practice plan. Players and Scouting share the same coach-only roster and player IDs. The team owner acts as manager.
+
+- **Players → Import roster:** paste names, or upload CSV/TSV/text. Only names are required; review the preview before saving. Same-name duplicates are skipped for review. Existing players can be edited individually.
+- **Schedule → Import schedule:** import a CSV/TSV or an iCalendar `.ics` file. Dates and times are validated and converted to the team's Pacific timezone. Unsupported all-day, overnight, recurring, or ambiguous calendar events are flagged for correction rather than guessed. Imports are one-time copies, not a GameChanger connection.
+- **Scouting:** create a baseline assessment, rate observed skills, and use **Plan practice from these ratings**. Unobserved skills stay blank.
+- **Practice plan:** the manager reviews a suggested team or player drill, edits its instructions, and approves a time block. Each block includes a setup, equipment, steps, coach cue, and success check. Managers can reorder blocks, change durations, assign staff, and open coach sign-up. Assistants can claim an unassigned released block or release their own; managers can override assignments.
+- Ratings and draft rankings remain coach-only. An explicitly approved individual drill shares the selected player's name and instructions with team members. No ratings are copied into shared plans.
+
+The importer links the official [GameChanger calendar instructions](https://help.gc.com/hc/en-us/articles/115005457626-Integrating-Your-Personal-Calendar) and [season stats export instructions](https://help.gc.com/hc/en-us/articles/360043583651-Exporting-Season-Stats). A stats export is only a starting point for preparing a roster; it is not represented as a complete roster export.
+
+See [practice recommendations, permissions, and drill sources](docs/practice-planning.md). Database permission and simultaneous-claim tests run with `supabase/tests/run-local.sh` in an isolated PostgreSQL cluster. The additive `manager_practice_assignments` migration must be applied before publishing this UI.

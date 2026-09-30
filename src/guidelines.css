@@ -1,4 +1,9 @@
 .gl-library { --gl-muted: #b1b1ba; }
+.gl-sharing { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 24px; padding: 18px 22px; border: 1px solid #44444c; border-radius: 16px; }
+.gl-sharing p { color: var(--gl-muted); font-size: 14px; line-height: 1.6; }
+.gl-sharing strong { color: #c3b2f7; }
+.gl-sharing .cl-btn { flex-shrink: 0; }
+.gl-original-link { display: grid; gap: 8px; }
 .gl-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
 .gl-intro > div:first-child { max-width: 610px; }
 .gl-intro p { color: var(--gl-muted); margin-top: 12px; font-size: 16px; line-height: 1.6; }
@@ -58,6 +63,7 @@
 .gl-file::file-selector-button { border: 0; border-radius: 8px; background: #c3b2f7; color: #0e0e10; padding: 10px 14px; margin-right: 12px; font: inherit; cursor: pointer; }
 @media (max-width: 1000px) { .gl-intro { flex-direction: column; } }
 @media (max-width: 650px) {
+  .gl-sharing { align-items: stretch; flex-direction: column; }
   .gl-intro { gap: 20px; }
   .gl-intro > .gl-actions { width: 100%; }
   .gl-intro > .gl-actions > button { flex: 1; padding: 12px; font-size: 14px; }

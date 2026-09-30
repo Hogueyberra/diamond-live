@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { validatePracticeFields } from './practicePlanning.js';
 
 export const COACHING_KEY = "diamond-live.coaching.v1";
 const COLLECTIONS = ["teams", "events", "observations", "activities"];
@@ -78,8 +79,15 @@ function prepare(data) {
     }
   }
   validateRecords(data);
+  validatePracticeFields(data);
   const serialized = JSON.stringify(data);
   return { data: JSON.parse(serialized), serialized };
+}
+
+// Used at the cloud boundary as well as for local backups. Never display a
+// partially read or structurally invalid workspace as an empty saved team.
+export function validateCoachingData(data) {
+  return prepare(data).data;
 }
 
 function load(initialData) {
@@ -138,6 +146,14 @@ export function useCoachingStore(initialData) {
   const retrySave = useCallback(() => {
     setSaveAttempt((attempt) => attempt + 1);
   }, []);
+  const save = useCallback(async (update) => {
+    if (store.loadError) throw new Error(store.loadError);
+    const next = prepare(typeof update === 'function' ? update(store.data) : update);
+    setStore({ ...next, dirty: true, loadError: null });
+    try { window.localStorage.setItem(COACHING_KEY, next.serialized); setSaveError(null); }
+    catch (error) { const message = saveMessage(error); setSaveError(message); throw new Error(message); }
+    return { data: next.data };
+  }, [store]);
 
   const exportData = useCallback(() => {
     let url;
@@ -160,5 +176,5 @@ export function useCoachingStore(initialData) {
     }
   }, [store.data]);
 
-  return { data: store.data, setData, saveError, loadError: store.loadError, retrySave, exportData };
+  return { data: store.data, setData, save, saveError, loadError: store.loadError, retrySave, exportData };
 }

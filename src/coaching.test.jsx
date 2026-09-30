@@ -1,18 +1,21 @@
 // @vitest-environment jsdom
 
 import { StrictMode } from "react";
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App.jsx";
 import { COACHING_KEY } from "./coachingStore.js";
 import { RECORDS_KEY, ROLE_KEY } from "./state.jsx";
+
+// This suite exercises the local demo, independent of the developer's live account configuration.
+vi.mock('./supabaseClient.js', () => ({ supabase: null, cloudConfigured: false, configError: null }));
 
 const originalShowModal = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "showModal");
 const originalClose = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "close");
 
 beforeEach(() => {
   localStorage.clear();
-  window.history.replaceState(null, "", "/");
+  window.history.replaceState(null, "", "/preview");
   Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
     configurable: true,
     value() { this.setAttribute("open", ""); },
@@ -56,7 +59,7 @@ function activeSavedGame() {
 }
 
 describe("coaching workspace", () => {
-  it("turns a coach observation into a reviewed practice activity and preserves its outcome on reload", () => {
+  it("turns a coach observation into a reviewed practice activity and preserves its outcome on reload", async () => {
     const app = renderApp();
     addObservation("Choose the relay target", "Players waited for a reminder before identifying the next base.");
     const noteCard = screen.getByRole("heading", { name: "Choose the relay target" }).closest("li");
@@ -72,7 +75,7 @@ describe("coaching workspace", () => {
     fireEvent.click(within(dialog).getByRole("button", { name: "Approve & add to practice" }));
 
     expect(screen.queryByRole("dialog")).toBeNull();
-    expect(screen.getByRole("status").textContent).toMatch(/reviewed and added/i);
+    expect(screen.getByText(/Takeaway reviewed and added/i)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Open practice plan" }));
     dialog = screen.getByRole("dialog", { name: "Fielding & first-base footwork" });
     expect(within(dialog).getByText("32 min planned")).toBeTruthy();
@@ -80,9 +83,12 @@ describe("coaching workspace", () => {
     expect(within(activity).getByText("Call the target before receiving the ball.")).toBeTruthy();
     expect(within(activity).getByText("Five consecutive clear target calls.", { exact: false })).toBeTruthy();
     fireEvent.click(within(activity).getByRole("checkbox", { name: "Completed in practice" }));
+    await waitFor(() => expect(within(activity).getByRole('textbox', { name: 'Outcome for Relay decision reps' }).disabled).toBe(false));
     const outcome = within(activity).getByRole("textbox", { name: "Outcome for Relay decision reps" });
     fireEvent.change(outcome, { target: { value: "Four clear calls in a row; repeat next practice." } });
     fireEvent.blur(outcome);
+    await waitFor(() => expect(savedWorkspace().activities.find((item) => item.title === 'Relay decision reps').outcome).toBe('Four clear calls in a row; repeat next practice.'));
+    await waitFor(() => expect(within(activity).getByRole('textbox', { name: 'Outcome for Relay decision reps' }).disabled).toBe(false));
     fireEvent.click(within(dialog).getByRole("button", { name: "Close dialog" }));
 
     const saved = savedWorkspace();

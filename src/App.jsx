@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes } from "react-router";
-import { routerBasename } from "./base.js";
+import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes, useLocation } from "react-router";
+import { legacyProjectPath, routerBasename } from "./base.js";
 import { FIXTURE, ROLES, playerById } from "./data.js";
 import { Family, Film, Lineup, Saturday, Scorebook } from "./screens.jsx";
 import { GameBoundary, GameProvider, useGame } from "./state.jsx";
-import { CoachingWorkspace } from "./CoachingWorkspace.jsx";
+import { WorkspaceGateway } from "./WorkspaceGateway.jsx";
 import { INITIAL_COACHING_DATA } from "./coachingData.js";
 import { useCoachingStore } from "./coachingStore.js";
+import { useAccount } from "./useAccount.js";
+import { useSharedWorkspace } from "./useSharedWorkspace.js";
 
 const LINKS = [
   ["/demo", "Saturday"],
@@ -55,13 +57,13 @@ function ScoreStrip() {
   );
 }
 
-function Shell() {
+function Shell({ coachingHome }) {
   const { role, setRole, reset, saveError, actionError, saved, retrySave, exportGames } = useGame();
   const [flash, setFlash] = useState("");
 
   return (
     <div className="legacy-game"><div className="app">
-      <Link className="reset" to="/">Back to coaching home</Link>
+      <Link className="reset" to={coachingHome}>Back to coaching home</Link>
       <header className="top">
         <div className="top-row">
           <div className="brand">
@@ -130,13 +132,22 @@ function Shell() {
   );
 }
 
+function LegacyProjectRedirect() {
+  const location = useLocation();
+  return <Navigate replace to={{ pathname: legacyProjectPath(location.pathname) ?? '/', search: location.search, hash: location.hash }} />;
+}
+
 export function AppRoutes() {
   const coachingStore = useCoachingStore(INITIAL_COACHING_DATA);
+  const account = useAccount();
+  const shared = useSharedWorkspace(account.repository, account.teams.find((team) => team.id === account.activeTeamId), account.user?.id);
   return (
     <GameProvider>
       <Routes>
-        <Route path="/" element={<CoachingWorkspace store={coachingStore} />} />
-        <Route element={<GameBoundary><Shell /></GameBoundary>}>
+        <Route path="diamond-live/*" element={<LegacyProjectRedirect />} />
+        <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
+        <Route path="preview" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} demoPreview />} />
+        <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />
           <Route path="scorebook" element={<Scorebook />} />
