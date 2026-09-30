@@ -26,7 +26,7 @@ Still to build: real Angels schedule and roster, event editing and cancellation,
 
 ## Web preview
 
-The website address prepared for the custom-domain release is [diamondliveapp.com](https://diamondliveapp.com/). GitHub Pages continues to host the app; no paid hosting plan is needed. The domain cutover and HTTPS verification are tracked in the [domain setup record](docs/diamondliveapp-domain-setup.md). The previous address is [Diamond Live on GitHub Pages](https://hogueyberra.github.io/diamond-live/).
+The custom domain is configured as [diamondliveapp.com](https://diamondliveapp.com/), and the root-path deployment completed on September 30, 2026. **HTTPS is active and public routes are verified; final sign-in and shared-team verification are in progress.** GitHub Pages continues to host the app; no paid hosting plan is needed. See the [domain setup record](docs/diamondliveapp-domain-setup.md) for the completed checks and remaining verification. The previous address is [Diamond Live on GitHub Pages](https://hogueyberra.github.io/diamond-live/).
 
 The release workflow publishes `main` after tests and a production build. Its base path defaults to `/` for the custom domain; repository variable `VITE_BASE_PATH` can override it for rollback or another host. Sign out or use a private browser window to see the public homepage.
 
