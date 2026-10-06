@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes, useLocation } from "react-router";
 import { legacyProjectPath, routerBasename } from "./base.js";
 import { FIXTURE, ROLES, playerById } from "./data.js";
@@ -9,6 +9,7 @@ import { INITIAL_COACHING_DATA } from "./coachingData.js";
 import { useCoachingStore } from "./coachingStore.js";
 import { useAccount } from "./useAccount.js";
 import { useSharedWorkspace } from "./useSharedWorkspace.js";
+const MyPracticeGateway = lazy(() => import('./MyPractice.jsx').then((module) => ({ default: module.MyPracticeGateway })));
 
 const LINKS = [
   ["/demo", "Saturday"],
@@ -147,6 +148,8 @@ export function AppRoutes() {
         <Route path="diamond-live/*" element={<LegacyProjectRedirect />} />
         <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
         <Route path="preview" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} demoPreview />} />
+        <Route path="my-practice" element={<Suspense fallback={<p role="status">Opening My Practice…</p>}><MyPracticeGateway account={account} /></Suspense>} />
+        <Route path="practice-preview" element={<Suspense fallback={<p role="status">Opening the sample family…</p>}><MyPracticeGateway account={account} demo /></Suspense>} />
         <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />

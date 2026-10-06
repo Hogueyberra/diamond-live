@@ -12,7 +12,7 @@ const formatExpiry = (value) => {
   return value && Number.isFinite(date.getTime()) ? date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : 'Expiry unavailable';
 };
 
-export function AccountPanel({ account, onClose }) {
+export function AccountPanel({ account, onClose, onMyPractice }) {
   const [tab, setTab] = useState('profile');
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
@@ -126,6 +126,7 @@ export function AccountPanel({ account, onClose }) {
   };
 
   return <div className="coaching-workspace account-host"><Modal title={account.user ? 'Your account' : 'Sign in to Diamond Live'} onClose={close}><div className="ac-panel">
+    {account.user && onMyPractice && <section className="ac-section"><h3>For players & families</h3><p>Open your linked child’s goals, home challenges, and reflections.</p><Button disabled={busy} onClick={() => run('my-practice', onMyPractice)}>Open My Practice</Button></section>}
     {error && <p className="cw-alert" role="alert">{error}</p>}
     {message && <p className="cw-success" role="status">{message}</p>}
     {account.loading && account.user && <p className="ac-loading" role="status">Updating your account…</p>}
