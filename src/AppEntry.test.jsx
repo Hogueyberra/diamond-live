@@ -11,6 +11,7 @@ vi.mock('./useSharedWorkspace.js', () => ({ useSharedWorkspace: () => mocks.shar
 vi.mock('./supabaseClient.js', () => ({ supabase: mocks.client }));
 vi.mock('./cloudGuidelines.js', () => ({ createCloudGuidelinesRepository: mocks.guidelines }));
 vi.mock('./scoutingRepository.js', () => ({ createScoutingRepository: mocks.scouting }));
+vi.mock('./developmentRepository.js', () => ({ createDevelopmentRepository: vi.fn(() => ({ loadWorkspace: vi.fn().mockResolvedValue({data:{schemaVersion:1,plans:[],reviews:[]},revision:0,updatedAt:null}), saveWorkspace: vi.fn() })) }));
 vi.mock('./HomePage.jsx', () => ({ HomePage: ({ onSignIn, onExploreDemo }) => <main><h1>Public Diamond Live homepage</h1><button onClick={onSignIn}>Sign in</button><button onClick={onExploreDemo}>Explore the demo</button></main> }));
 vi.mock('./CoachingWorkspace.jsx', () => ({ CoachingWorkspace: (props) => {
   mocks.workspace(props);

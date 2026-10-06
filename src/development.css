@@ -1,0 +1,30 @@
+.dev-workspace { padding:32px 0; min-width:0; }
+.dev-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.dev-heading h1 { margin:24px 0; }
+.dev-heading p,.dev-boundary,.dev-help { line-height:1.6; max-width:75ch; }
+.dev-boundary,.dev-help,.dev-date,.dev-save-status { color:var(--cl-muted,#a8a8b0); font-size:.9rem; }
+.dev-toolbar { display:flex; gap:16px; align-items:end; margin:28px 0; flex-wrap:wrap; }
+.dev-toolbar .cl-field { min-width:180px; flex:1; }
+.dev-plans { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin:24px 0; align-items:start; }
+.dev-plan { padding:28px; min-width:0; }
+.dev-plan h2 { font-size:1.5rem; line-height:1.35; overflow-wrap:anywhere; }
+.dev-plan-top { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; font-size:.875rem; }
+.dev-plan p,.dev-plan li,.dev-plan summary { line-height:1.6; }
+.dev-plan summary,.dev-instruction-editor summary { cursor:pointer; font-weight:700; }
+.dev-plan details { padding:16px 0; border-top:1px solid var(--cl-border,#26262b); }
+.dev-plan .ts-actions { flex-wrap:wrap; margin:18px 0; }
+.dev-plan .cl-btn { white-space:normal; height:auto; min-height:44px; }
+.dev-empty { padding:32px; }
+.dev-form fieldset,.dev-workspace form fieldset { border:0; padding:0; margin:0; min-width:0; }
+.dev-form-heading { font-size:1.5rem; }
+.dev-check { display:flex; gap:10px; align-items:center; line-height:1.5; margin:20px 0; }
+.dev-check input { width:18px; height:18px; accent-color:#c6f24e; }
+.dev-instruction-editor { padding:20px; border:1px solid var(--cl-border,#26262b); border-radius:16px; margin:20px 0; }
+.dev-instruction-editor summary { line-height:1.5; }
+.dev-instruction-editor .cl-field { margin:20px 0; }
+.dev-instructions { padding:12px 0; overflow-wrap:anywhere; }
+.dev-instructions a { color:inherit; }
+.dev-multiline { white-space:pre-line; }
+.dev-review-note { border-left:3px solid #c3b2f7; padding-left:16px; margin:20px 0; }
+.dev-recovery { border:1px solid #c3b2f7; border-radius:16px; padding:20px; }
+@media(max-width:800px) { .dev-plans { grid-template-columns:1fr; } .dev-heading { flex-direction:column; align-items:start; } .dev-plan { padding:20px; } }

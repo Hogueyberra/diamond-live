@@ -8,10 +8,14 @@ import { INITIAL_COACHING_DATA } from './coachingData.js';
 
 const mocks = vi.hoisted(() => ({
   createRepository: vi.fn(), load: vi.fn(), save: vi.fn(), scout: vi.fn(), client: {},
+  createDevelopment: vi.fn(), developmentHook: vi.fn(), developmentLoad: vi.fn(), developmentSave: vi.fn(),
 }));
 vi.mock('./supabaseClient.js', () => ({ supabase: mocks.client }));
 vi.mock('./cloudGuidelines.js', () => ({ createCloudGuidelinesRepository: vi.fn(() => ({ scopeKey: 'guidelines-test' })) }));
 vi.mock('./scoutingRepository.js', () => ({ createScoutingRepository: mocks.createRepository }));
+vi.mock('./developmentRepository.js', () => ({ createDevelopmentRepository: mocks.createDevelopment }));
+vi.mock('./useDevelopment.js', () => ({ useDevelopment: (options) => { mocks.developmentHook(options); return { pending:false }; } }));
+vi.mock('./DevelopmentWorkspace.jsx', () => ({ DevelopmentWorkspace: (props) => <section aria-label="Development test boundary"><button onClick={() => props.onPendingChange(true)}>Start pending development</button><button onClick={() => props.onPendingChange(false)}>Resolve pending development</button></section> }));
 vi.mock('./HomePage.jsx', () => ({ HomePage: ({ onSignIn, onExploreDemo }) => <main><h1>Diamond Live public home</h1><button onClick={onSignIn}>Sign in</button><button onClick={onExploreDemo}>Explore demo</button></main> }));
 vi.mock('./ScoutingWorkspace.jsx', () => ({ ScoutingWorkspace: (props) => {
   mocks.scout(props);
@@ -43,6 +47,7 @@ beforeEach(() => {
   mocks.load.mockResolvedValue({ data: {}, revision: 0, updatedAt: null });
   mocks.save.mockResolvedValue({ data: {}, revision: 1, updatedAt: '2026-09-30T01:00:00Z' });
   mocks.createRepository.mockReturnValue({ loadWorkspace: mocks.load, saveWorkspace: mocks.save });
+  mocks.createDevelopment.mockReturnValue({loadWorkspace:mocks.developmentLoad,saveWorkspace:mocks.developmentSave});
 });
 afterEach(cleanup);
 
@@ -51,6 +56,8 @@ describe('scouting account and navigation boundary', () => {
     render(app(account('viewer')));
     expect(screen.queryByRole('button', { name: 'Scouting', exact: true })).toBeNull();
     expect(mocks.createRepository).not.toHaveBeenCalled();
+    expect(mocks.createDevelopment).not.toHaveBeenCalled();
+    expect(screen.queryByRole('button',{name:'Development',exact:true})).toBeNull();
     expect(mocks.scout).not.toHaveBeenCalled();
     expect(screen.queryByText('Scouting demo')).toBeNull();
   });
@@ -145,5 +152,33 @@ describe('scouting account and navigation boundary', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Resolve pending scouting' }));
     fireEvent.click(screen.getByRole('button', { name: 'Verify test code' }));
     expect(signedOut.verifyCode).toHaveBeenCalledWith('coach@example.com', '12345678');
+  });
+});
+
+describe('development account and navigation boundary',()=>{
+  it.each(['owner','coach'])('binds %s development reads and writes to the active team',async(role)=>{
+    const current=account(role); render(app(current)); fireEvent.click(screen.getByRole('button',{name:'Development',exact:true}));
+    await screen.findByRole('region',{name:'Development test boundary'});
+    const options=mocks.developmentHook.mock.calls.at(-1)[0];
+    expect(mocks.createDevelopment).toHaveBeenCalledWith(mocks.client); expect(options.scopeKey).toBe('team-one'); expect(options.authorId).toBe('coach-one'); expect(options.demo).toBe(false);
+    await options.repository.load(); await options.repository.save(3,{developmentFixture:true},'request-id');
+    expect(mocks.developmentLoad).toHaveBeenCalledWith('team-one'); expect(mocks.developmentSave).toHaveBeenCalledWith('team-one',3,{developmentFixture:true},'request-id');
+  });
+  it('blocks navigation and account changes while an unsaved development form is open, and protects refresh',async()=>{
+    const current=account(); render(app(current)); fireEvent.click(screen.getByRole('button',{name:'Development',exact:true}));
+    await screen.findByRole('region',{name:'Development test boundary'}); fireEvent.click(screen.getByRole('button',{name:'Start pending development'}));
+    const unload=new Event('beforeunload',{cancelable:true}); window.dispatchEvent(unload); expect(unload.defaultPrevented).toBe(true);
+    fireEvent.click(screen.getByRole('button',{name:'Schedule',exact:true})); await screen.findByText(/Finish or discard the open player or development form/);
+    expect(screen.getByRole('region',{name:'Development test boundary'})).toBeTruthy();
+    fireEvent.click(screen.getByRole('button',{name:'Test Coach'})); fireEvent.click(screen.getByRole('button',{name:'Switch test team'}));
+    await screen.findByText(/You have unsaved team or scouting changes, or development changes/); expect(current.setActiveTeamId).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button',{name:'Resolve pending development'})); fireEvent.click(screen.getByRole('button',{name:'Switch test team'})); expect(current.setActiveTeamId).toHaveBeenCalledWith('other-team');
+  });
+  it('removes development on a viewer downgrade and leaves the public home disconnected',async()=>{
+    const current=account(); const {rerender}=render(app(current)); fireEvent.click(screen.getByRole('button',{name:'Development',exact:true})); await screen.findByRole('region',{name:'Development test boundary'});
+    mocks.createDevelopment.mockClear(); const viewer=account('viewer'); rerender(app(viewer));
+    expect(screen.queryByRole('region',{name:'Development test boundary'})).toBeNull(); expect(mocks.createDevelopment).not.toHaveBeenCalled();
+    const signedOut={...account(),user:null,profile:null,teams:[],activeTeamId:null}; rerender(app(signedOut));
+    expect(screen.getByRole('heading',{name:'Diamond Live public home'})).toBeTruthy(); expect(mocks.createDevelopment).not.toHaveBeenCalled();
   });
 });
