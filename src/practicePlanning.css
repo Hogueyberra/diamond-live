@@ -38,9 +38,13 @@
 .pp-library-grid button:disabled { opacity:.5; cursor:default; }
 .pp-library-grid span { display:block; font-size:.7rem; color:var(--cl-muted,#a8a6b1); margin-top:.35rem; }
 .pp-review { border:1px solid #c3b2f7; border-radius:14px; padding:1.2rem; margin-top:1.5rem; }
+.pp-review h4 { scroll-margin-top:88px; }
 .pp-review h4:focus { outline:none; }
 .practice-planner button:focus-visible,.practice-planner summary:focus-visible { outline:2px solid #c6f24e; outline-offset:4px; }
 @media(max-width:520px) { .pp-summary { align-items:flex-start; flex-direction:column; } .pp-library-grid { grid-template-columns:1fr; } .pp-timeline .pp-block,.pp-review { padding:1rem .8rem; } .pp-block-time { align-items:flex-start; } .pp-actions>.cl-btn { flex:1 1 170px; } }
 .pp-unsaved { font-size:.7rem; color:#c3b2f7; }
+.pp-alternatives { margin-top:16px; }
+.pp-alternatives summary { cursor:pointer; font-size:.875rem; }
+.pp-alternatives .cl-btn { margin:12px 12px 0 0; white-space:normal; }
 .cw-dialog:has(.practice-planner) .cw-dialog-heading { position:sticky; top:-32px; z-index:2; margin:-32px -32px 24px; padding:22px 32px 16px; background:var(--cl-color-surface,#161618); border-bottom:1px solid var(--cl-border,#39393e); }
 @media(max-width:600px) { .cw-dialog:has(.practice-planner) .cw-dialog-heading { top:-24px; margin:-24px -20px 20px; padding:16px 20px; } }

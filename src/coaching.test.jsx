@@ -14,6 +14,8 @@ const originalShowModal = Object.getOwnPropertyDescriptor(HTMLDialogElement.prot
 const originalClose = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "close");
 
 beforeEach(() => {
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(new Date('2026-09-30T18:00:00Z'));
   localStorage.clear();
   window.history.replaceState(null, "", "/preview");
   Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
@@ -28,6 +30,7 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   vi.restoreAllMocks();
   localStorage.clear();
   window.history.replaceState(null, "", "/");
@@ -59,6 +62,42 @@ function activeSavedGame() {
 }
 
 describe("coaching workspace", () => {
+  it('connects a library home challenge to a private plan and preserves its adapted practice instructions for manager approval', async () => {
+    renderApp(); fireEvent.click(screen.getByRole('button',{name:'Drills',exact:true}));
+    fireEvent.click(screen.getByRole('button',{name:'At home',exact:true}));
+    fireEvent.change(screen.getByRole('searchbox',{name:'Search drills'}),{target:{value:'field, gather, aim'}});
+    fireEvent.click(screen.getByRole('button',{name:'Assign home challenge',exact:true}));
+    const dialog=await screen.findByRole('dialog',{name:'Create development plan'});
+    const playerOption=within(dialog).getByRole('option',{name:'Alex Demo · Age 8'});
+    fireEvent.change(within(dialog).getByLabelText('Player'),{target:{value:playerOption.value}});
+    fireEvent.change(within(dialog).getByLabelText('Player goal · included on the home card'),{target:{value:'Synthetic development goal.'}});
+    fireEvent.change(within(dialog).getByLabelText('Practice easier option'),{target:{value:'Use a still ball before a gentle roll.'}});
+    fireEvent.change(within(dialog).getByLabelText('Practice fun challenge'),{target:{value:'Show your favorite balanced finish.'}});
+    fireEvent.click(within(dialog).getByRole('button',{name:'Save development plan'}));
+    await screen.findByRole('heading',{name:'Synthetic development goal.'});
+    expect(localStorage.getItem(COACHING_KEY)).toBeNull();
+    fireEvent.click(screen.getByRole('button',{name:'Review practice drill'}));
+    const form=screen.getByRole('form',{name:'Review and approve drill'});
+    expect(within(form).getByLabelText('Who is this for?').value).toBe(playerOption.value);
+    expect(within(form).getByLabelText('Steps · one per line').value).toContain('Easier: Use a still ball before a gentle roll.');
+    expect(within(form).getByLabelText('Steps · one per line').value).toContain('Fun challenge: Show your favorite balanced finish.');
+    fireEvent.click(within(form).getByRole('button',{name:'Approve & add to practice'}));
+    await waitFor(()=>expect(savedWorkspace().activities.some(item=>item.playerId===playerOption.value&&item.drillId==='field-gather')).toBe(true));
+    expect(savedWorkspace()).not.toHaveProperty('plans');
+  });
+  it('opens the drill library and sends a selected drill through practice review without auto-saving it', async () => {
+    renderApp();
+    fireEvent.click(screen.getByRole('button', { name: 'Drills', exact: true }));
+    expect(screen.getByRole('heading', { name: /Small challenges/ })).toBeTruthy();
+    const card = screen.getByRole('heading', { name: 'Glove gate' }).closest('article');
+    fireEvent.click(within(card).getByRole('button', { name: 'Review for practice' }));
+    const form = screen.getByRole('form', { name: 'Review and approve drill' });
+    expect(within(form).getByLabelText('Drill name').value).toBe('Glove gate');
+    expect(localStorage.getItem(COACHING_KEY)).toBeNull();
+    fireEvent.click(within(form).getByRole('button', { name: 'Approve & add to practice' }));
+    await waitFor(() => expect(savedWorkspace().activities.some((activity) => activity.drillId === 'glove-gate')).toBe(true));
+    expect(screen.getByRole('heading', { name: 'Glove gate', level: 4 })).toBeTruthy();
+  });
   it("turns a coach observation into a reviewed practice activity and preserves its outcome on reload", async () => {
     const app = renderApp();
     addObservation("Choose the relay target", "Players waited for a reminder before identifying the next base.");

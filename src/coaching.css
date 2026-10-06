@@ -16,7 +16,7 @@ body { margin: 0; min-width: 320px; background: #0e0e10; }
 .cw-nav-shell { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex: 1; }
 .coaching-workspace .cw-brand { display: flex; gap: 10px; align-items: center; font-family: var(--cl-font-display); font-size: 24px; font-weight: 800; letter-spacing: -.04em; color: var(--cl-color-chalk); white-space: nowrap; min-height: 52px; }
 .cw-brand svg { color: var(--cl-color-lime); }
-.cw-nav-shell nav { display: flex; gap: 4px; }
+.cw-nav-shell nav { min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .cw-nav-shell nav button { display: flex; align-items: center; gap: 8px; padding: 0 16px; min-height: 52px; border: 0; border-radius: var(--cl-radius-full); font-size: 14px; font-weight: 700; background: transparent; color: var(--cl-muted); }
 .cw-nav-shell nav button:hover { color: var(--cl-color-chalk); background: var(--cl-color-surface-2); }
 .cw-nav-shell nav button[aria-current] { color: var(--cl-color-ink); background: var(--cl-color-lime); }
@@ -237,7 +237,7 @@ body { margin: 0; min-width: 320px; background: #0e0e10; }
 .cw-gateway-main { max-width: 660px; margin: 80px auto; display: grid; gap: 24px; }
 .cw-gateway-main h1 { font-family: var(--cl-font-display); font-size: clamp(36px, 6vw, 56px); line-height: 1.08; letter-spacing: -.035em; }
 .cw-gateway-main > p { line-height: 1.7; color: var(--cl-muted); }
-@media (min-width: 601px) and (max-width: 1300px) {
+@media (min-width: 601px) {
   .cw-header { flex-wrap: wrap; }
   .cw-nav-shell { flex-basis: 100%; }
   .cw-account-button { margin-left: auto; }

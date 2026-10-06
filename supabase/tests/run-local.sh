@@ -23,6 +23,9 @@ done
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/security.sql"
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/scouting-security.sql"
 psql -X -v ON_ERROR_STOP=1 -f "$task_root/supabase/tests/practice-security.sql"
+task_development_fixture=$(node "$task_root/supabase/tests/development-fixture.mjs")
+psql -X -v ON_ERROR_STOP=1 -v "development_fixture=$task_development_fixture" -f "$task_root/supabase/tests/development-security.sql"
 SCOUTING_TEST_DIRECTORY="$task_pg" sh "$task_root/supabase/tests/scouting-concurrency.sh"
+DEVELOPMENT_TEST_DIRECTORY="$task_pg" sh "$task_root/supabase/tests/development-concurrency.sh"
 PRACTICE_TEST_DIRECTORY="$task_pg" sh "$task_root/supabase/tests/practice-concurrency.sh"
-printf '\nShared storage, scouting, and practice SQL permissions, validation, and concurrency tests passed.\n'
+printf '\nShared storage, scouting, development, and practice SQL permissions, validation, and concurrency tests passed.\n'
