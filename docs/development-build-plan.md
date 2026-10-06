@@ -1,12 +1,12 @@
 # Player-development build plan
 
-Updated October 2, 2026. This plan integrates the recovered Ballgame Builders material into Diamond Live's existing coaching workflow. It distinguishes the local implementation from proposed work and does not record a deployment or change any player scores.
+Updated October 6, 2026. This plan integrates the recovered Ballgame Builders material into Diamond Live's existing coaching workflow. It distinguishes the local implementation from proposed work and does not record a deployment or change any player scores.
 
 ## Product workflow
 
 **Observe → Choose a goal → Practice together → Try an optional home challenge → Reflect → Reassess.**
 
-The assessment supplies evidence for a coach's decision. The drill library supplies suitable options. The practice planner supplies staff, timing, and instructions. A development assignment connects those pieces for one player; a family view eventually provides the child's own approved home challenges. Completing an activity supplies a learning note, not automatic ability points.
+The assessment supplies evidence for a coach's decision. The drill library supplies suitable options. The practice planner supplies staff, timing, and instructions. A development assignment connects those pieces for one player; My Practice provides the child's approved home challenges through a verified guardian account. Completing an activity supplies a learning note, not automatic ability points.
 
 Example: a coach observes that a player struggles to gather their feet after fielding. The coach sets a concrete goal, adds Field, gather, aim to the team practice, and offers its empty-hand home version using two socks. The family can report Tried it, Needed help, or Chose another activity. At the next comparable fielding station, the coach makes a new observation and decides whether a dated reassessment is warranted. No household equipment or completion status affects the ranking.
 
@@ -18,10 +18,10 @@ Example: a coach observes that a player struggles to gather their feet after fie
 | Library | 58 drills, 55 home versions, guide/age/helper/setting filters, recovered source attribution | Catalog is bundled; approved development plans retain versioned instruction snapshots; no content editing dashboard |
 | Recommendations | Observed current skills select eligible activities and alternatives | Running, decisions, reflection, and recovered throwing games remain manual choices |
 | Practice plans | Manager reviews instructions, selects audience, approves a time block, assigns a coach, and records outcomes | An approved individual practice block is team-readable; it is not a private family assignment |
-| Development plans | Coach-only create/edit/close, preserved instructions, practice links, optional check-ins, substitutes, and recorded family feedback | Hosted migration/release verification pending; guardian access is a later phase |
-| Take-home practice | Approved home/substitute cards, Progress Loop, one-cue parent guidance, optional reflection | Manual handouts; no guardian links, reminders, or child-specific dashboard |
+| Development plans | Coach-only create/edit/close, preserved instructions, practice links, optional check-ins, substitutes, and recorded family feedback | Hosted migration/release verification pending; approved home instructions are shared through verified guardian links |
+| Take-home practice | Approved home/substitute cards, Progress Loop, one-cue parent guidance, optional reflection | Verified guardian My Practice and account-owned reflections implemented locally; hosted release pending; no reminders |
 
-Phase 2 verification: **383 passing application tests, a successful production build, and passing local SQL security/concurrency tests**. The browser verification uses synthetic demo plans. Hosted family-access behavior is not implemented. Release validation must exercise the deployed app and apply the required scouting/practice/development migrations. See [development plan behavior and release checks](development-plans.md).
+Phase 2 verification: **383 passing application tests, a successful production build, and passing local SQL security/concurrency tests**. The browser verification uses synthetic demo plans. Guardian My Practice is now implemented locally in phase 3; hosted migration and live-account smoke verification remain pending. Release validation must exercise the deployed app and apply the required scouting/practice/development migrations. See [development plan behavior and release checks](development-plans.md).
 
 ## Build sequence
 
@@ -43,7 +43,9 @@ These records are coach-only and export the family-safe card manually. The coach
 
 **Done when:** a coach can create, edit, list, and close a player development plan; link it to an approved practice block; export only approved home instructions; preserve prior snapshots; recover failed/conflicting saves; and review a reported reflection. Creating or closing a plan does not modify ratings. Non-coaches cannot read the private plan records.
 
-### 3. Connect families and children to My Practice
+### 3. Connect families and children to My Practice — implemented locally
+
+Local verification: **421 application tests**, successful build, SQL household/security/concurrency checks, and desktop/390 px browser walkthrough. See [implemented behavior and hosted release checks](my-practice.md).
 
 Add owner-managed, verified guardian-to-player links. Begin with a child experience inside the guardian's signed-in account rather than requiring a separate child email. The household sees that child's approved assignments, equipment/helper needs, easier choices, and optional follow-up dates.
 
@@ -73,6 +75,6 @@ Keep Strong All Season in a separate 14+ track. Everyday Energy and Fuel the Gam
 
 ## Next milestone
 
-Release and pilot the completed coach development plans after hosted migration and smoke checks. Then build **verified guardian access and My Practice**, with separate household permissions and child-friendly reflections. Continue gathering coach feedback before changing the ranking rubric.
+Release and pilot coach development plans and **verified guardian My Practice** after hosted migrations, advisors, and live-account smoke checks. The assignment/reflection loop is implemented locally; see [family behavior and verification](my-practice.md). Continue gathering coach feedback before changing the ranking rubric.
 
 Related records: [player development and current ranking review](player-development.md), [practice planning](practice-planning.md), [earlier project reuse inventory](legacy-project-reuse.md), and [shared-storage verification](shared-storage-setup.md).

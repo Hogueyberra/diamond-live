@@ -4,7 +4,7 @@ create role authenticated nologin;
 create schema auth;
 create schema storage;
 create schema extensions;
-create table auth.users(id uuid primary key);
+create table auth.users(id uuid primary key, email text, email_confirmed_at timestamptz, is_anonymous boolean default false);
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
 create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
 create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text references storage.buckets(id),name text,metadata jsonb,unique(bucket_id,name));
@@ -17,6 +17,7 @@ insert into auth.users values
  ('10000000-0000-4000-8000-000000000002'),
  ('10000000-0000-4000-8000-000000000003'),
  ('10000000-0000-4000-8000-000000000004');
+update auth.users set email='test-'||right(id::text,1)||'@example.com',email_confirmed_at=now();
 create schema test;
 create function test.assert(p_ok boolean,p_message text) returns void language plpgsql as $$ begin
   if p_ok is distinct from true then raise exception 'ASSERTION FAILED: %',p_message; end if;
