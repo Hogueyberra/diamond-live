@@ -14,6 +14,9 @@ const originalShowModal = Object.getOwnPropertyDescriptor(HTMLDialogElement.prot
 const originalClose = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "close");
 
 beforeEach(() => {
+  // Demo schedule is fixed in September 2026; keep next-practice assertions deterministic.
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date("2026-09-29T12:00:00Z"));
   localStorage.clear();
   window.history.replaceState(null, "", "/preview");
   Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
@@ -29,6 +32,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.useRealTimers();
   localStorage.clear();
   window.history.replaceState(null, "", "/");
   for (const [name, descriptor] of [["showModal", originalShowModal], ["close", originalClose]]) {

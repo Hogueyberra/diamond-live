@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import { writeFileSync, mkdirSync } from 'node:fs';
+process.loadEnvFile('.assistant-local/runtime.env');
+const base = `http://127.0.0.1:${process.env.DIAMOND_PORT || 8788}`;
+const headers = { 'Content-Type': 'application/json', 'x-diamond-local-token': process.env.DIAMOND_LOCAL_TOKEN };
+const results = [];
+async function ask(input, customHeaders = headers) {
+  const start = performance.now();
+  const response = await fetch(`${base}/api/assistant`, { method: 'POST', headers: customHeaders, body: JSON.stringify({ teamId: 'local-demo', division: 'Minor B', year: '2026', mode: 'rules', ...input }) });
+  const value = await response.json();
+  results.push({ input, status: response.status, milliseconds: Math.round(performance.now() - start), value });
+  return { response, value };
+}
+assert.equal((await ask({ question: 'pitching' }, { 'Content-Type': 'application/json' })).response.status, 401);
+assert.equal((await ask({ question: 'pitching', teamId: '00000000-0000-4000-8000-000000000001' }, { 'Content-Type': 'application/json', Authorization: 'Bearer deliberately-invalid-test-token' })).response.status, 401);
+assert.equal((await ask({ question: 'pitching', teamId: '00000000-0000-4000-8000-000000000001' })).response.status, 403);
+const pitch = await ask({ question: 'Can our Minor B pitcher throw a fourth inning after 25 pitches?' });
+assert.equal(pitch.response.status, 200); assert.match(pitch.value.answer, /fourth inning is not allowed/); assert.equal(pitch.value.sources[0].page, 27);
+assert(pitch.value.sources[0].url.startsWith('/rules/'));
+const pdf = await fetch(`${base}${pitch.value.sources[0].url}`, { method: 'HEAD' });
+assert.equal(pdf.status, 200); assert.equal(pdf.headers.get('content-type'), 'application/pdf');
+const courtesy = await ask({ question: 'When can we use a courtesy runner for the catcher?' });
+assert.equal(courtesy.response.status, 200); assert(courtesy.value.sources.some((s) => s.id === 'hvll-2026-section-x-i'));
+await ask({ question: 'When can we use a courtesy runner for the catcher?' });
+const plan = await ask({ mode: 'practice', practice: { players: 8, coaches: 2, teamMinutes: 15, homeMinutes: 10 } });
+assert.equal(plan.response.status, 200); assert.equal(plan.value.plan.team.blocks.reduce((s, b) => s + b.minutes, 0), 15); assert.equal(plan.value.plan.home.blocks.reduce((s, b) => s + b.minutes, 0), 10);
+const chat = await ask({ mode: 'general', question: 'How can I encourage a child who is frustrated after missing a ground ball?' });
+assert.equal(chat.response.status, 200); assert(!/swing|batter.s box|pitch count/i.test(chat.value.answer));
+assert.equal((await fetch(`${base}/api/chat`)).status, 404);
+mkdirSync('output/ai-evaluation', { recursive: true });
+writeFileSync('output/ai-evaluation/live-smoke.json', JSON.stringify(results, null, 2));
+for (const r of results) console.log(r.input.mode ?? 'rules', r.status, `${r.milliseconds}ms`, r.value.method ?? 'access check');
