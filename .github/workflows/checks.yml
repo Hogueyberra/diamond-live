@@ -21,6 +21,7 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
+      - run: npm run assistant:build
   database-security:
     runs-on: ubuntu-latest
     steps:

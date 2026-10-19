@@ -11,7 +11,9 @@ const corpus = JSON.parse(readFileSync(resolve(root, 'server/data/rules.json')))
 const config = { url: process.env.VITE_SUPABASE_URL, key: process.env.VITE_SUPABASE_PUBLISHABLE_KEY, localToken: process.env.DIAMOND_LOCAL_TOKEN };
 const allowed = new Set(['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:8788', 'http://127.0.0.1:8788', 'https://diamondliveapp.com', ...(process.env.DIAMOND_ALLOWED_ORIGINS ?? '').split(',').filter(Boolean)]);
 const model = process.env.DIAMOND_MODEL || 'qwen2.5:14b';
-const dist = resolve(root, 'dist');
+// A dedicated root-path build prevents ordinary GitHub Pages builds from
+// replacing the pilot with assets under the /diamond-live/ URL prefix.
+const dist = resolve(root, 'dist-assistant');
 let active = 0;
 const limits = new Map();
 function limited(key, maximum) {
@@ -70,7 +72,7 @@ const server = http.createServer(async (req, res) => {
       if (extname(file)) return json(res, 404, { error: 'Not found.' });
       file = resolve(dist, 'index.html');
     }
-    const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.pdf': 'application/pdf' }[extname(file)] ?? 'application/octet-stream';
+    const mime = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.pdf': 'application/pdf' }[extname(file)] ?? 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': mime, 'Cache-Control': file.endsWith('.html') ? 'no-cache' : 'public, max-age=3600' });
     if (req.method === 'HEAD') res.end(); else createReadStream(file).on('error', () => res.destroy()).pipe(res);
   } catch { json(res, 404, { error: 'Not found.' }); }

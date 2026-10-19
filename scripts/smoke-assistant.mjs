@@ -1,9 +1,24 @@
 import assert from 'node:assert/strict';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 process.loadEnvFile('.assistant-local/runtime.env');
 const base = `http://127.0.0.1:${process.env.DIAMOND_PORT || 8788}`;
 const headers = { 'Content-Type': 'application/json', 'x-diamond-local-token': process.env.DIAMOND_LOCAL_TOKEN };
 const results = [];
+// Exercise the production frontend, not just the development proxy and API.
+const homepage = await fetch(base);
+assert.equal(homepage.status, 200);
+const html = await homepage.text();
+const assets = [...html.matchAll(/(?:src|href)="(\/[^"?#]+)/g)].map((m) => m[1]);
+assert(assets.length > 0, 'The production homepage must include its built assets.');
+for (const asset of assets) {
+  assert(!asset.startsWith('/diamond-live/'), 'The assistant pilot needs root-path assets.');
+  assert.equal((await fetch(`${base}${asset}`, { method: 'HEAD' })).status, 200, `Missing asset: ${asset}`);
+}
+for (const file of readdirSync('dist-assistant/assets').filter((file) => /\.(?:js|mjs)$/.test(file))) {
+  const response = await fetch(`${base}/assets/${file}`, { method: 'HEAD' });
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('content-type'), 'text/javascript', `Incorrect module type: ${file}`);
+}
 async function ask(input, customHeaders = headers) {
   const start = performance.now();
   const response = await fetch(`${base}/api/assistant`, { method: 'POST', headers: customHeaders, body: JSON.stringify({ teamId: 'local-demo', division: 'Minor B', year: '2026', mode: 'rules', ...input }) });

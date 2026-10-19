@@ -60,11 +60,13 @@ To rebuild after reviewing changed PDFs:
 
 ```sh
 npm run assistant:index
-npm run build
+npm run assistant:build
 launchctl kickstart -k gui/$(id -u)/com.diamondlive.assistant
 ```
 
 Indexing requires Poppler (`pdftotext`). For a new scanned document, install Tesseract as well, then use `python3 scripts/ocr-rule-pages.py 'public/rules/filename.pdf'`, review the cached transcription, and rebuild. A changed bylaws PDF requires reconciling `src/data/hvll2026.json`, the fixed pitching answer, and its tests before updating the expected hash.
+
+The pilot uses a separate root-path production build in `dist-assistant/`. Run `npm run assistant:build` for this service. The normal `npm run build` retains the existing GitHub Pages configuration and does not replace the pilot files. The pilot installer checks that the built entry assets exist before enabling a tunnel.
 
 ## Restart, stop, or reproduce
 
@@ -91,7 +93,7 @@ npm ci
 ollama pull qwen2.5:14b
 npm run assistant:setup
 npm run assistant:index
-npm run build
+npm run assistant:build
 npm run assistant
 # In a second terminal:
 npm run dev
@@ -103,7 +105,7 @@ Useful checks:
 
 ```sh
 npm test
-npm run build
+npm run assistant:build
 node scripts/evaluate-assistant.mjs qwen2.5:14b
 node scripts/smoke-assistant.mjs
 ```
@@ -116,6 +118,6 @@ The public website has not been deployed with this feature. A prepared Cloudflar
 
 Automatic approval review rejected starting that persistent public tunnel because the destination, access scope, and persistent exposure needed specific approval. The user has been asked; no tunnel is running. `scripts/install-coach-pilot.py` is prepared but must not be run until that approval is received.
 
-After approval, finish a real signed-in coach test, confirm that sign-in redirects work for the pilot hostname, verify viewer/other-team denial over the public route, and check simultaneous-request behavior before sharing the link. A quick tunnel changes hostname when restarted and has no uptime guarantee. For ongoing coach use, configure a named tunnel and stable domain, then perform the same access checks. Keeping the Mac awake alone does not guarantee internet or service availability.
+After approval, finish a real signed-in coach test using the existing emailed-code flow, verify viewer/other-team denial over the public route, and check simultaneous-request behavior before sharing the link. The current sign-in flow uses a code entered in the app, not a redirect or magic-link callback, so a pilot hostname does not require changing the auth redirect allowlist. A quick tunnel changes hostname when restarted and has no uptime guarantee. For ongoing coach use, configure a named tunnel and stable domain, then perform the same access checks. Keeping the Mac awake alone does not guarantee internet or service availability.
 
 Work is saved on branch `codex/local-ai-coach`. The unrelated budget PDF was not changed.

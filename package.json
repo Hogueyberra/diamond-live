@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "assistant": "node server/index.mjs",
+    "assistant:build": "vite build --base / --outDir dist-assistant",
     "assistant:index": "node scripts/index-assistant-rules.mjs",
     "assistant:setup": "node scripts/setup-assistant.mjs"
   },

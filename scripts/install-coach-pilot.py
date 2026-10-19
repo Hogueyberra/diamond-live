@@ -1,10 +1,17 @@
 """A temporary authenticated pilot URL. A named tunnel is needed for a stable domain."""
 from pathlib import Path
-import os, plistlib, subprocess
+import os, plistlib, subprocess, re
 
 root = Path(__file__).resolve().parents[1]
 local = root / '.assistant-local'
 binary = local / 'bin/cloudflared'
+build = root / 'dist-assistant'
+index = build / 'index.html'
+if not index.exists():
+    raise SystemExit('Run npm run assistant:build before enabling the pilot.')
+assets = re.findall(r'(?:src|href)="(/[^"?#]+)', index.read_text())
+if not assets or any(asset.startswith('/diamond-live/') or not (build / asset.lstrip('/')).is_file() for asset in assets):
+    raise SystemExit('The pilot build has missing assets or an incorrect URL prefix. Run npm run assistant:build.')
 if not binary.exists():
     raise SystemExit('Install the verified official cloudflared binary first.')
 label = 'com.diamondlive.pilot'
