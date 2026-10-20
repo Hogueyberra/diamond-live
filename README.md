@@ -1,5 +1,13 @@
 # Diamond Live
 
+**Continuing on another computer?** Start with the [setup and backup handoff](docs/continue-on-another-computer.md), including the files and browser data that a Git clone does not transfer.
+
+## Latest checkpoint — October 20, 2026
+
+The interactive clubhouse, drill/video library, iPhone capture workflow, player assessments, and umpire rules chat are published at [the Coach Desk prototype](https://diamondliveapp.com/prototype). The [sign-in page](https://diamondliveapp.com/sign-in) supports existing account passwords and email codes. Clerk's frontend flow is implemented, with its card above existing-account access when enabled; application selection, provider configuration, and live identity-linking verification remain pending. See [Clerk activation status and setup](docs/clerk-auth-setup.md).
+
+The latest application release passed **391 tests across 41 files**, a production build, database permission/concurrency checks, and public deployment verification. Source, original artwork, fonts/licenses, database migrations, screenshots, and setup/research notes are committed to this repository. The older implementation notes below describe the original coaching workspace and its development history.
+
 Coaching workspace prototype for the **Angels, Huntington Valley Little League Minor B**, with an isolated **Seals** demo team. The home screen connects team schedules, coaching observations, practice activities, and source-linked division rules. Events, locations, and notes are clearly labeled demo data; the actual Angels schedule and roster have not been added.
 
 The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`. Its simplified scoring rules are demo rules; it is not ready to serve as the Angels' official scorebook.
@@ -61,6 +69,8 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 - `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
 - `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Rules, and Scouting tabs
 - `/prototype` interactive clubhouse, player assessments, development plans, calendar, drill/video library, and source-linked rules chat
+- `/sign-in` existing email/password and email-code access, with Clerk above it when configured
+- `/auth/connect` Clerk-to-account-service connection; `/auth/callback` PKCE return route
 - `/demo` original Saturday board for the role you are viewing as
 - `/lineup` batting order, positions, and who has arrived
 - `/scorebook` count, diamond, complete pitch history, and audited undo
