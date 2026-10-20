@@ -64,7 +64,7 @@ describe('public homepage and private workspace entry', () => {
     fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'coach@example.com' } });
     fireEvent.click(screen.getByRole('button', { name: 'Email me a code' }));
     await screen.findByLabelText('Email sign-in code');
-    expect(mocks.account.requestCode).toHaveBeenCalledWith('coach@example.com');
+    expect(mocks.account.requestCode).toHaveBeenCalledWith('coach@example.com', { existingOnly: false });
     expect(mocks.workspace).not.toHaveBeenCalled(); expect(mocks.shared.setData).not.toHaveBeenCalled();
   });
 
