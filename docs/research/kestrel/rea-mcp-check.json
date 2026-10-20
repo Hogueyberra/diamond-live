@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-16T21:14:07.221Z",
+  "server": {
+    "name": "rea",
+    "version": "6.5.0"
+  },
+  "toolCount": 207,
+  "websiteTools": [
+    "trace_web_module_imports",
+    "trace_web_source_location",
+    "observe_web_execution",
+    "inspect_web_event_listeners",
+    "inspect_web_network_capture",
+    "export_web_scripts",
+    "list_browser_targets",
+    "inspect_web_page",
+    "analyze_web_bundle",
+    "observe_web_session",
+    "discover_webmcp_tools",
+    "compare_web_captures",
+    "capture_web_screenshot",
+    "compare_web_screenshots",
+    "capture_browser_scenario",
+    "analyze_javascript_application"
+  ],
+  "scope": "Separate stdio client; does not connect this running Codex session."
+}

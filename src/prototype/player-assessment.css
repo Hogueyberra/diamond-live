@@ -1,0 +1,363 @@
+.pa-snapshot-intro {
+  margin: 10px 0 16px;
+  color: #766c60;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.pa-snapshot-skill {
+  margin: 17px 0;
+}
+.pa-snapshot-skill .pp-skill-row {
+  margin: 0 0 5px;
+}
+.pa-snapshot-skill small {
+  display: block;
+  color: #82766d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.pa-snapshot-skill .pa-change {
+  color: #456344;
+  font-weight: 600;
+}
+.pa-player-action {
+  background: #315b3f;
+  margin: 0 0 16px;
+  min-height: 46px;
+  font-size: 14px;
+}
+.pa-notice {
+  padding: 12px 14px;
+  margin: 10px 0;
+  background: #edf2e8;
+  color: #35533b;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.pa-guide,
+.pa-history {
+  border: 1px solid #e3dcd2;
+  background: #faf8f2;
+  border-radius: 9px;
+  padding: 13px 15px;
+  margin: 16px 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.pa-guide summary,
+.pa-history summary {
+  cursor: pointer;
+  color: #4b5c40;
+  font-weight: 600;
+  min-height: 24px;
+}
+.pa-guide p {
+  color: #796e62;
+}
+.pa-guide dl {
+  margin: 16px 0;
+}
+.pa-guide dl > div {
+  padding: 9px 0;
+  border-top: 1px solid #e6e0d5;
+}
+.pa-guide dt {
+  font-weight: 600;
+  color: #3e4c34;
+}
+.pa-guide dt b {
+  display: inline-block;
+  min-width: 23px;
+}
+.pa-guide dd {
+  margin: 3px 0 0 23px;
+  color: #796e62;
+}
+.pa-history summary span {
+  display: block;
+  margin-top: 3px;
+  color: #82766d;
+  font-weight: 400;
+  font-size: 10px;
+}
+.pa-history ol {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+}
+.pa-history li {
+  border-top: 1px solid #e3dcd2;
+  padding: 15px 0;
+}
+.pa-history li p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 9px 0 0;
+  color: #6d6459;
+}
+.pa-history-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+}
+.pa-history-heading > span {
+  font-size: 10px;
+  color: #82766d;
+}
+.pa-history small {
+  color: #82766d;
+}
+.pa-history-scores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 9px;
+}
+.pa-history-scores span {
+  background: #eceee4;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: #506049;
+}
+.pa-dialog {
+  width: min(690px, calc(100vw - 28px));
+  max-height: calc(100dvh - 36px);
+  overflow-y: auto;
+  border: 1px solid #ded5c8;
+  border-radius: 16px;
+  padding: 0;
+  background: #fffdf8;
+  color: #2c3327;
+  box-shadow: 0 20px 80px #1f291f33;
+}
+.pa-dialog::backdrop {
+  background: #1d281eb3;
+}
+.pa-dialog-heading {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px 26px 18px;
+  border-bottom: 1px solid #e3dcd2;
+}
+.pa-dialog h2 {
+  font:
+    700 30px/1.1 "Barlow Condensed",
+    sans-serif;
+  margin: 7px 0 10px;
+}
+.pa-dialog-heading p {
+  margin: 0;
+  color: #7d7266;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-close {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 7px;
+  background: #edece3;
+  display: grid;
+  place-items: center;
+  color: #5b6751;
+}
+.pa-form-body {
+  padding: 20px 26px;
+}
+.pa-form-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.pa-form-meta label,
+.pa-notes {
+  display: block;
+  color: #536148;
+  font-size: 13px;
+  font-weight: 600;
+}
+.pa-coach {
+  grid-column: 1 / -1;
+}
+.pa-form-meta input,
+.pa-form-meta select,
+.pa-notes textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  font:
+    16px Barlow,
+    sans-serif;
+  border: 1px solid #d7d6c8;
+  background: #fff;
+  color: #343c2c;
+  border-radius: 7px;
+  padding: 11px;
+  margin-top: 7px;
+}
+.pa-notes textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+.pa-form-body > .pp-muted {
+  font-size: 12px;
+  margin-top: 8px;
+}
+.pa-rating-field {
+  border: 0;
+  padding: 0;
+  margin: 22px 0;
+  min-width: 0;
+}
+.pa-rating-field legend {
+  width: 100%;
+  font-weight: 600;
+  font-size: 15px;
+  color: #364d35;
+}
+.pa-rating-field legend span {
+  float: right;
+  font-size: 11px;
+  font-weight: 400;
+  color: #837667;
+  padding-top: 4px;
+}
+.pa-rating-field > p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #827365;
+  margin: 7px 0 10px;
+}
+.pa-rating-options {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 5px;
+}
+.pa-rating-options label {
+  position: relative;
+  cursor: pointer;
+}
+.pa-rating-options input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.pa-rating-options span {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: 1px solid #d9d7ca;
+  border-radius: 7px;
+  background: #fff;
+  color: #526347;
+  font-size: 16px;
+  font-weight: 600;
+}
+.pa-rating-options input:checked + span {
+  background: #315b3f;
+  border-color: #315b3f;
+  color: white;
+}
+.pa-rating-options input:focus-visible + span {
+  outline: 3px solid #7992bc;
+  outline-offset: 2px;
+}
+.pa-unobserved {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #7a7566;
+  font-size: 12px;
+  cursor: pointer;
+}
+.pa-unobserved input {
+  accent-color: #315b3f;
+  width: 16px;
+  height: 16px;
+}
+.pa-rating-field .pa-selected-score {
+  background: #edf1e7;
+  color: #4f6547;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 0;
+}
+.pa-form-footer {
+  position: sticky;
+  bottom: 0;
+  background: #fffdf8;
+  border-top: 1px solid #ddd9cb;
+  padding: 17px 26px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.pa-form-footer > span {
+  font-size: 12px;
+  color: #536148;
+}
+.pa-form-footer small {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #82766d;
+}
+.pa-form-footer > div {
+  display: flex;
+  gap: 8px;
+}
+.pa-form-footer .pp-primary {
+  background: #315b3f;
+}
+.pa-form-footer button {
+  min-height: 44px;
+}
+.pa-error {
+  background: #f9e7df;
+  border-radius: 7px;
+  padding: 12px;
+  color: #90452c;
+  font-size: 13px;
+  line-height: 1.5;
+}
+@media (max-width: 560px) {
+  .pa-dialog-heading,
+  .pa-form-body {
+    padding: 18px;
+  }
+  .pa-dialog h2 {
+    font-size: 27px;
+  }
+  .pa-dialog-heading {
+    gap: 10px;
+  }
+  .pa-form-meta {
+    gap: 12px;
+  }
+  .pa-rating-options {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .pa-form-footer {
+    padding: 12px 18px max(12px, env(safe-area-inset-bottom));
+    flex-wrap: wrap;
+  }
+  .pa-form-footer > div {
+    width: 100%;
+  }
+  .pa-form-footer .pp-primary {
+    flex: 1;
+  }
+  .pa-form-footer small {
+    display: inline;
+    margin-left: 8px;
+  }
+}

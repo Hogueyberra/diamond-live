@@ -1,0 +1,130 @@
+{
+  "id": "6ef8dcab-812f-412a-af88-fe804bdf6f11",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=players",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Development",
+        "role": "button"
+      },
+      "e12": {
+        "name": "Library",
+        "role": "button"
+      },
+      "e13": {
+        "name": "Every player. A next step.",
+        "role": "heading"
+      },
+      "e14": {
+        "name": "Team roster",
+        "role": "heading"
+      },
+      "e15": {
+        "name": "12 Noah Martinez Shortstop · R/R Ground-ball footwork Example · Oct 14 Plan ready",
+        "role": "button"
+      },
+      "e16": {
+        "name": "7 Eli Thompson Catcher · R/R Receiving Example · Oct 14 Needs observation",
+        "role": "button"
+      },
+      "e17": {
+        "name": "22 Lucas Chen Center field · L/R First-step reads Example · Oct 14 On track",
+        "role": "button"
+      },
+      "e18": {
+        "name": "4 Mason Brooks Second base · R/R Contact point Example · Oct 14 Plan ready",
+        "role": "button"
+      },
+      "e19": {
+        "name": "18 Oliver Davis Pitcher · R/R Throwing accuracy Example · Oct 14 On track",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Skip to workspace",
+        "role": "link"
+      },
+      "e20": {
+        "name": "9 Leo Wilson Left field · L/L Baserunning Example · Oct 14 Needs observation",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Search players",
+        "role": "textbox"
+      },
+      "e22": {
+        "name": "All players",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Plan ready",
+        "role": "button"
+      },
+      "e24": {
+        "name": "Needs observation",
+        "role": "button"
+      },
+      "e25": {
+        "name": "On track",
+        "role": "button"
+      },
+      "e26": {
+        "name": "Noah Martinez",
+        "role": "heading"
+      },
+      "e27": {
+        "name": "Skill snapshot",
+        "role": "heading"
+      },
+      "e28": {
+        "name": "One clear goal",
+        "role": "heading"
+      },
+      "e29": {
+        "name": "Review development plan",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Diamond Live Coach Desk",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Prototype workspace",
+        "role": "navigation"
+      },
+      "e5": {
+        "name": "Coach’s assistant",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Open workspace menu",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Current workspace",
+        "role": "link"
+      },
+      "e8": {
+        "name": "Coach Desk",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Players",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - link \"Skip to workspace\" [ref=e2]\n  - banner\n    - button \"Diamond Live Coach Desk\" [ref=e3]\n      - image\n      - strong\n        - StaticText \"Diamond Live\"\n      - StaticText \"A little more purpose. Every practice.\"\n    - navigation \"Prototype workspace\" [ref=e4]\n      - button \"Coach Desk\" [ref=e8]\n        - StaticText \"Coach Desk\"\n      - button \"Players\" [ref=e9]\n        - StaticText \"Players\"\n      - button \"Calendar\" [ref=e10]\n        - StaticText \"Calendar\"\n      - button \"Development\" [ref=e11]\n        - StaticText \"Development\"\n      - button \"Library\" [ref=e12]\n        - StaticText \"Library\"\n    - StaticText \"Interactive prototype\"\n    - button \"Coach’s assistant\" [ref=e5]\n      - image\n      - StaticText \"Coach’s assistant\"\n    - button \"Open workspace menu\" [expanded=false, ref=e6]\n      - StaticText \"NC\"\n  - image\n  - strong\n    - StaticText \"Angels\"\n  - StaticText \"/\"\n  - StaticText \"Minor B\"\n  - StaticText \"Fall development\"\n  - image\n  - StaticText \"Sample data\"\n  - StaticText \"·\"\n  - StaticText \"Session-only changes\"\n  - main\n    - generic\n      - StaticText \"THE ROSTER\"\n      - heading \"Every player. A next step.\" [level=1, ref=e13]\n      - paragraph\n        - StaticText \"Bring observations, development, and the next practice together.\"\n      - strong\n        - StaticText \"06\"\n      - StaticText \"demo players\"\n      - LabelText\n        - image\n        - textbox \"Search players\" [ref=e21]\n      - generic \"Player status filters\"\n        - button \"All players\" [ref=e22]\n        - button \"Plan ready\" [ref=e23]\n        - button \"Needs observation\" [ref=e24]\n        - button \"On track\" [ref=e25]\n      - heading \"Team roster\" [level=2, ref=e14]\n      - StaticText \"6\"\n      - StaticText \" players\"\n      - StaticText \"PLAYER\"\n      - StaticText \"DEVELOPMENT FOCUS\"\n      - StaticText \"STATUS\"\n      - button \"12 Noah Martinez Shortstop · R/R Ground-ball footwork Example · Oct 14 Plan ready\" [ref=e15]\n        - StaticText \"12\"\n        - strong\n          - StaticText \"Noah Martinez\"\n        - StaticText \"Shortstop · R/R\"\n        - StaticText \"Ground-ball footwork\"\n        - StaticText \"Example · Oct 14\"\n        - StaticText \"Plan ready\"\n      - button \"7 Eli Thompson Catcher · R/R Receiving Example · Oct 14 Needs observation\" [ref=e16]\n        - StaticText \"7\"\n        - strong\n          - StaticText \"Eli Thompson\"\n        - StaticText \"Catcher · R/R\"\n        - StaticText \"Receiving\"\n        - StaticText \"Example · Oct 14\"\n        - StaticText \"Needs observation\"\n      - button \"22 Lucas Chen Center field · L/R First-step reads Example · Oct 14 On track\" [ref=e17]\n        - StaticText \"22\"\n        - strong\n          - StaticText \"Lucas Chen\"\n        - StaticText \"Center field · L/R\"\n        - StaticText \"First-step reads\"\n        - StaticText \"Example · Oct 14\"\n        - StaticText \"On track\"\n      - button \"4 Mason Brooks Second base · R/R Contact point Example · Oct 14 Plan ready\" [ref=e18]\n        - StaticText \"4\"\n        - strong\n          - StaticText \"Mason Brooks\"\n        - StaticText \"Second base · R/R\"\n        - StaticText \"Contact point\"\n        - StaticText \"Example · Oct 14\"\n        - StaticText \"Plan ready\"\n      - button \"18 Oliver Davis Pitcher · R/R Throwing accuracy Example · Oct 14 On track\" [ref=e19]\n        - StaticText \"18\"\n        - strong\n          - StaticText \"Oliver Davis\"\n        - StaticText \"Pitcher · R/R\"\n        - StaticText \"Throwing accuracy\"\n        - StaticText \"Example · Oct 14\"\n        - StaticText \"On track\"\n      - button \"9 Leo Wilson Left field · L/L Baserunning Example · Oct 14 Needs observation\" [ref=e20]\n        - StaticText \"9\"\n        - strong\n          - StaticText \"Leo Wilson\"\n        - StaticText \"Left field · L/L\"\n        - StaticText \"Baserunning\"\n        - StaticText \"Example · Oct 14\"\n        - StaticText \"Needs observation\"\n      - image\n      - StaticText \"Synthetic roster for exploring the prototype.\"\n      - LineBreak \"\\n\"\n      - StaticText \"Your team records remain in the existing workspace.\"\n      - article\n        - StaticText \"12\"\n        - StaticText \"PLAYER PROFILE\"\n        - heading \"Noah Martinez\" [level=2, ref=e26]\n        - paragraph\n          - StaticText \"Shortstop · R/R\"\n        - heading \"Skill snapshot\" [level=3, ref=e27]\n        - StaticText \"Plan ready\"\n        - paragraph\n          - StaticText \"Example coach ratings · Oct 14, 2026 · Prototype-only 1–5 rubric\"\n        - StaticText \"Hitting\"\n        - strong\n          - StaticText \"3/5\"\n        - StaticText \"Throwing\"\n        - strong\n          - StaticText \"4/5\"\n        - StaticText \"Fielding\"\n        - strong\n          - StaticText \"2/5\"\n        - StaticText \"Baserunning\"\n        - strong\n          - StaticText \"Unobserved\"\n        - image\n        - strong\n          - StaticText \"Latest coach observation\"\n        - paragraph\n          - StaticText \"Gets to the ball early. Work on setting the feet before the throw.\"\n        - StaticText \"Demo record · Coach Jordan · Oct 14\"\n        - heading \"One clear goal\" [level=3, ref=e28]\n        - paragraph\n          - StaticText \"Set feet and make an accurate throw on 8 of 10 routine grounders.\"\n        - image\n        - StaticText \"Oct 14 · Example assessment recorded\"\n        - button \"Review development plan\" [ref=e29]\n          - StaticText \"Review development plan\"\n          - image\n        - paragraph\n          - StaticText \"Practice proposals require coach review. Unobserved skills stay blank.\"\n  - contentinfo\n    - image\n    - StaticText \"Built around the coach. Focused on the player.\"\n    - link \"Current workspace\" [ref=e7]\n      - StaticText \"Current workspace\"\n      - image",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

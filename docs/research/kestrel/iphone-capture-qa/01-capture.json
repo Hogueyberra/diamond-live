@@ -1,0 +1,34 @@
+{
+  "id": "dccb0b58-ef32-4230-9af5-9996b6e849ce",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?capture=1#https://example.org/iphone-capture-qa",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e2": {
+        "name": "One good drill, kept.",
+        "role": "heading"
+      },
+      "e3": {
+        "name": "Back to clubhouse",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Video or post link",
+        "role": "textbox"
+      },
+      "e5": {
+        "name": "Save to Drill Inbox",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - banner\n    - image\n    - StaticText \"Diamond Live\"\n    - StaticText \"A good find. A better practice.\"\n  - main\n    - image\n    - StaticText \"SAVE NOW. COACH LATER.\"\n    - heading \"One good drill, kept.\" [level=1, ref=e2]\n    - paragraph\n      - StaticText \"Drop the link in your Drill Inbox. Organize it when you have a moment.\"\n    - form\n      - LabelText\n        - StaticText \"Video or post link\"\n      - textbox \"Video or post link\" [required, ref=e4]: https://example.org/iphone-capture-qa\n        - StaticText \"https://example.org/iphone-capture-qa\"\n      - image\n      - strong\n        - StaticText \"Web link\"\n      - StaticText \"example.org\"\n      - button \"Save to Drill Inbox\" [ref=e5]\n        - StaticText \"Save to Drill Inbox\"\n        - image\n    - paragraph\n      - StaticText \"No title or skill required. Saved on this browser only; it won’t appear on your computer automatically.\"\n    - button \"Back to clubhouse\" [ref=e3]\n      - image\n      - StaticText \"Back to clubhouse\"\n  - contentinfo\n    - StaticText \"Prototype · Links stay on the creator’s platform\"",
+    "browserPageId": "c697c4cb-4441-4e66-bb0a-213f98ed2219"
+  },
+  "_meta": {
+    "runtimeId": "ebb3833e-63df-4c35-9aa7-98166af59e88"
+  }
+}

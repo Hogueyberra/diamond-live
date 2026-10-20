@@ -1,0 +1,106 @@
+{
+  "id": "8aa19368-b258-4a4a-8726-67a878586d06",
+  "ok": true,
+  "result": {
+    "origin": "https://kestrel-os-demo.vercel.app/",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Programs",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Drill library",
+        "role": "heading"
+      },
+      "e12": {
+        "name": "All",
+        "role": "tab"
+      },
+      "e13": {
+        "name": "Speed",
+        "role": "tab"
+      },
+      "e14": {
+        "name": "Power",
+        "role": "tab"
+      },
+      "e15": {
+        "name": "Agility",
+        "role": "tab"
+      },
+      "e16": {
+        "name": "Mobility",
+        "role": "tab"
+      },
+      "e17": {
+        "name": "Corrective",
+        "role": "tab"
+      },
+      "e18": {
+        "name": "Strength",
+        "role": "tab"
+      },
+      "e19": {
+        "name": "Homework sent Monday night",
+        "role": "heading"
+      },
+      "e2": {
+        "name": "Kestrel OS home",
+        "role": "button"
+      },
+      "e20": {
+        "name": "Add to tonight",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Add to tonight",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Nudge",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Nudge",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Views",
+        "role": "navigation"
+      },
+      "e4": {
+        "name": "Chief of Staff",
+        "role": "button"
+      },
+      "e5": {
+        "name": "Programs",
+        "role": "heading"
+      },
+      "e6": {
+        "name": "Floor",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Athletes",
+        "role": "button"
+      },
+      "e8": {
+        "name": "Assessments",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Calendar",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - banner\n    - button \"Kestrel OS home\" [ref=e2]\n      - StaticText \"Kestrel Performance\"\n      - StaticText \"Kestrel OS, \"\n      - StaticText \"Columbus and Orlando\"\n    - navigation \"Views\" [ref=e3]\n      - button \"Floor\" [ref=e6]\n      - button \"Athletes\" [ref=e7]\n      - button \"Assessments\" [ref=e8]\n      - button \"Calendar\" [ref=e9]\n      - button \"Programs\" [ref=e10]\n        - StaticText \"Programs\"\n    - StaticText \"9\"\n    - StaticText \"agents\"\n    - StaticText \"running\"\n    - StaticText \"Tue, Sep 29\"\n    - StaticText \", \"\n    - StaticText \"4:14pm\"\n    - button \"Chief of Staff\" [ref=e4]\n      - StaticText \"Chief of Staff\"\n    - StaticText \"DH\"\n  - main\n    - heading \"Programs\" [level=1, ref=e5]\n    - paragraph\n      - StaticText \"The drill library, and three videos home to every athlete within an hour of every session.\"\n    - DescriptionList\n      - term \"videos in the library\"\n      - definition\n        - StaticText \"96\"\n      - definition\n        - StaticText \"videos in the library\"\n      - term \"packs sent Monday night\"\n      - definition\n        - StaticText \"27\"\n      - definition\n        - StaticText \"packs sent Monday night\"\n      - term \"opened before bed\"\n      - definition\n        - StaticText \"78%\"\n      - definition\n        - StaticText \"opened before bed\"\n      - term \"corrective packs this month\"\n      - definition\n        - StaticText \"14\"\n      - definition\n        - StaticText \"corrective packs this month\"\n    - generic\n      - heading \"Drill library\" [level=2, ref=e11]\n      - tablist\n        - tab \"All\" [ref=e12]\n        - tab \"Speed\" [selected, ref=e13]\n        - tab \"Power\" [ref=e14]\n        - tab \"Agility\" [ref=e15]\n        - tab \"Mobility\" [ref=e16]\n        - tab \"Corrective\" [ref=e17]\n        - tab \"Strength\" [ref=e18]\n      - list\n        - listitem [level=1]\n          - generic\n            - image\n            - StaticText \"4\"\n            - StaticText \" min\"\n            - StaticText \"Speed\"\n          - paragraph\n            - StaticText \"Wall drill, first step\"\n          - paragraph\n            - StaticText \"Acceleration angle, U12 and up\"\n          - StaticText \"22\"\n          - StaticText \" sent this week\"\n          - button \"Add to tonight\" [ref=e20]\n            - image\n            - StaticText \"Add to tonight\"\n        - listitem [level=1]\n          - generic\n            - image\n            - StaticText \"5\"\n            - StaticText \" min\"\n            - StaticText \"Speed\"\n          - paragraph\n            - StaticText \"A-skip series\"\n          - paragraph\n            - StaticText \"Knee drive, foot strike, All ages\"\n          - StaticText \"19\"\n          - StaticText \" sent this week\"\n          - button \"Add to tonight\" [ref=e21]\n            - image\n            - StaticText \"Add to tonight\"\n    - generic\n      - sectionheader\n        - heading \"Homework sent Monday night\" [level=2, ref=e19]\n        - paragraph\n          - StaticText \"Sender texted every parent within an hour of the session\"\n        - StaticText \"21\"\n        - StaticText \"/\"\n        - StaticText \"27\"\n      - list\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"Speed and agility, U12\"\n          - StaticText \"Ryan\"\n          - StaticText \", sent \"\n          - StaticText \"6:41pm\"\n          - StaticText \"7\"\n          - StaticText \" of \"\n          - StaticText \"9\"\n          - StaticText \" opened\"\n          - list\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Harper L.\"\n              - paragraph\n                - StaticText \"Arms were sharp tonight. Keep the wall drill angle low.\"\n              - StaticText \"Opened \"\n              - StaticText \"7:02pm\"\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Maya P.\"\n              - paragraph\n                - StaticText \"Quick feet on the ladder. Pogos for springier ankles.\"\n              - StaticText \"Opened \"\n              - StaticText \"8:15pm\"\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Miles R.\"\n              - paragraph\n                - StaticText \"Ankle work only this week, no sprints yet.\"\n              - button \"Nudge\" [ref=e22]\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"Strength and conditioning, HS\"\n          - StaticText \"Devon\"\n          - StaticText \", sent \"\n          - StaticText \"7:38pm\"\n          - StaticText \"9\"\n          - StaticText \" of \"\n          - StaticText \"11\"\n          - StaticText \" opened\"\n          - list\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Caleb D.\"\n              - paragraph\n                - StaticText \"Hamstrings did the work tonight. Nordics twice this week.\"\n              - StaticText \"Opened \"\n              - StaticText \"7:51pm\"\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Isaiah N.\"\n              - paragraph\n                - StaticText \"Right side first on the Nordics, slow on the way down.\"\n              - StaticText \"Opened \"\n              - StaticText \"9:30pm\"\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"Small group, U14, Dublin\"\n          - StaticText \"Evan\"\n          - StaticText \", sent \"\n          - StaticText \"7:44pm\"\n          - StaticText \"4\"\n          - StaticText \" of \"\n          - StaticText \"6\"\n          - StaticText \" opened\"\n          - list\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Theo S.\"\n              - paragraph\n                - StaticText \"Soft landings, knees over toes. No extra jumping yet.\"\n              - button \"Nudge\" [ref=e23]\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Rosa G.\"\n              - paragraph\n                - StaticText \"Great first step. Keep the cuts low.\"\n              - StaticText \"Opened \"\n              - StaticText \"8:20pm\"\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"1 on 1, Elijah B.\"\n          - StaticText \"Devon\"\n          - StaticText \", sent \"\n          - StaticText \"5:40pm\"\n          - StaticText \"1\"\n          - StaticText \" of \"\n          - StaticText \"1\"\n          - StaticText \" opened\"\n          - list\n            - listitem [level=2]\n              - paragraph\n                - StaticText \"Elijah B.\"\n              - paragraph\n                - StaticText \"Best 10 yard sprint yet, 1.71. Same routine, one more set.\"\n              - StaticText \"Opened \"\n              - StaticText \"5:58pm\"\n      - paragraph\n        - StaticText \"Homework Builder is working on tonight's 3pm group, 9 packs. Sender texts them before 5pm.\"",
+    "browserPageId": "c697c4cb-4441-4e66-bb0a-213f98ed2219"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

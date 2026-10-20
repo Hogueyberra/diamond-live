@@ -1,0 +1,166 @@
+{
+  "id": "81a86b87-c172-4037-aa0c-0257ddbd0f48",
+  "ok": true,
+  "result": {
+    "origin": "https://kestrel-os-demo.vercel.app/",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Four decisions for you",
+        "role": "heading"
+      },
+      "e11": {
+        "name": "Approve all four",
+        "role": "button"
+      },
+      "e12": {
+        "name": "What your agents just did",
+        "role": "heading"
+      },
+      "e13": {
+        "name": "Sofia missed her last 4 sessions. Rehearsals for the school musical run to October 16, so the text pauses her package for two weeks and offers Saturday 10 or 11am at Riverside.",
+        "role": "listitem"
+      },
+      "e14": {
+        "name": "3 open spots, 4 families waiting. The first three replies get the spots and the fourth family gets first call next Tuesday.",
+        "role": "listitem"
+      },
+      "e15": {
+        "name": "26 families from the spring block. Three texts over 12 days with the dates, the sign-up link and Luke's number.",
+        "role": "listitem"
+      },
+      "e16": {
+        "name": "Three videos each, matched to their findings: ankle stability, knee tracking, hip mobility. Goes to the parent with a two line note from the coach.",
+        "role": "listitem"
+      },
+      "e17": {
+        "name": "Dismiss",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Approve",
+        "role": "button"
+      },
+      "e19": {
+        "name": "Dismiss",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Kestrel OS home",
+        "role": "button"
+      },
+      "e20": {
+        "name": "Approve",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Dismiss",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Approve",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Dismiss",
+        "role": "button"
+      },
+      "e24": {
+        "name": "Approve",
+        "role": "button"
+      },
+      "e25": {
+        "name": "Open Chief of Staff",
+        "role": "button"
+      },
+      "e26": {
+        "name": "Open Librarian",
+        "role": "button"
+      },
+      "e27": {
+        "name": "Open Homework Builder",
+        "role": "button"
+      },
+      "e28": {
+        "name": "Open Sender",
+        "role": "button"
+      },
+      "e29": {
+        "name": "Open Intake",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Views",
+        "role": "navigation"
+      },
+      "e30": {
+        "name": "Open Profile Writer",
+        "role": "button"
+      },
+      "e31": {
+        "name": "Open Re-test Clock",
+        "role": "button"
+      },
+      "e32": {
+        "name": "Open Text-back",
+        "role": "button"
+      },
+      "e33": {
+        "name": "Open Booker",
+        "role": "button"
+      },
+      "e34": {
+        "name": "Open Reminder",
+        "role": "button"
+      },
+      "e35": {
+        "name": "Open Attendance Watch",
+        "role": "button"
+      },
+      "e36": {
+        "name": "Open Package Clock",
+        "role": "button"
+      },
+      "e37": {
+        "name": "Open Win-back",
+        "role": "button"
+      },
+      "e38": {
+        "name": "Open station: see the next agents Kestrel could add",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Chief of Staff",
+        "role": "button"
+      },
+      "e5": {
+        "name": "Floor",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Athletes",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Assessments",
+        "role": "button"
+      },
+      "e8": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Programs",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - banner\n    - button \"Kestrel OS home\" [ref=e2]\n    - navigation \"Views\" [ref=e3]\n      - button \"Floor\" [ref=e5]\n        - StaticText \"Floor\"\n      - button \"Athletes\" [ref=e6]\n      - button \"Assessments\" [ref=e7]\n      - button \"Calendar\" [ref=e8]\n      - button \"Programs\" [ref=e9]\n    - StaticText \"12\"\n    - StaticText \"running\"\n    - button \"Chief of Staff\" [ref=e4]\n      - StaticText \"Chief of Staff\"\n  - main\n    - generic\n      - StaticText \"Riverside field house\"\n      - StaticText \"Tue, Sep 29\"\n      - StaticText \", \"\n      - StaticText \"4:12pm\"\n      - StaticText \"Four waiting on you\"\n      - generic\n        - image \"The Kestrel field house, with every AI agent at its station around the field\"\n          - StaticText \"Film table\"\n          - StaticText \"Testing area\"\n          - StaticText \"Front desk\"\n          - StaticText \"Bleacher desk\"\n          - StaticText \"Kestrel\"\n          - StaticText \"Kestrel\"\n          - StaticText \"10\"\n          - StaticText \"10\"\n          - StaticText \"20\"\n          - StaticText \"20\"\n          - StaticText \"30\"\n          - StaticText \"30\"\n          - StaticText \"40\"\n          - StaticText \"40\"\n          - StaticText \"50\"\n          - StaticText \"50\"\n          - StaticText \"40\"\n          - StaticText \"40\"\n          - StaticText \"30\"\n          - StaticText \"30\"\n          - StaticText \"20\"\n          - StaticText \"20\"\n          - StaticText \"10\"\n          - StaticText \"10\"\n          - StaticText \"Open station\"\n          - StaticText \"Kestrel Performance\"\n          - StaticText \"Kestrel Performance\"\n          - StaticText \"Kestrel Performance\"\n          - StaticText \"Kestrel Performance\"\n          - group \"Today's numbers\"\n            - generic\n              - StaticText \"Good afternoon, Devon.\"\n            - StaticText \"4:12pm\"\n            - StaticText \"Four decisions waiting on you\"\n            - StaticText \"19\"\n            - StaticText \"Leads this week\"\n            - StaticText \"13\"\n            - StaticText \"Booked this week\"\n            - StaticText \"58\"\n            - StaticText \"Texts today\"\n            - StaticText \"5\"\n            - StaticText \"Athletes at risk\"\n            - StaticText \"82%\"\n            - StaticText \"Fill this week\"\n            - StaticText \"21/27\"\n            - StaticText \"Homework opened\"\n          - StaticText \"4\"\n          - StaticText \"9\"\n          - StaticText \"31\"\n          - StaticText \"7\"\n          - StaticText \"12\"\n          - StaticText \"23\"\n          - StaticText \"1\"\n          - StaticText \"Press box\"\n          - StaticText \"18\"\n          - StaticText \"5\"\n          - StaticText \"27\"\n          - StaticText \"Kestrel\"\n          - StaticText \"10\"\n          - StaticText \"3\"\n          - StaticText \"44\"\n          - StaticText \"Parents\"\n          - button \"Open Chief of Staff\" [ref=e25]\n          - button \"Open Librarian\" [ref=e26]\n          - button \"Open Homework Builder\" [ref=e27]\n          - button \"Open Sender\" [ref=e28]\n          - button \"Open Intake\" [ref=e29]\n          - button \"Open Profile Writer\" [ref=e30]\n          - button \"Open Re-test Clock\" [ref=e31]\n          - button \"Open Text-back\" [ref=e32]\n          - button \"Open Booker\" [ref=e33]\n          - button \"Open Reminder\" [ref=e34]\n          - button \"Open Attendance Watch\" [ref=e35]\n          - button \"Open Package Clock\" [ref=e36]\n          - button \"Open Win-back\" [ref=e37]\n          - button \"Open station: see the next agents Kestrel could add\" [ref=e38]\n        - generic\n          - generic\n            - StaticText \"Profile Writer\"\n            - StaticText \"Write the performance profile\"\n    - generic\n      - heading \"Four decisions for you\" [level=2, ref=e10]\n      - paragraph\n        - StaticText \"The Chief of Staff held these for you\"\n      - button \"Approve all four\" [ref=e11]\n        - StaticText \"Approve all four\"\n      - list\n        - listitem \"Sofia missed her last 4 sessions. Rehearsals for the school musical run to October 16, so the text pauses her package for two weeks and offers Saturday 10 or 11am at Riverside.\" [level=1, ref=e13]\n          - paragraph\n            - StaticText \"Send the win-back text to Sofia M.'s mom\"\n          - paragraph\n            - StaticText \"Sofia missed her last 4 sessions. Rehearsals for the school musical run to October 16, so the text pauses her package for two weeks and offers Saturday 10 or 11am at Riverside.\"\n          - StaticText \"Win-back\"\n          - StaticText \", held \"\n          - StaticText \"9:04\"\n          - button \"Dismiss\" [ref=e17]\n          - button \"Approve\" [ref=e18]\n        - listitem \"3 open spots, 4 families waiting. The first three replies get the spots and the fourth family gets first call next Tuesday.\" [level=1, ref=e14]\n          - paragraph\n            - StaticText \"Fill tonight's 6pm speed group from the waitlist\"\n          - paragraph\n            - StaticText \"3 open spots, 4 families waiting. The first three replies get the spots and the fourth family gets first call next Tuesday.\"\n          - StaticText \"Reminder\"\n          - StaticText \", held \"\n          - StaticText \"16:04\"\n          - button \"Dismiss\" [ref=e19]\n          - button \"Approve\" [ref=e20]\n        - listitem \"26 families from the spring block. Three texts over 12 days with the dates, the sign-up link and Luke's number.\" [level=1, ref=e15]\n          - paragraph\n            - StaticText \"Start the Orlando reminder sequence for the November block\"\n          - paragraph\n            - StaticText \"26 families from the spring block. Three texts over 12 days with the dates, the sign-up link and Luke's number.\"\n          - StaticText \"Text-back\"\n          - StaticText \", held \"\n          - StaticText \"23:04\"\n          - button \"Dismiss\" [ref=e21]\n          - button \"Approve\" [ref=e22]\n        - listitem \"Three videos each, matched to their findings: ankle stability, knee tracking, hip mobility. Goes to the parent with a two line note from the coach.\" [level=1, ref=e16]\n          - paragraph\n            - StaticText \"Send corrective homework to the 5 athletes assessed this week\"\n          - paragraph\n            - StaticText \"Three videos each, matched to their findings: ankle stability, knee tracking, hip mobility. Goes to the parent with a two line note from the coach.\"\n          - StaticText \"Sender\"\n          - StaticText \", held \"\n          - StaticText \"30:04\"\n          - button \"Dismiss\" [ref=e23]\n          - button \"Approve\" [ref=e24]\n    - generic\n      - heading \"What your agents just did\" [level=2, ref=e12]\n      - paragraph\n        - StaticText \"Every finished task, newest first\"\n      - StaticText \"113\"\n      - StaticText \" done today\"\n      - list\n        - listitem [level=1]\n          - StaticText \"4:09pm\"\n          - paragraph\n            - StaticText \"Booker Booked Zoe V. a free assessment, Saturday 9am at Riverside\"\n          - StaticText \"Greg V., Powell\"\n          - StaticText \"Front desk\"\n          - image\n          - StaticText \"3:32\"\n        - listitem [level=1]\n          - StaticText \"4:05pm\"\n          - paragraph\n            - StaticText \"Text-back Texted back a missed call in 31 seconds\"\n          - StaticText \"Greg V., Powell\"\n          - StaticText \"Front desk\"\n          - image\n          - StaticText \"0:31\"\n        - listitem [level=1]\n          - StaticText \"3:58pm\"\n          - paragraph\n            - StaticText \"Profile Writer Drafted Theo S.'s performance profile, knee flag for Ryan\"\n          - StaticText \"Theo S., basketball HS\"\n          - StaticText \"Testing area\"\n          - image\n          - StaticText \"26:20\"\n        - listitem [level=1]\n          - StaticText \"3:41pm\"\n          - paragraph\n            - StaticText \"Attendance Watch Flagged Amir H. after a second missed session\"\n          - StaticText \"Amir H., basketball U14\"\n          - StaticText \"Bleacher desk\"\n          - image\n          - StaticText \"1:04\"\n        - listitem [level=1]\n          - StaticText \"3:30pm\"\n          - paragraph\n            - StaticText \"Chief of Staff Sent Devon the 3pm check-in, four decisions waiting\"\n          - StaticText \"Devon\"\n          - StaticText \"Press box\"\n          - image\n          - StaticText \"1:35\"\n        - listitem [level=1]\n          - StaticText \"3:12pm\"\n          - paragraph\n            - StaticText \"Reminder Rebooked a no-show for Thursday 5pm\"\n          - StaticText \"Marcus Q., football U16\"\n          - StaticText \"Front desk\"\n          - image\n          - StaticText \"2:28\"\n        - listitem [level=1]\n          - StaticText \"2:47pm\"\n          - paragraph\n            - StaticText \"Librarian Tagged 3 new videos: pogo hops, lateral bounds, Bulgarian squat iso\"\n          - StaticText \"Video library\"\n          - StaticText \"Film table\"\n          - image\n          - StaticText \"6:42\"\n        - listitem [level=1]\n          - StaticText \"1:20pm\"\n          - paragraph\n            - StaticText \"Package Clock Flagged Elijah B.: 2 of 10 sessions left, season in 16 days\"\n          - StaticText \"Elijah B., football HS\"\n          - StaticText \"Bleacher desk\"\n          - image\n          - StaticText \"0:58\"",
+    "browserPageId": "c697c4cb-4441-4e66-bb0a-213f98ed2219"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "captured_on": "2026-10-16",
+  "origin": "https://kestrel-os-demo.vercel.app",
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 719,
+      "sha256": "a328163be20091869f1d935f6c0d34b18f1187650737c004246bf35401629c6d"
+    },
+    {
+      "path": "index-CQLdyNS8.js",
+      "bytes": 447487,
+      "sha256": "2f256482b5eb19349a243678a742cb5bc117a12e3655d1ba04b8e4bf6632a901"
+    },
+    {
+      "path": "index-qLNAtCzC.css",
+      "bytes": 58148,
+      "sha256": "b78a35a6ef6f0657801f633e1834375ca8f7a14ccf855739a10abd7c73add328"
+    }
+  ]
+}

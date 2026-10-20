@@ -1,0 +1,571 @@
+.dm-demo {
+  width: 100%;
+  color: #f4eedf;
+  overflow: hidden;
+}
+.dm-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.dm-figure {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.dm-path {
+  fill: none;
+  stroke: #e9d9b7;
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.dm-full {
+  border-radius: 9px;
+  background: #f3f0e8;
+  margin: 16px 0;
+}
+.dm-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 7px;
+  color: #3b4537;
+}
+.dm-controls button {
+  display: grid;
+  place-items: center;
+  padding: 7px;
+  background: white;
+  border: 1px solid #d9ddd2;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #2d583d;
+  flex-shrink: 0;
+}
+.dm-controls svg {
+  width: 16px;
+  height: 16px;
+}
+.dm-controls button {
+  min-width: 34px;
+  min-height: 36px;
+}
+.lv-library .lv-primary svg,
+.lv-library .lv-secondary svg,
+.lv-library .lv-text svg {
+  width: 17px;
+  height: 17px;
+}
+.lv-development .lv-secondary svg,
+.lv-development .pcl-source svg {
+  width: 17px;
+  height: 17px;
+}
+.dm-controls span {
+  flex: 1;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.dm-controls strong {
+  display: block;
+  font-size: 9px;
+  opacity: 0.7;
+}
+.dm-demo .dm-caption {
+  font-size: 10px;
+  color: #6a705f;
+  margin: 0;
+  padding: 0 12px 12px;
+  line-height: 1.5;
+}
+.pcl-drill-art:has(.dm-demo) {
+  padding: 0;
+  height: auto;
+  aspect-ratio: 320 / 170;
+}
+.pcl-drill-art .dm-demo {
+  height: 100%;
+}
+.pcl-drill-art .pcl-art-category {
+  top: 8px;
+  left: 8px;
+  font-weight: 600;
+}
+.pcl-drill-art .pcl-art-time {
+  right: 7px;
+  bottom: 7px;
+}
+.lv-invite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 17px 21px;
+  margin-bottom: 25px;
+  border: 1px solid #d5dccd;
+  border-radius: 10px;
+  background: #e8ede3;
+}
+.lv-invite strong {
+  font-size: 14px;
+  color: #314c34;
+}
+.lv-invite p {
+  font-size: 12px;
+  color: #63715e;
+  margin: 5px 0 0;
+}
+.lv-primary,
+.lv-secondary,
+.lv-watch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 7px;
+  padding: 11px 15px;
+  border: 1px solid #2d583d;
+  background: #2d583d;
+  color: white;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+.pr-app .lv-watch {
+  color: white;
+}
+.lv-primary {
+  flex-shrink: 0;
+}
+.lv-secondary {
+  background: white;
+  border-color: #d8d9ce;
+  color: #34503b;
+}
+.lv-text {
+  border: 0;
+  background: transparent;
+  color: #795441;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  padding: 7px;
+}
+.lv-library-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+.lv-library-status > span {
+  font-size: 11px;
+  color: #6e7467;
+}
+.lv-status {
+  font-size: 12px;
+  color: #315d39;
+  margin-bottom: 12px;
+}
+.lv-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 22px;
+  align-items: start;
+}
+.lv-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+.lv-resource {
+  border: 1px solid #dbd7cd;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.lv-resource.lv-selected {
+  outline: 2px solid #527357;
+  outline-offset: 2px;
+}
+.lv-resource-cover {
+  border: 0;
+  width: 100%;
+  text-align: left;
+  background: #e7e4da;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 170px;
+  color: #433a31;
+}
+.lv-resource-cover > strong {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 27px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.lv-resource-cover > span:last-child {
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+}
+.lv-platform {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #555346;
+}
+.lv-platform-youtube {
+  color: #a43d2e;
+}
+.lv-platform-instagram {
+  color: #944669;
+}
+.lv-platform-tiktok {
+  color: #245d65;
+}
+.lv-resource-body {
+  padding: 18px;
+}
+.lv-resource-body > span {
+  font-size: 10px;
+  color: #7d7466;
+}
+.lv-resource-body h3 {
+  font-size: 15px;
+  margin: 8px 0;
+}
+.lv-resource-body p {
+  font-size: 12px;
+  color: #72685c;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lv-resource-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  align-items: center;
+  margin-top: 18px;
+}
+.lv-resource-footer a {
+  color: #375c40;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.lv-resource-footer > span {
+  padding: 4px 7px;
+  background: #f4ecdd;
+  border-radius: 4px;
+  color: #7c623a;
+}
+.lv-resource-footer .lv-reviewed {
+  background: #edf3e8;
+  color: #3e683b;
+}
+.lv-empty {
+  grid-column: 1/-1;
+  min-height: 390px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 35px;
+  background: #e9e8de;
+  border: 1px dashed #c5c9b8;
+  border-radius: 12px;
+  color: #50614b;
+}
+.lv-empty h3 {
+  font:
+    600 29px "Barlow Condensed",
+    sans-serif;
+  margin: 20px 0 5px;
+}
+.lv-empty p {
+  max-width: 350px;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.lv-empty small {
+  font-size: 11px;
+  line-height: 1.6;
+  max-width: 330px;
+  margin-top: 22px;
+  color: #6f7466;
+}
+.lv-detail {
+  position: sticky;
+  top: 20px;
+  overflow-wrap: anywhere;
+}
+.lv-watch {
+  display: flex;
+  margin: 16px 0;
+}
+.lv-watch svg {
+  width: 18px;
+}
+.lv-detail-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 17px 0;
+}
+.lv-detail-actions svg {
+  width: 16px;
+}
+.lv-cue {
+  border-radius: 8px;
+  background: #f2eee4;
+  padding: 15px;
+  color: #735e43;
+  margin: 15px 0;
+}
+.lv-cue strong {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.lv-cue p {
+  margin: 7px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lv-how {
+  padding-left: 20px;
+}
+.lv-how li {
+  margin: 22px 0;
+  padding-left: 5px;
+  font-size: 13px;
+}
+.lv-lesson p,
+.lv-lesson li {
+  color: #756c5d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.lv-lesson h3 {
+  font-size: 13px;
+  margin: 20px 0 8px;
+}
+.lv-lesson ol {
+  padding-left: 20px;
+}
+.lv-lesson li {
+  padding-left: 4px;
+  margin-bottom: 10px;
+}
+.lv-dialog {
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100dvh - 40px);
+  padding: 28px;
+  border: 1px solid #d6d1c6;
+  border-radius: 16px;
+  background: #fcfaf5;
+  color: #342d25;
+  overflow-y: auto;
+  box-sizing: border-box;
+  font-family: Barlow, sans-serif;
+}
+.lv-dialog::backdrop {
+  background: #242a25a1;
+  backdrop-filter: blur(3px);
+}
+.lv-dialog h2 {
+  font:
+    600 32px/1.1 "Barlow Condensed",
+    sans-serif;
+  margin: 16px 0 12px;
+}
+.lv-dialog p {
+  color: #756e60;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.lv-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 18px 0;
+  min-width: 0;
+}
+.lv-dialog input:not([type="checkbox"]),
+.lv-dialog textarea,
+.lv-dialog select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid #d7d3c8;
+  background: white;
+  border-radius: 7px;
+  font:
+    13px Barlow,
+    sans-serif;
+  color: #37372d;
+  min-width: 0;
+}
+.lv-dialog textarea {
+  resize: vertical;
+}
+.lv-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.lv-form-row label {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.lv-dialog .lv-checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+  line-height: 1.6;
+  gap: 10px;
+  font-weight: 400;
+}
+.lv-checkbox input {
+  accent-color: #2d583d;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin: 0;
+}
+.lv-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid #dfd8cb;
+  padding-top: 18px;
+}
+.lv-form-footer small {
+  font-size: 11px;
+  color: #7c7364;
+  line-height: 1.6;
+}
+.lv-dialog .lv-error {
+  color: #9c3526;
+  background: #f9e7df;
+  padding: 10px;
+  border-radius: 6px;
+}
+.lv-development {
+  border-top: 1px solid #e7e0d4;
+  margin-top: 22px;
+  padding-top: 18px;
+}
+.lv-development h3 {
+  font-size: 16px;
+}
+.lv-development p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #7b7061;
+}
+.lv-match {
+  padding: 12px;
+  border: 1px solid #dedecf;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+.lv-match strong {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 5px;
+}
+.lv-match a {
+  display: inline-flex;
+  gap: 5px;
+  color: #345a3c;
+  font-size: 12px;
+  margin: 7px 0;
+}
+.lv-match small {
+  font-size: 10px;
+  color: #82735e;
+  display: block;
+}
+.lv-match button {
+  margin-top: 8px;
+}
+.lv-development summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: #45683c;
+  padding: 10px 0;
+}
+.lv-development details[open] {
+  border-bottom: 1px solid #e7e0d4;
+  padding-bottom: 15px;
+}
+.pr-app .lv-development button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pr-app .lv-development button:focus-visible,
+.lv-dialog :is(button, input, textarea, select):focus-visible,
+.dm-controls button:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+@media (max-width: 1100px) {
+  .lv-layout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+  .lv-resource-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .lv-layout {
+    grid-template-columns: 1fr;
+  }
+  .lv-detail {
+    position: static;
+  }
+  .lv-invite {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lv-dialog {
+    padding: 21px;
+  }
+  .lv-form-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .lv-form-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .lv-empty {
+    min-height: 320px;
+    padding: 26px;
+  }
+  .pcl-tabs {
+    gap: 19px;
+  }
+  .pcl-tabs button {
+    font-size: 12px;
+  }
+}

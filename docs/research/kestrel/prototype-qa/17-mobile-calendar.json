@@ -1,0 +1,122 @@
+{
+  "id": "3f0551a2-938c-47f9-983b-1ab1f3d7d2f2",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=calendar",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Development",
+        "role": "button"
+      },
+      "e12": {
+        "name": "Library",
+        "role": "button"
+      },
+      "e13": {
+        "name": "Every rep starts here.",
+        "role": "heading"
+      },
+      "e14": {
+        "name": "Previous week",
+        "role": "button"
+      },
+      "e15": {
+        "name": "October 12 – Oct 18, 2026",
+        "role": "heading"
+      },
+      "e16": {
+        "name": "Next week",
+        "role": "button"
+      },
+      "e17": {
+        "name": "This week",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Mon 12 Practice · 4:00–5:15 PM Fielding foundations Riverside Field · Diamond 2",
+        "role": "button"
+      },
+      "e19": {
+        "name": "Wed 14 Practice · 4:30–5:30 PM Contact & confidence Riverside Field · Batting cages",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Skip to workspace",
+        "role": "link"
+      },
+      "e20": {
+        "name": "Fri 16 Team meeting · 5:00–5:30 PM Coach check-in Riverside Field · Clubhouse",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Sat 17 Practice · 9:00–10:00 AM Saturday team practice Riverside Field",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Week",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Agenda",
+        "role": "button"
+      },
+      "e24": {
+        "name": "Saturday team practice",
+        "role": "heading"
+      },
+      "e25": {
+        "name": "Coach coverage",
+        "role": "heading"
+      },
+      "e26": {
+        "name": "Practice outline",
+        "role": "heading"
+      },
+      "e27": {
+        "name": "Explore practice drills",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Diamond Live Coach Desk",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Prototype workspace",
+        "role": "navigation"
+      },
+      "e5": {
+        "name": "",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Open workspace menu",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Current workspace",
+        "role": "link"
+      },
+      "e8": {
+        "name": "Coach Desk",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Players",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - link \"Skip to workspace\" [ref=e2]\n  - banner\n    - button \"Diamond Live Coach Desk\" [ref=e3]\n      - image\n      - strong\n        - StaticText \"Diamond Live\"\n    - navigation \"Prototype workspace\" [ref=e4]\n      - button \"Coach Desk\" [ref=e8]\n        - image\n        - StaticText \"Coach Desk\"\n      - button \"Players\" [ref=e9]\n        - image\n        - StaticText \"Players\"\n      - button \"Calendar\" [ref=e10]\n        - image\n        - StaticText \"Calendar\"\n      - button \"Development\" [ref=e11]\n        - image\n        - StaticText \"Development\"\n      - button \"Library\" [ref=e12]\n        - image\n        - StaticText \"Library\"\n    - button [ref=e5]\n      - image\n    - button \"Open workspace menu\" [expanded=false, ref=e6]\n      - StaticText \"NC\"\n  - image\n  - strong\n    - StaticText \"Angels\"\n  - StaticText \"/\"\n  - StaticText \"Minor B\"\n  - StaticText \"Fall development\"\n  - main\n    - generic\n      - StaticText \"MAKE ROOM FOR PROGRESS\"\n      - heading \"Every rep starts here.\" [level=1, ref=e13]\n      - paragraph\n        - StaticText \"A shared rhythm for practices, game days, and the people behind them.\"\n      - button \"Previous week\" [ref=e14]\n        - image\n      - heading \"October 12 – Oct 18, 2026\" [level=2, ref=e15]\n        - StaticText \"October 12 – Oct 18, 2026\"\n      - button \"Next week\" [ref=e16]\n        - image\n      - button \"This week\" [ref=e17]\n      - generic \"Calendar display\"\n        - button \"Week\" [ref=e22]\n        - button \"Agenda\" [ref=e23]\n      - button \"Mon 12 Practice · 4:00–5:15 PM Fielding foundations Riverside Field · Diamond 2\" [ref=e18]\n        - StaticText \"Mon\"\n        - strong\n          - StaticText \"12\"\n        - generic\n          - StaticText \"Practice · 4:00–5:15 PM\"\n        - strong\n          - StaticText \"Fielding foundations\"\n        - StaticText \"Riverside Field · Diamond 2\"\n        - image\n      - button \"Wed 14 Practice · 4:30–5:30 PM Contact & confidence Riverside Field · Batting cages\" [ref=e19]\n        - StaticText \"Wed\"\n        - strong\n          - StaticText \"14\"\n        - generic\n          - StaticText \"Practice · 4:30–5:30 PM\"\n        - strong\n          - StaticText \"Contact & confidence\"\n        - StaticText \"Riverside Field · Batting cages\"\n        - image\n      - button \"Fri 16 Team meeting · 5:00–5:30 PM Coach check-in Riverside Field · Clubhouse\" [ref=e20]\n        - StaticText \"Fri\"\n        - strong\n          - StaticText \"16\"\n        - generic\n          - StaticText \"Team meeting · 5:00–5:30 PM\"\n        - strong\n          - StaticText \"Coach check-in\"\n        - StaticText \"Riverside Field · Clubhouse\"\n        - image\n      - button \"Sat 17 Practice · 9:00–10:00 AM Saturday team practice Riverside Field\" [ref=e21]\n        - StaticText \"Sat\"\n        - strong\n          - StaticText \"17\"\n        - generic\n          - StaticText \"Practice · 9:00–10:00 AM\"\n        - strong\n          - StaticText \"Saturday team practice\"\n        - StaticText \"Riverside Field\"\n        - image\n      - StaticText \" Practice\"\n      - StaticText \" Game\"\n      - StaticText \"All times Pacific · Synthetic demo schedule\"\n      - generic\n        - StaticText \"Saturday, October 17\"\n        - heading \"Saturday team practice\" [level=2, ref=e24]\n        - StaticText \"Needs coverage\"\n        - image\n        - StaticText \"9:00–10:00 AM\"\n        - image\n        - StaticText \"Riverside Field\"\n        - image\n        - StaticText \"Angels · Minor B\"\n        - paragraph\n          - StaticText \"Three focused stations, sixty minutes together. Two coaches are assigned; infield needs a station coach.\"\n        - heading \"Coach coverage\" [level=3, ref=e25]\n        - StaticText \"CJ\"\n        - strong\n          - StaticText \"Coach Jordan\"\n        - StaticText \"Session lead\"\n        - image\n        - StaticText \"CL\"\n        - strong\n          - StaticText \"Coach Lee · one station open\"\n        - StaticText \"One station needs a coach\"\n        - heading \"Practice outline\" [level=3, ref=e26]\n        - list\n          - listitem [level=1]\n            - ListMarker \"1. \"\n            - StaticText \"20 min · Throwing station · Coach Jordan\"\n          - listitem [level=1]\n            - ListMarker \"2. \"\n            - StaticText \"20 min · Hitting station · Coach Lee\"\n          - listitem [level=1]\n            - ListMarker \"3. \"\n            - StaticText \"20 min · Infield station · Unassigned\"\n        - button \"Explore practice drills\" [ref=e27]\n          - image\n          - StaticText \"Explore practice drills\"\n          - image\n        - StaticText \"Demo planning preview. No team schedule is changed.\"\n  - contentinfo\n    - image\n    - StaticText \"Built around the coach. Focused on the player.\"\n    - link \"Current workspace\" [ref=e7]\n      - StaticText \"Current workspace\"\n      - image",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

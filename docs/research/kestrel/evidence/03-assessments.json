@@ -1,0 +1,110 @@
+{
+  "id": "09a495e6-cfca-4530-b271-b3548bcdca7f",
+  "ok": true,
+  "result": {
+    "origin": "https://kestrel-os-demo.vercel.app/",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Programs",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Performance profile",
+        "role": "heading"
+      },
+      "e12": {
+        "name": "Parent report",
+        "role": "heading"
+      },
+      "e13": {
+        "name": "Send parent report",
+        "role": "button"
+      },
+      "e14": {
+        "name": "Send to the coach",
+        "role": "button"
+      },
+      "e15": {
+        "name": "Re-test Clock",
+        "role": "heading"
+      },
+      "e16": {
+        "name": "Miles R.",
+        "role": "heading"
+      },
+      "e17": {
+        "name": "Miles R. Injury flag Soccer U12 Profile drafted",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Lila C. Soccer U12 Assessed",
+        "role": "button"
+      },
+      "e19": {
+        "name": "Ben O. Football U16 Report sent",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Kestrel OS home",
+        "role": "button"
+      },
+      "e20": {
+        "name": "Theo S. Injury flag Basketball HS Profile drafted",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Rosa G. Softball U14 Report sent",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Isaiah N. Track HS Profile drafted",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Grace L. Softball U14 Assessed",
+        "role": "button"
+      },
+      "e24": {
+        "name": "Send reminder",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Views",
+        "role": "navigation"
+      },
+      "e4": {
+        "name": "Chief of Staff",
+        "role": "button"
+      },
+      "e5": {
+        "name": "Assessments",
+        "role": "heading"
+      },
+      "e6": {
+        "name": "Floor",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Athletes",
+        "role": "button"
+      },
+      "e8": {
+        "name": "Assessments",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Calendar",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - banner\n    - button \"Kestrel OS home\" [ref=e2]\n      - StaticText \"Kestrel Performance\"\n      - StaticText \"Kestrel OS, \"\n      - StaticText \"Columbus and Orlando\"\n    - navigation \"Views\" [ref=e3]\n      - button \"Floor\" [ref=e6]\n      - button \"Athletes\" [ref=e7]\n      - button \"Assessments\" [ref=e8]\n        - StaticText \"Assessments\"\n      - button \"Calendar\" [ref=e9]\n      - button \"Programs\" [ref=e10]\n    - StaticText \"10\"\n    - StaticText \"agents\"\n    - StaticText \"running\"\n    - StaticText \"Tue, Sep 29\"\n    - StaticText \", \"\n    - StaticText \"4:12pm\"\n    - button \"Chief of Staff\" [ref=e4]\n      - StaticText \"Chief of Staff\"\n    - StaticText \"DH\"\n  - main\n    - heading \"Assessments\" [level=1, ref=e5]\n    - paragraph\n      - StaticText \"Every free assessment becomes a performance profile, a parent report and a 6 week re-test.\"\n    - DescriptionList\n      - term \"form to drafted profile\"\n      - definition\n        - StaticText \"38 min\"\n      - definition\n        - StaticText \"form to drafted profile\"\n      - term \"showed up for their re-test this month\"\n      - definition\n        - StaticText \"86%\"\n      - definition\n        - StaticText \"showed up for their re-test this month\"\n    - list\n      - listitem [level=1]\n        - StaticText \"13\"\n        - StaticText \"Booked this week\"\n        - StaticText \"by \"\n        - StaticText \"Booker\"\n      - listitem [level=1]\n        - StaticText \"7\"\n        - StaticText \"Assessed\"\n        - StaticText \"by \"\n        - StaticText \"Intake\"\n      - listitem [level=1]\n        - StaticText \"5\"\n        - StaticText \"Profiles drafted\"\n        - StaticText \"by \"\n        - StaticText \"Profile Writer\"\n      - listitem [level=1]\n        - StaticText \"2\"\n        - StaticText \"Reports sent\"\n        - StaticText \"by \"\n        - StaticText \"Profile Writer\"\n      - listitem [level=1]\n        - StaticText \"3\"\n        - StaticText \"Re-tests due\"\n        - StaticText \"by \"\n        - StaticText \"Re-test Clock\"\n    - paragraph\n      - StaticText \"Monday, 3 assessed\"\n    - list\n      - listitem [level=1]\n        - button \"Miles R. Injury flag Soccer U12 Profile drafted\" [ref=e17]\n          - StaticText \"Miles R.\"\n          - image \"Injury flag\"\n          - StaticText \"Soccer\"\n          - StaticText \" \"\n          - StaticText \"U12\"\n          - StaticText \"Profile drafted\"\n      - listitem [level=1]\n        - button \"Lila C. Soccer U12 Assessed\" [ref=e18]\n          - StaticText \"Lila C.\"\n          - StaticText \"Soccer\"\n          - StaticText \" \"\n          - StaticText \"U12\"\n          - StaticText \"Assessed\"\n      - listitem [level=1]\n        - button \"Ben O. Football U16 Report sent\" [ref=e19]\n          - StaticText \"Ben O.\"\n          - StaticText \"Football\"\n          - StaticText \" \"\n          - StaticText \"U16\"\n          - StaticText \"Report sent\"\n    - paragraph\n      - StaticText \"Tuesday, 4 assessed\"\n    - list\n      - listitem [level=1]\n        - button \"Theo S. Injury flag Basketball HS Profile drafted\" [ref=e20]\n          - StaticText \"Theo S.\"\n          - image \"Injury flag\"\n          - StaticText \"Basketball\"\n          - StaticText \" \"\n          - StaticText \"HS\"\n          - StaticText \"Profile drafted\"\n      - listitem [level=1]\n        - button \"Rosa G. Softball U14 Report sent\" [ref=e21]\n          - StaticText \"Rosa G.\"\n          - StaticText \"Softball\"\n          - StaticText \" \"\n          - StaticText \"U14\"\n          - StaticText \"Report sent\"\n      - listitem [level=1]\n        - button \"Isaiah N. Track HS Profile drafted\" [ref=e22]\n          - StaticText \"Isaiah N.\"\n          - StaticText \"Track\"\n          - StaticText \" \"\n          - StaticText \"HS\"\n          - StaticText \"Profile drafted\"\n      - listitem [level=1]\n        - button \"Grace L. Softball U14 Assessed\" [ref=e23]\n          - StaticText \"Grace L.\"\n          - StaticText \"Softball\"\n          - StaticText \" \"\n          - StaticText \"U14\"\n          - StaticText \"Assessed\"\n    - paragraph\n      - StaticText \"Booked next, by Booker\"\n    - list\n      - listitem [level=1]\n        - StaticText \"Jaylen P.\"\n        - StaticText \" \"\n        - StaticText \"Baseball U14\"\n        - StaticText \"Thu 4:00pm\"\n      - listitem [level=1]\n        - StaticText \"Mason E.\"\n        - StaticText \" \"\n        - StaticText \"Football U16\"\n        - StaticText \"Thu 4:30pm\"\n      - listitem [level=1]\n        - StaticText \"Zoe V.\"\n        - StaticText \" \"\n        - StaticText \"Track HS\"\n        - StaticText \"Sat 9:00am\"\n      - listitem [level=1]\n        - StaticText \"Ava D.\"\n        - StaticText \" \"\n        - StaticText \"Soccer U12\"\n        - StaticText \"Sat 9:30am\"\n      - listitem [level=1]\n        - StaticText \"Ruby S.\"\n        - StaticText \" \"\n        - StaticText \"Volleyball U14\"\n        - StaticText \"Sat 10:00am\"\n      - listitem [level=1]\n        - StaticText \"Leo A.\"\n        - StaticText \" \"\n        - StaticText \"Basketball U14\"\n        - StaticText \"Sat 9:00am\"\n    - generic\n      - sectionheader\n        - heading \"Miles R.\" [level=2, ref=e16]\n        - paragraph\n          - StaticText \"Soccer U12, assessed Monday with Ryan Mitchell\"\n        - StaticText \"Flag: \"\n        - StaticText \"left ankle\"\n        - StaticText \"Profile drafted\"\n      - StaticText \"Test\"\n      - StaticText \"Result\"\n      - StaticText \"Age group percentile\"\n      - list\n        - listitem [level=1]\n          - StaticText \"10 yard sprint\"\n          - StaticText \"2.16s\"\n          - generic\n          - StaticText \"31st\"\n        - listitem [level=1]\n          - StaticText \"Vertical jump\"\n          - StaticText \"13.0in\"\n          - generic\n          - StaticText \"38th\"\n        - listitem [level=1]\n          - StaticText \"Broad jump\"\n          - StaticText \"64in\"\n          - generic\n          - StaticText \"35th\"\n        - listitem [level=1]\n          - StaticText \"5-10-5 shuttle\"\n          - StaticText \"5.80s\"\n          - generic\n          - StaticText \"29th\"\n        - listitem [level=1]\n          - StaticText \"Single-leg balance\"\n          - StaticText \"8s left, 21s right\"\n          - generic\n          - StaticText \"12th\"\n      - paragraph\n        - StaticText \"Key finding: Left ankle instability, glutes late to fire\"\n      - paragraph\n        - StaticText \"The next six weeks\"\n      - list\n        - listitem [level=1]\n          - StaticText \"Wk \"\n          - StaticText \"1\"\n        - listitem [level=1]\n          - StaticText \"Wk \"\n          - StaticText \"2\"\n        - listitem [level=1]\n          - StaticText \"Wk \"\n          - StaticText \"3\"\n        - listitem [level=1]\n          - StaticText \"Wk \"\n          - StaticText \"4\"\n        - listitem [level=1]\n          - StaticText \"Wk \"\n          - StaticText \"5\"\n        - listitem [level=1]\n          - image \"Re-test\"\n          - StaticText \"Wk \"\n          - StaticText \"6\"\n      - StaticText \"Corrective\"\n      - StaticText \"Speed\"\n      - StaticText \"Re-test held by Re-test Clock\"\n      - paragraph\n        - StaticText \"Homework pack, picked by Homework Builder\"\n      - list\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"Single-leg balance series\"\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"Ankle band walks\"\n        - listitem [level=1]\n          - paragraph\n            - StaticText \"Couch stretch\"\n      - image \"Flagged joints\"\n        - StaticText \"R\"\n        - StaticText \"L\"\n      - list\n        - listitem [level=1]\n          - StaticText \"Left ankle\"\n          - StaticText \"flag\"\n        - listitem [level=1]\n          - StaticText \"Left hip\"\n          - StaticText \"watch\"\n    - generic\n      - sectionheader\n        - paragraph\n          - StaticText \"Profile Writer\"\n        - paragraph\n          - StaticText \"Drafted Monday, coach approves before it sends\"\n      - heading \"Performance profile\" [level=3, ref=e11]\n      - list\n        - listitem [level=1]\n          - StaticText \"1\"\n          - StaticText \"Left ankle rolls in on single-leg landings. Balance is 8 seconds on the left against 21 on the right.\"\n        - listitem [level=1]\n          - StaticText \"2\"\n          - StaticText \"Left glute fires late on the step-down, so the knee drifts in.\"\n        - listitem [level=1]\n          - StaticText \"3\"\n          - StaticText \"Plan: 3 weeks of ankle and hip corrective work, then speed and cutting from week 4.\"\n      - heading \"Parent report\" [level=3, ref=e12]\n      - paragraph\n        - StaticText \"Miles worked hard today. His right side is strong, but his left ankle is less stable, which is common at his age and very fixable. For the next three weeks we will build that ankle up before we add speed work. His homework is three short videos, about ten minutes a day.\"\n      - button \"Send parent report\" [ref=e13]\n      - button \"Send to the coach\" [ref=e14]\n    - generic\n      - heading \"Re-test Clock\" [level=3, ref=e15]\n      - StaticText \"12 of 14 showed this month\"\n      - list\n        - listitem [level=1]\n          - StaticText \"38\"\n          - paragraph\n            - StaticText \"Jada T.\"\n          - paragraph\n            - StaticText \"Day 38 of 42, Thu 5:00pm\"\n          - StaticText \"Booked by the agent\"\n        - listitem [level=1]\n          - StaticText \"41\"\n          - paragraph\n            - StaticText \"Owen K.\"\n          - paragraph\n            - StaticText \"Day 41 of 42, Fri 4:00pm\"\n          - StaticText \"Booked by the agent\"\n        - listitem [level=1]\n          - StaticText \"36\"\n          - paragraph\n            - StaticText \"Maya P.\"\n          - paragraph\n            - StaticText \"Day 36 of 42, two slots offered\"\n          - button \"Send reminder\" [ref=e24]",
+    "browserPageId": "c697c4cb-4441-4e66-bb0a-213f98ed2219"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}
