@@ -24,7 +24,10 @@ export const ASSISTANT_DRILLS = {
   aim: { title: 'Roll to a ready partner', steps: 'From an easy distance, roll a tennis ball toward the ready partner’s hands at ground level. The partner receives with two hands and rolls it back. Pause between rolls. This practices aiming without throwing workload.', cue: 'Look, aim, gentle roll.', measure: 'Notice three rolls the partner can receive without reaching far.', sourceUrl: fieldingSource },
   balance: { title: 'Balance rehearsal', steps: 'Without a bat or ball, find a comfortable athletic stance, turn gently through the hips, and pause in balance. Keep arms close and stay in your own space. Avoid forceful twisting.', cue: 'Comfortable stance, balanced finish.', measure: 'Notice three comfortable balanced finishes.', sourceUrl: basicsSource },
 };
-const drillFor = (skill) => skill === 'hit_swing' ? 'balance' : /accuracy$/.test(skill) ? 'aim' : /agility$/.test(skill) ? 'move' : /footwork$/.test(skill) ? 'gather' : 'receive';
+// The clubhouse records broad categories. Keep them broad rather than inventing
+// granular scouting scores from a category rating.
+const categorySkills = ['hitting', 'throwing', 'fielding', 'baserunning'];
+const drillFor = (skill) => ['hit_swing', 'hitting'].includes(skill) ? 'balance' : skill === 'throwing' || /accuracy$/.test(skill) ? 'aim' : skill === 'baserunning' || /agility$/.test(skill) ? 'move' : /footwork$/.test(skill) ? 'gather' : 'receive';
 
 export function createAssistantPractice(input = {}) {
   const bounded = (value, lo, hi, fallback) => Number.isInteger(value) && value >= lo && value <= hi ? value : fallback;
@@ -33,7 +36,7 @@ export function createAssistantPractice(input = {}) {
   const coaches = bounded(input.coaches, 1, 8, 2);
   const teamMinutes = bounded(input.teamMinutes, 10, 90, 15);
   const homeMinutes = bounded(input.homeMinutes, 5, 30, 10);
-  const summary = Array.isArray(input.summary) ? input.summary.filter((x) => SCOUTING_SKILLS.some((s) => s.id === x.skillId && s.id !== 'hit_bunting') && Number.isInteger(x.observed) && x.observed > 0 && x.observed <= 100 && Number.isInteger(x.needsPractice) && x.needsPractice >= 0 && x.needsPractice <= x.observed) : [];
+  const summary = Array.isArray(input.summary) ? input.summary.filter((x) => (categorySkills.includes(x.skillId) || SCOUTING_SKILLS.some((s) => s.id === x.skillId && s.id !== 'hit_bunting')) && Number.isInteger(x.observed) && x.observed > 0 && x.observed <= 100 && Number.isInteger(x.needsPractice) && x.needsPractice >= 0 && x.needsPractice <= x.observed) : [];
   const priorities = [...summary].filter((s) => s.needsPractice > 0).sort((a, b) => b.needsPractice / b.observed - a.needsPractice / a.observed || b.needsPractice - a.needsPractice);
   const selected = [...new Set(priorities.map((s) => drillFor(s.skillId)))].slice(0, 2);
   for (const id of ['receive', 'gather']) if (selected.length < 2 && !selected.includes(id)) selected.push(id);

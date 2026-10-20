@@ -34,8 +34,8 @@ function Plan({ plan, coachNote }) {
   return <div className="ca-plan"><p>{plan.basis}</p>{coachNote && <p className="ca-note"><strong>AI coaching note:</strong> {coachNote}</p>}{['team', 'home'].map((kind) => { const p = plan[kind]; return <section className="ca-session" key={kind}><h3>{p.title} <span>{p.minutes} minutes</span></h3><p><strong>Equipment:</strong> {p.equipment}</p><p>{p.setup}</p><ol>{p.blocks.map((b, i) => <li key={`${b.id}-${i}`}><strong>{b.start}–{b.end} min · {b.title}</strong><p>{b.steps}</p><p className="ca-cue">“{b.cue}”</p><a href={b.sourceUrl} target="_blank" rel="noreferrer">Related fundamentals ↗</a></li>)}</ol><p><strong>Look for:</strong> {p.success}</p><p className="ca-note">{p.safety}</p><Button onClick={async () => { try { await navigator.clipboard.writeText(practiceText(plan, kind)); setCopied(`${p.title} copied. Review before sharing.`); } catch { setCopied('Copy is unavailable in this browser. Select the instructions above to copy them.'); } }}>Copy {kind === 'home' ? 'parent instructions' : 'team plan'}</Button></section>; })}<p role="status">{copied}</p></div>;
 }
 
-export function CoachAssistant({ team, scoutingData, isCloud, repository }) {
-  const [mode, setMode] = useState('rules');
+export function CoachAssistant({ team, scoutingData, isCloud, repository, practicePlayers, summarizePractice, initialMode = 'rules', demoPractice = false }) {
+  const [mode, setMode] = useState(initialMode);
   const [division, setDivision] = useState(divisions.includes(team.division) ? team.division : 'Minor B');
   const [year, setYear] = useState('2026');
   const [question, setQuestion] = useState('');
@@ -45,9 +45,11 @@ export function CoachAssistant({ team, scoutingData, isCloud, repository }) {
   const [practice, setPractice] = useState({ age: 8, players: 8, coaches: 2, teamMinutes: 15, homeMinutes: 10 });
   const [playerId, setPlayerId] = useState('');
   const controller = useRef(null); const alive = useRef(true);
+  const latestAnswer = useRef(null);
   useEffect(() => { alive.current = true; return () => { alive.current = false; controller.current?.abort(); }; }, []);
-  const summary = assessmentSummary(scoutingData, playerId);
-  const players = scoutingData?.players?.filter((p) => !p.archived) ?? [];
+  useEffect(() => { if (history.length) latestAnswer.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' }); }, [history]);
+  const summary = summarizePractice ? summarizePractice(playerId) : assessmentSummary(scoutingData, playerId);
+  const players = practicePlayers ?? scoutingData?.players?.filter((p) => !p.archived) ?? [];
   async function submit(e) {
     e?.preventDefault(); if (busy || (mode !== 'practice' && !question.trim())) return;
     const asked = mode === 'practice' ? 'Create a team practice and a parent version.' : question.trim();
@@ -58,7 +60,7 @@ export function CoachAssistant({ team, scoutingData, isCloud, repository }) {
     } catch (reason) { if (alive.current && reason.name !== 'AbortError') setError(reason.message); }
     finally { if (alive.current) setBusy(false); }
   }
-  return <section className="ca-root" aria-labelledby="assistant-title"><div className="cw-page-heading"><h1 className="cl-h1" id="assistant-title">A little help for your next play.</h1><p>Ask about your league’s rules, plan useful reps, or work through a coaching question.</p></div>
+  return <section className="ca-root" aria-labelledby="assistant-title"><div className="cw-page-heading"><h1 className="cl-h1" id="assistant-title">A little help for your next play.</h1><p>Ask about your league’s rules, plan useful reps, or work through a coaching question.</p>{demoPractice && <p className="ca-note">Practice plans use the Angels demo’s sample assessments. Ratings and video links you add here stay in this browser.</p>}</div>
     <div className="ca-modes" role="group" aria-label="Assistant mode">{[['rules', 'League rules'], ['practice', 'Practice plan'], ['general', 'Coaching chat']].map(([id, label]) => <Button key={id} aria-pressed={mode === id} disabled={busy} onClick={() => { setMode(id); setError(''); }}>{label}</Button>)}</div>
     <form className="cl-card ca-compose" onSubmit={submit}>
       {mode === 'rules' && <><p className="ca-note">HVLL documents and your shared team library. Select the division and season for this question. Earlier documents may differ; missing rules need league confirmation.</p><div className="ca-fields"><label>Division<select className="cl-input" value={division} disabled={busy} onChange={(e) => setDivision(e.target.value)}>{divisions.map((d) => <option key={d}>{d}</option>)}</select></label><label>Season<select className="cl-input" value={year} disabled={busy} onChange={(e) => setYear(e.target.value)}><option>2026</option><option>2024</option></select></label></div><div className="ca-examples">{prompts.map((p) => <button type="button" key={p} disabled={busy} onClick={() => setQuestion(p)}>{p}</button>)}</div></>}
@@ -66,7 +68,7 @@ export function CoachAssistant({ team, scoutingData, isCloud, repository }) {
       <div className="ca-actions"><Button variant="primary" type="submit" disabled={busy}>{busy ? 'Preparing your answer…' : mode === 'practice' ? 'Build practice plan' : 'Ask assistant'}</Button>{busy && <Button onClick={() => controller.current?.abort()}>Cancel</Button>}{history.length > 0 && <Button disabled={busy} onClick={() => setHistory([])}>Clear conversation</Button>}</div>
       {busy && <p role="status">Checking your request. Detailed explanations may take a few seconds.</p>}{error && <p role="alert" className="cw-alert">{error}</p>}
     </form>
-    <div className="ca-history" aria-label="Assistant answers">{[...history].reverse().map((entry, index) => <article key={history.length - index} className="cl-card ca-answer"><h2>{entry.question}</h2><p className="ca-method">{methods[entry.method]} · {(entry.elapsedMs / 1000).toFixed(1)}s</p>{entry.plan ? <Plan plan={entry.plan} coachNote={entry.coachNote} /> : <p className="ca-prose">{entry.answer}</p>}{entry.sources?.map((source) => <SourceCard key={source.id} source={source} repository={repository} />)}</article>)}</div>
+    <div className="ca-history" aria-label="Assistant answers" aria-live="polite">{[...history].reverse().map((entry, index) => <article ref={index === 0 ? latestAnswer : null} key={history.length - index} className="cl-card ca-answer"><h2>{entry.question}</h2><p className="ca-method">{methods[entry.method]} · {(entry.elapsedMs / 1000).toFixed(1)}s</p>{entry.plan ? <Plan plan={entry.plan} coachNote={entry.coachNote} /> : <p className="ca-prose">{entry.answer}</p>}{entry.sources?.map((source) => <SourceCard key={source.id} source={source} repository={repository} />)}</article>)}</div>
     <p className="ca-note">Each question is checked independently. Include the situation in follow-ups. Review explanations against the cited rules and approve practice instructions before sharing with families.</p>
   </section>;
 }

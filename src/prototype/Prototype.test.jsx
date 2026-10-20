@@ -46,7 +46,7 @@ function open() {
 }
 function navigate(name) {
   fireEvent.click(
-    within(screen.getByRole("navigation", { name: "Prototype workspace" })).getByRole("button", {
+    within(screen.getByRole("navigation", { name: "Clubhouse navigation" })).getByRole("button", {
       name,
     }),
   );
@@ -143,13 +143,13 @@ it("supports an empty player search and recovery", () => {
   expect(screen.getByRole("button", { name: /12\s*Noah Martinez/ })).toBeTruthy();
 });
 
-it("lets the prepared guide navigate to the library without executing an action", () => {
+it("opens the real assistant sign-in gate instead of prepared guide replies", () => {
   open();
   fireEvent.click(screen.getByRole("button", { name: "Coach’s assistant" }));
-  fireEvent.click(screen.getByRole("button", { name: "Where are the rules?" }));
-  expect(screen.getByText("Prototype guide · prepared answers")).toBeTruthy();
-  fireEvent.click(screen.getByRole("button", { name: "Open Library" }));
-  expect(screen.getByRole("heading", { name: "Your next great practice." })).toBeTruthy();
+  expect(screen.getByRole("heading", { name: "Sign in for a little coaching help." })).toBeTruthy();
+  expect(screen.getByRole("link", { name: "Sign in to Diamond Live" }).getAttribute("href")).toBe("/sign-in");
+  expect(screen.queryByText("Prototype guide · prepared answers")).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Close assistant" }));
   expect(screen.queryByRole("dialog")).toBeNull();
 });
 
@@ -183,7 +183,7 @@ it("opens the same workspaces from all four clubhouse areas", () => {
     ["Equipment wall: open Library", "Library"],
   ]) {
     fireEvent.click(screen.getByRole("button", { name: area }));
-    const nav = within(screen.getByRole("navigation", { name: "Prototype workspace" }));
+    const nav = within(screen.getByRole("navigation", { name: "Clubhouse navigation" }));
     expect(nav.getByRole("button", { name: destination }).getAttribute("aria-current")).toBe(
       "page",
     );

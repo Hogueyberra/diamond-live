@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import {
   Baseball,
-  ArrowUp,
   ArrowUpRight,
   Flag,
   X,
@@ -23,6 +22,8 @@ import { useVideoLibrary } from "./drillResources.js";
 import ShareCapture from "./ShareCapture.jsx";
 import { usePlayerAssessments } from "./playerAssessments.js";
 import RulesAssistant from "./RulesAssistant.jsx";
+import ClubhouseAssistant from "./ClubhouseAssistant.jsx";
+import { AccountPanel } from "../AccountPanel.jsx";
 import "./prototype.css";
 
 const VIEWS = [
@@ -33,162 +34,7 @@ const VIEWS = [
   { id: "library", name: "Library", icon: Books, component: LibraryView },
 ];
 
-function replyTo(question) {
-  const q = question.toLowerCase();
-  if (/rule|document|library/.test(q))
-    return {
-      text: "Open the Library to find a drill or inspect a rule reference. The current coaching workspace also has the full searchable HVLL document library, with original passages and page citations.",
-      view: "library",
-      label: "Open Library",
-    };
-  if (/player|rating|assess|skill|progress/.test(q))
-    return {
-      text: "Players puts a sample roster beside each player’s observed skills, development focus, and recent work. Development walks through reviewing an assessment and approving a practice plan. These are sample records, separate from your team.",
-      view: "players",
-      label: "Review players",
-    };
-  if (/calendar|schedule|week|event/.test(q))
-    return {
-      text: "Calendar has a week view and an agenda. Select a session to see the plan and coach coverage. The events in this prototype are sample sessions; your existing team schedule stays in the current workspace.",
-      view: "calendar",
-      label: "See the calendar",
-    };
-  if (/practice|drill|develop|plan/.test(q))
-    return {
-      text: "Development connects an observed skill to a proposed drill and a reviewed practice plan. You can explore the approval flow here. In the current workspace, approved blocks can be assigned to coaches and tracked through completion.",
-      view: "development",
-      label: "Plan development",
-    };
-  if (/review|priorit|attention|approve/.test(q))
-    return {
-      text: "Start with the review queue on Coach Desk. Open a suggestion to inspect the observation and proposed next step before approving or dismissing it. Your choices update this prototype’s queue and activity history for this session.",
-      view: "desk",
-      label: "Open review queue",
-    };
-  return {
-    text: "I can help you find your way around this prototype: review coaching priorities, explore a player, plan development, check the calendar, or find a drill. This guide uses prepared answers; it is not connected to live AI or private team records.",
-    view: "desk",
-    label: "Go to Coach Desk",
-  };
-}
-
-function CoachAssistant({ onClose, onNavigate }) {
-  const dialog = useRef(null);
-  const input = useRef(null);
-  const bottom = useRef(null);
-  const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      id: 0,
-      from: "guide",
-      text: "Good afternoon, Coach. Let’s make the next practice count. What would you like to explore?",
-    },
-  ]);
-  const counter = useRef(0);
-  useEffect(() => {
-    const previous = document.activeElement;
-    dialog.current.showModal();
-    input.current.focus();
-    return () => {
-      if (previous?.isConnected) previous.focus();
-    };
-  }, []);
-  useEffect(() => {
-    bottom.current?.scrollIntoView({ block: "nearest", behavior: "instant" });
-  }, [messages]);
-  const ask = (text) => {
-    const value = text.trim();
-    if (!value) return;
-    setMessages((current) => [
-      ...current,
-      { id: ++counter.current, from: "coach", text: value },
-      { id: ++counter.current, from: "guide", ...replyTo(value) },
-    ]);
-    setQuestion("");
-    input.current.focus();
-  };
-  return (
-    <dialog
-      ref={dialog}
-      className="pr-assistant"
-      aria-labelledby="pr-assistant-title"
-      onCancel={(event) => {
-        event.preventDefault();
-        onClose();
-      }}
-    >
-      <header className="pr-assistant-heading">
-        <span className="pr-assistant-icon">
-          <Flag size={21} />
-        </span>
-        <div>
-          <h2 id="pr-assistant-title">Coach’s assistant</h2>
-          <p>Prototype guide · prepared answers</p>
-        </div>
-        <button className="pr-icon-button" aria-label="Close assistant" onClick={onClose}>
-          <X size={20} />
-        </button>
-      </header>
-      <div className="pr-messages" role="log" aria-label="Conversation">
-        {messages.map((message) => (
-          <div className={`pr-message pr-message--${message.from}`} key={message.id}>
-            {message.from === "guide" && <Flag size={18} aria-hidden="true" />}
-            <div>
-              <p>{message.text}</p>
-              {message.view && (
-                <button
-                  onClick={() => {
-                    onNavigate(message.view);
-                    onClose();
-                  }}
-                >
-                  {message.label}
-                  <ArrowUpRight size={15} />
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
-        <div ref={bottom} />
-      </div>
-      <div className="pr-chat-bottom">
-        <div className="pr-suggestions">
-          {["What needs my review?", "Help me plan practice", "Where are the rules?"].map(
-            (text) => (
-              <button key={text} onClick={() => ask(text)}>
-                {text}
-              </button>
-            ),
-          )}
-        </div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            ask(question);
-          }}
-        >
-          <label className="pr-sr-only" htmlFor="pr-question">
-            Ask the prototype guide
-          </label>
-          <input
-            id="pr-question"
-            ref={input}
-            value={question}
-            onChange={(event) => setQuestion(event.target.value)}
-            placeholder="Ask about this workspace…"
-            maxLength={500}
-          />
-          <button type="submit" disabled={!question.trim()} aria-label="Send message">
-            <ArrowUp size={20} />
-          </button>
-        </form>
-        <p>Sample workspace. No messages are sent to families.</p>
-      </div>
-    </dialog>
-  );
-}
-
-export default function Prototype() {
+export default function Prototype({ account }) {
   const videoLibrary = useVideoLibrary();
   const assessments = usePlayerAssessments();
   const [params, setParams] = useSearchParams();
@@ -199,6 +45,11 @@ export default function Prototype() {
   const [selectedPlayerId, setSelectedPlayerId] = useState(null);
   const [playerSelectionVersion, setPlayerSelectionVersion] = useState(0);
   const [teamMenu, setTeamMenu] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountName = account?.profile?.display_name || "Coach";
+  const initials = account?.user ? accountName.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase() : "DC";
+  const openAccount = () => { setAssistantMode(null); setTeamMenu(false); setAccountOpen(true); };
+  useEffect(() => { setAssistantMode(null); }, [account?.user?.id, account?.activeTeamId]);
   const main = useRef(null);
   const navigate = (view, playerId) => {
     if (!VIEWS.some((item) => item.id === view)) return;
@@ -213,7 +64,7 @@ export default function Prototype() {
   };
   useEffect(() => {
     const previous = document.title;
-    document.title = "Diamond Live · Coach Desk prototype";
+    document.title = "Diamond Live · Coach Desk";
     return () => {
       document.title = previous;
     };
@@ -253,7 +104,7 @@ export default function Prototype() {
               <small>A little more purpose. Every practice.</small>
             </span>
           </button>
-          <nav className="pr-navigation" aria-label="Prototype workspace">
+          <nav className="pr-navigation" aria-label="Clubhouse navigation">
             {VIEWS.map(({ id, name, icon: Icon }) => (
               <button
                 key={id}
@@ -268,7 +119,7 @@ export default function Prototype() {
           <div className="pr-header-actions">
             <span className="pr-demo-badge">
               <span />
-              Interactive prototype
+              Demo clubhouse
             </span>
             <button
               className="pr-assistant-trigger"
@@ -284,16 +135,16 @@ export default function Prototype() {
               aria-expanded={teamMenu}
               onClick={() => setTeamMenu(!teamMenu)}
             >
-              NC
+              {initials}
             </button>
           </div>
           {teamMenu && (
             <div className="pr-workspace-menu">
-              <strong>Coach’s sample workspace</strong>
-              <p>Explore with fictional team data.</p>
-              <Link to="/sign-in">Sign in to your team<ArrowUpRight size={15} /></Link>
-              <Link to="/preview">
-                Open current coaching workspace
+              <strong>{account?.user ? accountName : "Demo coach"}</strong>
+              <p>Angels demo · Sample team data</p>
+              {account?.user ? <button onClick={openAccount}>Your account and teams</button> : <Link to="/sign-in">Sign in to your team<ArrowUpRight size={15} /></Link>}
+              <Link to="/workspace">
+                Shared team records
                 <ArrowUpRight size={15} />
               </Link>
               <Link to="/demo">
@@ -347,14 +198,12 @@ export default function Prototype() {
             <Baseball size={14} />
             Built around the coach. Focused on the player.
           </span>
-          <Link to="/preview">
-            Current workspace
-            <ArrowUpRight size={14} />
-          </Link>
+          <span>Angels demo · Your clubhouse preview</span>
         </footer>
         {assistantMode === "coach" && !capturing && (
-          <CoachAssistant onClose={() => setAssistantMode(null)} onNavigate={navigate} />
+          <ClubhouseAssistant account={account} assessments={assessments} onClose={() => setAssistantMode(null)} onAccount={openAccount} />
         )}
+        {accountOpen && account && <div className="pr-account-host"><AccountPanel key={account.user?.id ?? "guest"} account={account} onClose={() => setAccountOpen(false)} /></div>}
         {assistantMode === "rules" && !capturing && (
           <RulesAssistant onClose={() => setAssistantMode(null)} />
         )}
