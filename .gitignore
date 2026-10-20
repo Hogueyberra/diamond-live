@@ -14,7 +14,6 @@ output/playwright/
 # Local planning and capture notes are not part of the public app.
 docs/coaching-workspace-plan.md
 docs/uiverse-integration.md
-design-qa.md
 
 # Supabase CLI cache.
 supabase/.temp/
