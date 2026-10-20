@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const mock = vi.hoisted(() => ({
   listener: null,
-  auth: { onAuthStateChange: vi.fn(), getSession: vi.fn(), signInWithOtp: vi.fn(), verifyOtp: vi.fn(), signOut: vi.fn() },
+  auth: { onAuthStateChange: vi.fn(), getSession: vi.fn(), signInWithOtp: vi.fn(), verifyOtp: vi.fn(), signOut: vi.fn(), signInWithPassword: vi.fn(), signInWithOAuth: vi.fn(), exchangeCodeForSession: vi.fn() },
   repository: { getProfile: vi.fn(), listTeams: vi.fn(), saveProfile: vi.fn(), createTeam: vi.fn(), joinTeam: vi.fn(), createInvite: vi.fn(), listMembers: vi.fn(), removeMember: vi.fn(), listInvites: vi.fn(), revokeInvite: vi.fn(), loadWorkspace: vi.fn(), saveWorkspace: vi.fn() },
   unsubscribe: vi.fn(),
 }));
@@ -12,6 +12,7 @@ vi.mock('./supabaseClient.js', () => ({ cloudConfigured: true, configError: '', 
 vi.mock('./cloudRepository.js', () => ({ createCloudRepository: () => mock.repository }));
 import { useAccount } from './useAccount.js';
 import { useSharedWorkspace } from './useSharedWorkspace.js';
+import { AuthContext } from './AuthContext.js';
 
 const deferred = () => { let resolve, reject; const promise = new Promise((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; };
 const session = (id) => ({ user: { id, email: `${id}@example.com` }, access_token: `test-${id}` });
@@ -27,12 +28,57 @@ beforeEach(() => {
   mock.auth.signInWithOtp.mockResolvedValue({ data: {}, error: null });
   mock.auth.verifyOtp.mockResolvedValue({ data: {}, error: null });
   mock.auth.signOut.mockResolvedValue({ error: null });
+  mock.auth.signInWithPassword.mockResolvedValue({ data: {}, error: null });
+  mock.auth.exchangeCodeForSession.mockResolvedValue({ data: {}, error: null });
   mock.repository.getProfile.mockResolvedValue({ display_name: 'Coach' });
   mock.repository.listTeams.mockResolvedValue([]);
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe('account identity and asynchronous responses', () => {
+  it('uses Clerk OIDC with a same-origin callback and signs out of both services', async () => {
+    const clerk = { enabled: true, isLoaded: true, isSignedIn: true, provider: 'custom:clerk', signOut: vi.fn().mockResolvedValue(undefined) };
+    mock.auth.signInWithOAuth.mockResolvedValue({ data: { url: 'https://auth.example.com/authorize' } });
+    const wrapper = ({ children }) => <AuthContext.Provider value={clerk}>{children}</AuthContext.Provider>;
+    const { result } = renderHook(() => useAccount(), { wrapper });
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    await result.current.beginClerkSignIn();
+    expect(mock.auth.signInWithOAuth).toHaveBeenCalledWith({ provider: 'custom:clerk', options: { redirectTo: `${window.location.origin}/auth/callback`, scopes: 'openid profile email' } });
+    await result.current.signOut();
+    expect(mock.auth.signOut).toHaveBeenCalledWith({ scope: 'local' });
+    expect(clerk.signOut).toHaveBeenCalledTimes(1);
+  });
+
+  it('refuses to initiate Clerk OAuth before Clerk has authenticated the user', async () => {
+    const { result } = renderHook(() => useAccount());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    await expect(result.current.beginClerkSignIn()).rejects.toThrow('Complete Clerk sign-in first');
+    expect(mock.auth.signInWithOAuth).not.toHaveBeenCalled();
+  });
+
+  it('uses the existing account provider for passwords without altering password whitespace', async () => {
+    const { result } = renderHook(() => useAccount());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    await act(async () => { await result.current.signInWithPassword(' coach@example.com ', '  exact password  '); });
+    expect(mock.auth.signInWithPassword).toHaveBeenCalledWith({ email: 'coach@example.com', password: '  exact password  ' });
+    mock.auth.signInWithPassword.mockResolvedValueOnce({ error: new Error('Invalid credentials') });
+    await expect(result.current.signInWithPassword('coach@example.com', 'wrong')).rejects.toThrow('Invalid credentials');
+  });
+
+  it('does not create accounts through the existing-account code fallback', async () => {
+    const { result } = renderHook(() => useAccount());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    await result.current.requestCode('coach@example.com', { existingOnly: true });
+    expect(mock.auth.signInWithOtp).toHaveBeenCalledWith({ email: 'coach@example.com', options: { shouldCreateUser: false } });
+  });
+
+  it('refuses a callback that would replace an already active account', async () => {
+    mock.auth.getSession.mockResolvedValue({ data: { session: session('account-a') } });
+    const { result } = renderHook(() => useAccount());
+    await waitFor(() => expect(result.current.user?.id).toBe('account-a'));
+    await expect(result.current.completeClerkSignIn('code')).rejects.toThrow('already have an active account');
+    expect(mock.auth.exchangeCodeForSession).not.toHaveBeenCalled();
+  });
   it('clears prior account data and ignores its late profile/team responses', async () => {
     const oldProfile = deferred(); const oldTeams = deferred();
     mock.auth.getSession.mockResolvedValue({ data: { session: session('account-a') } });

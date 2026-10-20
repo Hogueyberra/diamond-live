@@ -24,7 +24,11 @@ async function verify() {
   const module = await (await read(prototypeUrl)).text();
   assert(module.includes('Consult the Rules'), 'Published clubhouse must include the umpire');
   assert(module.includes('Record assessment'), 'Published clubhouse must include player assessments');
-  for (const route of ['prototype', 'prototype?capture=1', 'preview']) {
+  const authentication = entry.match(/(?:\.\/|\/assets\/)AuthPages-[A-Za-z0-9_-]+\.js/);
+  assert(authentication, 'Published application must include the sign-in page');
+  const authModule = await (await read(new URL(authentication[0], entryUrl))).text();
+  assert(authModule.includes('Already have a Diamond Live account?'), 'Published sign-in must preserve existing account access');
+  for (const route of ['prototype', 'prototype?capture=1', 'preview', 'sign-in', 'auth/connect', 'auth/callback']) {
     // GitHub Pages serves the SPA through 404.html on direct route entry.
     const html = await (await read(route, [200, 404])).text();
     assert(html.includes(script[1]), `${route}: SPA fallback must load the current application`);

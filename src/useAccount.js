@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cloudConfigured, configError, supabase } from './supabaseClient.js';
 import { createCloudRepository } from './cloudRepository.js';
+import { useClerkConnection } from './AuthContext.js';
+import { authPath } from './authConfig.js';
 
 export function useAccount() {
+  const clerk = useClerkConnection();
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(cloudConfigured);
   const [error, setError] = useState('');
@@ -58,11 +61,28 @@ export function useAccount() {
   const throwError = (result) => { if (result.error) throw result.error; return result.data; };
   return {
     configured: cloudConfigured, configError, repository, user: session?.user ?? null, loading, error, profile, teams, activeTeamId,
+    clerk,
     setActiveTeamId: (id) => { if (!teams.some((team) => team.id === id)) throw new Error('This team is no longer available to your account.'); selectTeam(id); },
     reload,
-    requestCode: async (email) => {
+    signInWithPassword: async (email, password) => {
       if (!supabase) throw new Error('Account setup is not complete yet.');
-      throwError(await supabase.auth.signInWithOtp({ email: email.trim(), options: { shouldCreateUser: true } }));
+      throwError(await supabase.auth.signInWithPassword({ email: email.trim(), password }));
+    },
+    beginClerkSignIn: async () => {
+      if (!supabase || !clerk.enabled || !clerk.isSignedIn) throw new Error('Complete Clerk sign-in first.');
+      if (identity.current) throw new Error('You already have an active account. Sign out before changing accounts.');
+      const redirectTo = new URL(authPath('auth/callback', import.meta.env.BASE_URL), window.location.origin).href;
+      const data = throwError(await supabase.auth.signInWithOAuth({ provider: clerk.provider, options: { redirectTo, scopes: 'openid profile email' } }));
+      if (!data?.url) throw new Error('The account connection could not be started.');
+    },
+    completeClerkSignIn: async (code) => {
+      if (!supabase || !code) throw new Error('Start sign-in again.');
+      if (identity.current) throw new Error('You already have an active account.');
+      throwError(await supabase.auth.exchangeCodeForSession(code));
+    },
+    requestCode: async (email, { existingOnly = false } = {}) => {
+      if (!supabase) throw new Error('Account setup is not complete yet.');
+      throwError(await supabase.auth.signInWithOtp({ email: email.trim(), options: { shouldCreateUser: !existingOnly } }));
     },
     verifyCode: async (email, token) => {
       if (!supabase) throw new Error('Account setup is not complete yet.');
@@ -71,7 +91,10 @@ export function useAccount() {
     saveProfile: async (name) => { requireAccount(); await repository.saveProfile(name); await reload(); },
     createTeam: async (details) => { requireAccount(); const team = await repository.createTeam(details); await reload(); if (identity.current === userId) selectTeam(team.id); return team; },
     joinTeam: async (code) => { requireAccount(); const team = await repository.joinTeam(code.trim()); await reload(); if (identity.current === userId) selectTeam(team.id); return team; },
-    signOut: async () => { if (supabase) throwError(await supabase.auth.signOut({ scope: 'local' })); },
+    signOut: async () => {
+      if (supabase) throwError(await supabase.auth.signOut({ scope: 'local' }));
+      if (clerk.enabled && clerk.isSignedIn) await clerk.signOut();
+    },
     createInvite: (role) => { requireAccount(); return repository.createInvite(activeTeamId, role); },
     listMembers: () => { requireAccount(); return repository.listMembers(activeTeamId); },
     removeMember: (id) => { requireAccount(); return repository.removeMember(activeTeamId, id); },

@@ -291,6 +291,7 @@ export default function Prototype() {
             <div className="pr-workspace-menu">
               <strong>Coach’s sample workspace</strong>
               <p>Explore with fictional team data.</p>
+              <Link to="/sign-in">Sign in to your team<ArrowUpRight size={15} /></Link>
               <Link to="/preview">
                 Open current coaching workspace
                 <ArrowUpRight size={15} />

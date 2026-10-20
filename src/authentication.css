@@ -1,0 +1,28 @@
+.dl-auth-page, .dl-auth-page *, .dl-auth-page *::before, .dl-auth-page *::after { box-sizing: border-box; }
+.dl-auth-page { min-height: 100dvh; display: grid; justify-items: center; align-content: start; gap: 24px; padding: 64px 20px; background: #f7f7f9; color: #202025; font-family: Inter, 'Segoe UI', sans-serif; color-scheme: light; }
+.dl-auth-brand { font-size: 20px; font-weight: 750; color: #254b35; text-decoration: none; }
+.dl-auth-card { width: min(100%, 420px); padding: 30px; background: white; border: 1px solid #e0e0e5; border-radius: 12px; box-shadow: 0 8px 20px #18212f0c; }
+.dl-auth-card h1, .dl-auth-card h2 { margin: 0 0 8px; text-align: center; font-size: 20px; font-weight: 700; }
+.dl-auth-subtitle { margin: 0 0 26px; color: #737382; text-align: center; font-size: 14px; line-height: 1.6; }
+.dl-auth-page .cl-rootBox, .dl-auth-page .cl-cardBox { width: 100%; max-width: 420px; }
+.dl-auth-page .cl-cardBox { box-shadow: none; border: 1px solid #e0e0e5; }
+.dl-auth-clerk { width: min(100%, 420px); }
+.dl-auth-actions { display: grid; gap: 16px; margin-bottom: 16px; text-align: center; }
+.dl-signin-form { display: grid; gap: 16px; color: #202025; }
+.dl-signin-form form { display: grid; gap: 18px; }
+.dl-signin-form label { display: grid; gap: 8px; font-size: 14px; font-weight: 550; }
+.dl-signin-form input { width: 100%; box-sizing: border-box; min-height: 44px; padding: 11px 12px; border: 1px solid #d9d9df; border-radius: 7px; font: inherit; font-size: 16px; color: #202025; background: #fff; }
+.dl-signin-form input:focus-visible, .dl-auth-page :is(a, button, summary):focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
+.dl-signin-form button { font: inherit; cursor: pointer; min-height: 44px; }
+.dl-signin-form button:disabled { opacity: .6; cursor: wait; }
+.dl-auth-submit { border: 1px solid #26262e; border-radius: 7px; background: #36363e; color: white; padding: 10px 16px; font-weight: 650 !important; }
+.dl-auth-submit:hover:not(:disabled) { background: #24242b; }
+.dl-auth-link { background: transparent; border: 0; color: #3b4a68; text-decoration: underline; text-underline-offset: 3px; padding: 0 6px; }
+.dl-auth-help { margin: 0; font-size: 13px; color: #737382; text-align: center; line-height: 1.5; }
+.dl-auth-error, .dl-auth-message { padding: 12px; border-radius: 7px; font-size: 14px; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
+.dl-auth-error { color: #882b2b; background: #fff0f0; }
+.dl-auth-message { color: #254b35; background: #eef7f0; }
+.dl-auth-email { overflow-wrap: anywhere; }
+.coaching-workspace .ac-signin-card { background: white; padding: 24px; border-radius: 12px; }
+.coaching-workspace .ac-signin-card p { margin: 0; }
+@media (max-width: 480px) { .dl-auth-page { padding: 30px 16px; } .dl-auth-card { padding: 24px; } }

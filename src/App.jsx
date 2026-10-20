@@ -11,6 +11,9 @@ import { useAccount } from "./useAccount.js";
 import { useSharedWorkspace } from "./useSharedWorkspace.js";
 
 const Prototype = lazy(() => import('./prototype/Prototype.jsx'));
+const SignInPage = lazy(() => import('./AuthPages.jsx').then((module) => ({ default: module.SignInPage })));
+const ClerkConnect = lazy(() => import('./AuthPages.jsx').then((module) => ({ default: module.ClerkConnect })));
+const AuthCallback = lazy(() => import('./AuthPages.jsx').then((module) => ({ default: module.AuthCallback })));
 
 const LINKS = [
   ["/demo", "Saturday"],
@@ -149,6 +152,9 @@ export function AppRoutes() {
         <Route path="diamond-live/*" element={<LegacyProjectRedirect />} />
         <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
         <Route path="preview" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} demoPreview />} />
+        <Route path="sign-in/*" element={<Suspense fallback={<p role="status">Opening sign-in…</p>}><SignInPage account={account} /></Suspense>} />
+        <Route path="auth/connect" element={<Suspense fallback={<p role="status">Opening your account…</p>}><ClerkConnect account={account} /></Suspense>} />
+        <Route path="auth/callback" element={<Suspense fallback={<p role="status">Completing sign-in…</p>}><AuthCallback account={account} /></Suspense>} />
         <Route path="prototype" element={<Suspense fallback={<p role="status">Opening Coach Desk…</p>}><Prototype /></Suspense>} />
         <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
