@@ -1,0 +1,11 @@
+{
+  "id": "1d807674-e0ea-4bc8-b260-f128c6bd7f80",
+  "ok": true,
+  "result": {
+    "result": "{\"viewport\":390,\"documentWidth\":375}",
+    "origin": "http://localhost:4173/prototype?view=library"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

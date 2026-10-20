@@ -1,6 +1,6 @@
 # Diamond Live local assistant
 
-Prepared on October 19, 2026. The local assistant runs on Nick’s Mac mini (M4 Pro, 24 GB). Laya is not installed or required.
+Prepared on October 19, 2026; updated October 20 after merging the latest GitHub work. The local assistant runs on Nick’s Mac mini (M4 Pro, 24 GB). Laya is not installed or required.
 
 ## Try it
 
@@ -46,7 +46,7 @@ These are sample measurements, not guarantees or a multi-coach load test. The pi
 
 The integrated rules test covers inning caps, weekly reset, reentry, courtesy runners, eight-player games, playing-time rotation, missing pitch-count/rest eligibility, Minor C bunting, and Rookie Ball stealing. The eight primary selection/behavior cases passed for the chosen model. This checks selected cases, not every possible league question.
 
-Final validation: 365 tests passed across 36 files, and the production build passed with the existing main-bundle size warning. Live checks rejected unsigned, invalid-session, and demo-to-real-team requests; PDF links opened successfully; simultaneous work returned a retry message; cancellation released capacity for the next request. Browser checks covered rule answers, both practice versions, copying parent instructions, cancelling, and clearing answers on team change. A real signed-in coach session still needs an end-to-end check. Built files were checked for the local demo token and the unrelated budget file; neither was present.
+Latest validation: 410 tests passed across 44 files, and the production build passed with the existing main-bundle size warning. Live checks rejected unsigned, invalid-session, and demo-to-real-team requests; PDF links opened successfully; simultaneous work returned a retry message; cancellation released capacity for the next request. Browser checks covered rule answers, both practice versions, copying parent instructions, cancelling, and clearing answers on team change. A real signed-in coach session still needs an end-to-end check. Built files were checked for the local demo token and the unrelated budget file; neither was present.
 
 ## Documents
 
@@ -112,12 +112,24 @@ node scripts/smoke-assistant.mjs
 
 Evaluation output is saved locally under `output/ai-evaluation/` and ignored by Git. Do not publish local tokens, environment files, logs, or private team questions. The server does not log prompts or authentication headers.
 
-## Remote coach access — awaiting approval
+## Protected public pilot — enabled October 20
 
-The public website has not been deployed with this feature. A prepared Cloudflare pilot would serve the built app and its protected assistant API through a temporary `*.trycloudflare.com` address. The homepage and league PDFs would be public; assistant requests would require a signed-in owner or coach. The local sample bypass is rejected on forwarded requests. Ollama itself would remain private.
+The user approved the persistent protected pilot on October 20. It is now running through the per-user `com.diamondlive.pilot` service and starts at login. The current address is:
 
-Automatic approval review rejected starting that persistent public tunnel because the destination, access scope, and persistent exposure needed specific approval. The user has been asked; no tunnel is running. `scripts/install-coach-pilot.py` is prepared but must not be run until that approval is received.
+**https://newer-volume-separation-racks.trycloudflare.com/**
 
-After approval, finish a real signed-in coach test using the existing emailed-code flow, verify viewer/other-team denial over the public route, and check simultaneous-request behavior before sharing the link. The current sign-in flow uses a code entered in the app, not a redirect or magic-link callback, so a pilot hostname does not require changing the auth redirect allowlist. A quick tunnel changes hostname when restarted and has no uptime guarantee. For ongoing coach use, configure a named tunnel and stable domain, then perform the same access checks. Keeping the Mac awake alone does not guarantee internet or service availability.
+Sign in at `/sign-in` with an existing Diamond Live password or email code. The homepage, clubhouse demo, and bundled league PDFs are public. AI requests require a verified owner/coach membership; the local demo bypass is rejected on forwarded requests. Ollama stays on loopback and its raw endpoints are not published. The primary `diamondliveapp.com` deployment is unchanged by this pilot.
 
-Work is saved on branch `codex/local-ai-coach`. The unrelated budget PDF was not changed.
+The public HTTPS checks passed for the homepage, prototype, capture, preview, sign-in and callback routes, clubhouse/umpire images, and league PDF. Unsigned, invalid-session, and fake-demo-token AI requests returned 401. Raw model routes and local configuration/server source paths returned 404. A real signed-in coach check remains pending the user's sign-in; unit tests cover viewer and other-team denial. No messages or sign-in codes were sent automatically.
+
+The optional Clerk setup remains disabled, as documented in `clerk-auth-setup.md`; the existing password/code account flow works without selecting a Clerk application or changing redirect settings. If Clerk is activated later, its provider and exact callback origins must be configured and verified separately.
+
+A quick tunnel changes its address on restart and has no uptime guarantee. Find the latest address with `npm run assistant:pilot-status`. For ongoing coach use, configure a named tunnel and stable domain, then repeat the access checks. Keeping the Mac awake alone does not guarantee internet or service availability. See [Cloudflare's quick-tunnel limits](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).
+
+To verify a current pilot URL, run `node scripts/verify-assistant-pilot.mjs https://CURRENT.trycloudflare.com` and `node scripts/verify-public-site.mjs https://CURRENT.trycloudflare.com`. To stop public access, run `launchctl bootout gui/$(id -u)/com.diamondlive.pilot`; moving its plist out of `~/Library/LaunchAgents/` also disables the next-login start. This does not stop the private local assistant.
+
+## GitHub continuation checkpoint
+
+Merged GitHub `main` at `1a2ddf4` (the October 20 cross-computer handoff) into `codex/local-ai-coach`, preserving the clubhouse prototype, drill/video library, local player assessments, umpire rules lookup, and password/optional-Clerk sign-in. The working AI remains in the signed-in coaching workspace's Assistant view. The clubhouse guide still labels its prepared responses, and its browser-local records are not silently copied into private team data.
+
+Compatible dependency fixes updated Vite to 8.3.4 and source-map-js to 1.2.2 with their build dependencies. The post-update audit reported zero vulnerabilities. Source, lockfile, tests, and startup scripts are saved together. The unrelated budget PDF was not changed or published.

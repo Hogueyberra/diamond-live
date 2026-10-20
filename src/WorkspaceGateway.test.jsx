@@ -47,6 +47,17 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe('scouting account and navigation boundary', () => {
+  it('preserves pending demo scouting before navigating to Clerk sign-in', async () => {
+    const current = { ...account(), user: null, clerk: { enabled: true } };
+    render(app(current, shared(current), true));
+    fireEvent.click(screen.getByRole('button', { name: 'Scouting', exact: true }));
+    await screen.findByText('Scouting demo');
+    fireEvent.click(screen.getByRole('button', { name: 'Start pending scouting' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Sign in', exact: true }));
+    expect(screen.getByRole('alert').textContent).toContain('unsaved team or scouting changes');
+    expect(screen.getByRole('region', { name: 'Scouting test boundary' })).toBeTruthy();
+  });
+
   it('never constructs a scouting repository or renders a demo for a signed-in Viewer', () => {
     render(app(account('viewer')));
     expect(screen.queryByRole('button', { name: 'Scouting', exact: true })).toBeNull();

@@ -1,0 +1,38 @@
+{
+  "id": "d832e49f-412b-497f-8d55-c3f1e0e3bb99",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype",
+    "refs": {
+      "e1": {
+        "name": "Close review",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Turn an observation into his next rep.",
+        "role": "heading"
+      },
+      "e3": {
+        "name": "What we observed",
+        "role": "heading"
+      },
+      "e4": {
+        "name": "Contact-point tee progression",
+        "role": "heading"
+      },
+      "e5": {
+        "name": "Dismiss suggestion",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Approve in prototype",
+        "role": "button"
+      }
+    },
+    "snapshot": "- dialog \"Turn an observation into his next rep.\"\n  - StaticText \"REVIEW A SUGGESTION\"\n  - button \"Close review\" [ref=e1]\n    - image\n  - StaticText \"MB\"\n  - heading \"Turn an observation into his next rep.\" [level=2, ref=e2]\n  - paragraph\n    - StaticText \"Mason Brooks\"\n  - heading \"What we observed\" [level=3, ref=e3]\n  - paragraph\n    - StaticText \"The sample observation records contact drifting behind the front foot. A simple tee progression gives Mason a repeatable setup and a clear target in front of the plate.\"\n  - StaticText \"Coach Jordan · Batting observation · Oct 14\"\n  - image\n  - StaticText \"PROPOSED NEXT STEP\"\n  - heading \"Contact-point tee progression\" [level=3, ref=e4]\n  - paragraph\n    - StaticText \"8 min · Hitting station\"\n  - paragraph\n    - StaticText \"Add one focused hitting block to a sample practice draft. This preview updates sample data only.\"\n  - button \"Dismiss suggestion\" [ref=e5]\n  - button \"Approve in prototype\" [ref=e6]\n    - image\n    - StaticText \"Approve in prototype\"",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

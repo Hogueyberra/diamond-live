@@ -1,0 +1,134 @@
+{
+  "id": "8cf372d8-b62f-4bdd-b60a-3f6d2096513b",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=development",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Development",
+        "role": "button"
+      },
+      "e12": {
+        "name": "Library",
+        "role": "button"
+      },
+      "e13": {
+        "name": "Observation into action.",
+        "role": "heading"
+      },
+      "e14": {
+        "name": "Development queue",
+        "role": "heading"
+      },
+      "e15": {
+        "name": "12 Noah Martinez Ground-ball footwork Plan proposed",
+        "role": "button"
+      },
+      "e16": {
+        "name": "4 Mason Brooks Contact point Plan proposed",
+        "role": "button"
+      },
+      "e17": {
+        "name": "7 Eli Thompson Receiving Needs observation",
+        "role": "button"
+      },
+      "e18": {
+        "name": "22 Lucas Chen First-step reads Plan proposed",
+        "role": "button"
+      },
+      "e19": {
+        "name": "18 Oliver Davis Throwing accuracy Plan proposed",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Skip to workspace",
+        "role": "link"
+      },
+      "e20": {
+        "name": "9 Leo Wilson Baserunning Needs observation",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Noah Martinez",
+        "role": "heading"
+      },
+      "e22": {
+        "name": "What the coach observed",
+        "role": "heading"
+      },
+      "e23": {
+        "name": "Ground-ball footwork",
+        "role": "heading"
+      },
+      "e24": {
+        "name": "Keep the loop moving",
+        "role": "heading"
+      },
+      "e25": {
+        "name": "Back to player profiles",
+        "role": "button"
+      },
+      "e26": {
+        "name": "Practice proposal",
+        "role": "heading"
+      },
+      "e27": {
+        "name": "Ground-ball approach & set",
+        "role": "heading"
+      },
+      "e28": {
+        "name": "Approve practice proposal",
+        "role": "button"
+      },
+      "e29": {
+        "name": "Station duration minutes",
+        "role": "spinbutton"
+      },
+      "e3": {
+        "name": "Diamond Live Coach Desk",
+        "role": "button"
+      },
+      "e30": {
+        "name": "Coaching cue",
+        "role": "textbox"
+      },
+      "e4": {
+        "name": "Prototype workspace",
+        "role": "navigation"
+      },
+      "e5": {
+        "name": "",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Open workspace menu",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Current workspace",
+        "role": "link"
+      },
+      "e8": {
+        "name": "Coach Desk",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Players",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - link \"Skip to workspace\" [ref=e2]\n  - banner\n    - button \"Diamond Live Coach Desk\" [ref=e3]\n      - image\n      - strong\n        - StaticText \"Diamond Live\"\n    - navigation \"Prototype workspace\" [ref=e4]\n      - button \"Coach Desk\" [ref=e8]\n        - image\n        - StaticText \"Coach Desk\"\n      - button \"Players\" [ref=e9]\n        - image\n        - StaticText \"Players\"\n      - button \"Calendar\" [ref=e10]\n        - image\n        - StaticText \"Calendar\"\n      - button \"Development\" [ref=e11]\n        - image\n        - StaticText \"Development\"\n      - button \"Library\" [ref=e12]\n        - image\n        - StaticText \"Library\"\n    - button [ref=e5]\n      - image\n    - button \"Open workspace menu\" [expanded=false, ref=e6]\n      - StaticText \"NC\"\n  - image\n  - strong\n    - StaticText \"Angels\"\n  - StaticText \"/\"\n  - StaticText \"Minor B\"\n  - StaticText \"Fall development\"\n  - main\n    - generic\n      - StaticText \"PLAYER DEVELOPMENT\"\n      - heading \"Observation into action.\" [level=1, ref=e13]\n      - paragraph\n        - StaticText \"A coach-led path from what you see to what you practice.\"\n      - StaticText \"Interactive demo · changes reset on reload\"\n      - strong\n        - StaticText \"04\"\n      - StaticText \"Assessed\"\n      - StaticText \"2 more need observation\"\n      - strong\n        - StaticText \"04\"\n      - StaticText \"Plans proposed\"\n      - StaticText \"Plus 2 observation stations\"\n      - strong\n        - StaticText \"00\"\n      - StaticText \"Coach approved\"\n      - StaticText \"In this demo session\"\n      - strong\n        - StaticText \"00\"\n      - StaticText \"Practice completed\"\n      - StaticText \"Recorded in this demo\"\n      - generic\n        - heading \"Development queue\" [level=2, ref=e14]\n        - StaticText \"6 examples\"\n        - button \"12 Noah Martinez Ground-ball footwork Plan proposed\" [ref=e15]\n          - StaticText \"12\"\n          - strong\n            - StaticText \"Noah Martinez\"\n          - StaticText \"Ground-ball footwork\"\n          - StaticText \"Plan proposed\"\n        - button \"4 Mason Brooks Contact point Plan proposed\" [ref=e16]\n          - StaticText \"4\"\n          - strong\n            - StaticText \"Mason Brooks\"\n          - StaticText \"Contact point\"\n          - StaticText \"Plan proposed\"\n        - button \"7 Eli Thompson Receiving Needs observation\" [ref=e17]\n          - StaticText \"7\"\n          - strong\n            - StaticText \"Eli Thompson\"\n          - StaticText \"Receiving\"\n          - StaticText \"Needs observation\"\n        - button \"22 Lucas Chen First-step reads Plan proposed\" [ref=e18]\n          - StaticText \"22\"\n          - strong\n            - StaticText \"Lucas Chen\"\n          - StaticText \"First-step reads\"\n          - StaticText \"Plan proposed\"\n        - button \"18 Oliver Davis Throwing accuracy Plan proposed\" [ref=e19]\n          - StaticText \"18\"\n          - strong\n            - StaticText \"Oliver Davis\"\n          - StaticText \"Throwing accuracy\"\n          - StaticText \"Plan proposed\"\n        - button \"9 Leo Wilson Baserunning Needs observation\" [ref=e20]\n          - StaticText \"9\"\n          - strong\n            - StaticText \"Leo Wilson\"\n          - StaticText \"Baserunning\"\n          - StaticText \"Needs observation\"\n        - image\n        - paragraph\n          - StaticText \"Progress starts with evidence.\"\n          - LineBreak \"\\n\"\n          - StaticText \"No observation? Schedule one first.\"\n      - article\n        - StaticText \"DEMO ASSESSMENT · 1–5 RUBRIC\"\n        - heading \"Noah Martinez\" [level=2, ref=e21]\n        - StaticText \"12\"\n        - heading \"What the coach observed\" [level=3, ref=e22]\n        - image\n        - paragraph\n          - StaticText \"“Gets to the ball early, but throws before setting the feet.”\"\n        - StaticText \"Coach Jordan\"\n        - StaticText \"Oct 14, 2026\"\n        - StaticText \"Fielding · 2/5\"\n        - StaticText \"FOCUS FOR THE NEXT PRACTICE\"\n        - heading \"Ground-ball footwork\" [level=3, ref=e23]\n        - paragraph\n          - StaticText \"8 accurate throws out of 10 routine grounders.\"\n        - heading \"Keep the loop moving\" [level=3, ref=e24]\n        - list\n          - listitem [level=1]\n            - StaticText \"1\"\n            - strong\n              - StaticText \"Observe\"\n            - paragraph\n              - StaticText \"Capture a specific baseball skill and coaching note.\"\n          - listitem [level=1]\n            - StaticText \"2\"\n            - strong\n              - StaticText \"Practice deliberately\"\n            - paragraph\n              - StaticText \"Review the proposed drill and adjust the coaching cue.\"\n          - listitem [level=1]\n            - StaticText \"3\"\n            - strong\n              - StaticText \"Observe again\"\n            - paragraph\n              - StaticText \"Record the outcome at the next session. Ratings are never updated automatically.\"\n        - button \"Back to player profiles\" [ref=e25]\n          - StaticText \"Back to player profiles\"\n          - image\n      - article\n        - image\n        - heading \"Practice proposal\" [level=2, ref=e26]\n        - StaticText \"Editable · coach review required\"\n        - StaticText \"SUGGESTED STATION\"\n        - heading \"Ground-ball approach & set\" [level=3, ref=e27]\n        - paragraph\n          - StaticText \"A sample drill selected for this observed skill. Adapt to your players and practice.\"\n        - LabelText\n          - StaticText \"Station duration\"\n          - image\n          - spinbutton \"Station duration minutes\" [ref=e29]: 12\n            - StaticText \"12\"\n          - StaticText \"minutes\"\n        - LabelText\n          - StaticText \"Coaching cue\"\n          - textbox \"Coaching cue\" [ref=e30]: Field, replace the feet, find the target, then throw.\n            - StaticText \"Field, replace the feet, find the target, then throw.\"\n        - strong\n          - StaticText \"Review checklist\"\n        - paragraph\n          - StaticText \"Player: Noah Martinez\"\n          - LineBreak \"\\n\"\n          - StaticText \"Focus: Ground-ball footwork\"\n          - LineBreak \"\\n\"\n          - StaticText \"Outcome: 8 accurate throws out of 10 routine grounders.\"\n        - button \"Approve practice proposal\" [ref=e28]\n          - StaticText \"Approve practice proposal\"\n          - image\n        - paragraph\n          - StaticText \"Local prototype only. No assignments or messages are sent. No production records are saved.\"\n  - contentinfo\n    - image\n    - StaticText \"Built around the coach. Focused on the player.\"\n    - link \"Current workspace\" [ref=e7]\n      - StaticText \"Current workspace\"\n      - image",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

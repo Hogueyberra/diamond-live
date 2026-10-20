@@ -1,0 +1,211 @@
+.sc-page {
+  min-height: 100dvh;
+  padding: 36px 20px;
+  background: radial-gradient(ellipse at top, #e3e8dc, #f4f1eb 65%);
+}
+.sc-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #2d4a36;
+  margin-bottom: 30px;
+  font:
+    700 25px "Barlow Condensed",
+    sans-serif;
+}
+.sc-brand small {
+  display: block;
+  font:
+    11px Barlow,
+    sans-serif;
+  margin-top: 3px;
+  color: #737e6c;
+}
+.sc-card {
+  width: min(100%, 470px);
+  margin: auto;
+  padding: 32px;
+  background: #fffdf8;
+  border: 1px solid #d9d9cd;
+  border-radius: 18px;
+  box-shadow: 0 15px 55px #454f3410;
+}
+.sc-emblem {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 17px;
+  background: #e8eee0;
+  color: #416344;
+  margin-bottom: 24px;
+}
+.sc-eyebrow {
+  color: #7c8773;
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  font-weight: 600;
+}
+.sc-card h1 {
+  font-size: 38px;
+  line-height: 1.1;
+  margin: 9px 0 14px;
+}
+.sc-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #777164;
+}
+.sc-card label {
+  display: block;
+  margin: 24px 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.sc-card textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #d7d8ca;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  background: white;
+  color: #354034;
+}
+.sc-source {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: #eff1e8;
+  border-radius: 9px;
+  color: #4b6549;
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+.sc-source svg {
+  flex-shrink: 0;
+}
+.sc-source strong {
+  display: block;
+  font-size: 14px;
+}
+.sc-source span {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+  color: #7b8572;
+}
+.sc-primary,
+.sc-secondary {
+  width: 100%;
+  border: 1px solid #2d583d;
+  padding: 14px 15px;
+  border-radius: 8px;
+  color: white;
+  background: #2d583d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.sc-secondary {
+  background: transparent;
+  border-color: #d8dbcd;
+  color: #45613c;
+}
+.sc-card .sc-storage,
+.sc-setup .sc-storage {
+  color: #777d6f;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.sc-back {
+  border: 0;
+  background: transparent;
+  color: #727b67;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 25px;
+  padding: 7px 0;
+  font-size: 12px;
+  cursor: pointer;
+}
+.sc-footer {
+  text-align: center;
+  color: #929283;
+  font-size: 11px;
+  padding-top: 25px;
+}
+.sc-card .sc-warning,
+.sc-setup .sc-warning {
+  background: #f6eadc;
+  color: #795733;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.sc-warning p {
+  font-size: 12px;
+  color: inherit;
+  margin-bottom: 0;
+}
+.sc-setup-steps {
+  padding-left: 20px;
+  margin: 25px 0;
+}
+.sc-setup-steps li {
+  padding-left: 7px;
+  margin: 22px 0;
+  font-size: 14px;
+  color: #354d35;
+}
+.sc-setup-steps p {
+  margin: 7px 0;
+}
+.sc-setup-steps label {
+  margin: 12px 0;
+}
+.sc-setup-steps input {
+  font-size: 12px;
+}
+.pr-app .sc-setup a.lv-primary {
+  color: white;
+}
+.lv-capture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.lv-inbox-note {
+  background: #edf1e5;
+  color: #59734b;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.lv-inbox-note p {
+  margin-bottom: 0;
+}
+@media (max-width: 480px) {
+  .sc-page {
+    padding: 24px 16px;
+  }
+  .sc-card {
+    padding: 24px;
+  }
+  .sc-card h1 {
+    font-size: 34px;
+  }
+  .lv-capture-actions {
+    width: 100%;
+  }
+}

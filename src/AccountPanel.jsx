@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button, Field, Modal } from './WorkspaceUI.jsx';
+import { SignInForm } from './SignInForm.jsx';
 import './account.css';
+import './authentication.css';
 
 const DIVISIONS = ['Tee Ball', 'Rookie Ball', 'Farm', 'Minor C', 'Minor B', 'Minor A', 'Majors'];
 const emptyTeam = () => ({ name: '', league: '', division: 'Minor B', season: '' });
@@ -14,9 +16,6 @@ const formatExpiry = (value) => {
 
 export function AccountPanel({ account, onClose }) {
   const [tab, setTab] = useState('profile');
-  const [email, setEmail] = useState('');
-  const [token, setToken] = useState('');
-  const [codeRequested, setCodeRequested] = useState(false);
   const [displayName, setDisplayName] = useState(account.profile?.display_name ?? '');
   const [nameDirty, setNameDirty] = useState(false);
   const [teamAction, setTeamAction] = useState('');
@@ -79,19 +78,6 @@ export function AccountPanel({ account, onClose }) {
   const close = () => { if (!pendingRef.current) onClose(); };
   const changeTab = (next) => { setTab(next); setError(''); setMessage(''); setConfirmation(null); };
   const refreshAccess = () => setAccessVersion((value) => value + 1);
-  const requestCode = (event) => {
-    event.preventDefault();
-    const value = email.trim();
-    if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) { setError('Enter a valid email address.'); return; }
-    run('request', () => account.requestCode(value), () => {
-      setEmail(value); setCodeRequested(true); setToken(''); setMessage(`A sign-in code has been requested for ${value}. Check your inbox and spam folder.`);
-    });
-  };
-  const verifyCode = (event) => {
-    event.preventDefault();
-    if (!/^\d{6,10}$/.test(token)) { setError('Enter the 6–10 digit code from your email.'); return; }
-    run('verify', () => account.verifyCode(email.trim(), token), () => setMessage('Signed in. Your profile and teams are loading.'));
-  };
   const saveProfile = (event) => {
     event.preventDefault();
     if (!displayName.trim()) { setError('Add the name your team will see.'); return; }
@@ -131,8 +117,7 @@ export function AccountPanel({ account, onClose }) {
     {account.loading && account.user && <p className="ac-loading" role="status">Updating your account…</p>}
     {!account.configured ? <section className="ac-setup"><span className="ac-eyebrow">Shared team workspace</span><h3>Account setup in progress</h3><p>Sign-in is not available yet. You can continue using the demo on this device.</p>{account.configError && <p className="cw-alert" role="alert">{String(account.configError.message ?? account.configError)}</p>}<Button onClick={close}>Back to the workspace</Button></section>
       : account.loading && !account.user ? <p className="ac-loading" role="status">Checking your account…</p>
-      : !account.user ? <section className="ac-signin"><p>Use your email to sign in or create an account. We’ll send you a one-time code.</p>{!codeRequested ? <form className="cw-form" onSubmit={requestCode}><Field label="Email address"><input className="cl-input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} maxLength={254} required disabled={busy} autoFocus /></Field><Button variant="primary" type="submit" disabled={busy}>{pending === 'request' ? 'Sending code…' : 'Email me a code'}</Button></form>
-        : <><div className="ac-email-destination"><strong>{email}</strong><button className="cw-text-button" disabled={busy} onClick={() => { setCodeRequested(false); setToken(''); setError(''); setMessage(''); }}>Use another email</button></div><form className="cw-form" onSubmit={verifyCode}><Field label="Email sign-in code"><input className="cl-input ac-code-input" type="text" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6,10}" minLength={6} maxLength={10} value={token} onChange={(event) => setToken(event.target.value.replace(/\D/g, '').slice(0, 10))} required disabled={busy} autoFocus /></Field><p className="cw-footnote">Enter the 6–10 digit code from the email. A code can only be used once.</p><Button type="submit" variant="primary" disabled={busy}>{pending === 'verify' ? 'Signing in…' : 'Verify & sign in'}</Button></form><form onSubmit={requestCode}><Button type="submit" disabled={busy}>{pending === 'request' ? 'Sending code…' : 'Send a new code'}</Button></form></>}</section>
+      : !account.user ? <div className="ac-signin-card"><SignInForm account={account} onPendingChange={(busy) => { pendingRef.current = busy; }} /></div>
         : <>
           <nav className="cl-tabs ac-tabs" aria-label="Account sections">{[['profile', 'Profile'], ['teams', 'Teams'], ...(owner ? [['access', 'Team access']] : [])].map(([value, label]) => <button key={value} className={`cl-tab${tab === value ? ' is-active' : ''}`} aria-pressed={tab === value} disabled={busy} onClick={() => changeTab(value)}>{label}</button>)}</nav>
           {tab === 'profile' && <section aria-label="Profile settings" className="ac-section"><form className="cw-form" onSubmit={saveProfile}><Field label="Your name"><input className="cl-input" value={displayName} onChange={(event) => { setDisplayName(event.target.value); setNameDirty(true); }} maxLength={80} autoComplete="name" required disabled={busy} /></Field><Field label="Account email"><input className="cl-input" type="email" value={account.user.email ?? ''} readOnly /></Field><p className="cw-footnote">Your name is visible to members of your teams.</p><Button variant="primary" type="submit" disabled={busy}>{pending === 'profile' ? 'Saving profile…' : 'Save profile'}</Button></form><div className="ac-signout"><p>Signing out ends this browser’s session.</p><Button disabled={busy} onClick={() => run('signout', () => account.signOut(), () => onClose())}>{pending === 'signout' ? 'Signing out…' : 'Sign out'}</Button></div></section>}

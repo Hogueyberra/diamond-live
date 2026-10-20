@@ -1,0 +1,154 @@
+{
+  "id": "6cc2c0bb-d682-4ff3-a806-0f43226c2763",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=library",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Development",
+        "role": "button"
+      },
+      "e12": {
+        "name": "Library",
+        "role": "button"
+      },
+      "e13": {
+        "name": "Your next great practice.",
+        "role": "heading"
+      },
+      "e14": {
+        "name": "Small skills. Lasting confidence.",
+        "role": "heading"
+      },
+      "e15": {
+        "name": "All",
+        "role": "button"
+      },
+      "e16": {
+        "name": "Infield",
+        "role": "button"
+      },
+      "e17": {
+        "name": "Outfield",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Hitting",
+        "role": "button"
+      },
+      "e19": {
+        "name": "Throwing",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Skip to workspace",
+        "role": "link"
+      },
+      "e20": {
+        "name": "Drills11",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Rules",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Documents",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Search drills",
+        "role": "textbox"
+      },
+      "e24": {
+        "name": "View Soft bunt targets",
+        "role": "button"
+      },
+      "e25": {
+        "name": "Soft bunt targets",
+        "role": "button"
+      },
+      "e26": {
+        "name": "Add Soft bunt targets to practice draft",
+        "role": "button"
+      },
+      "e27": {
+        "name": "View Balanced tee swings",
+        "role": "button"
+      },
+      "e28": {
+        "name": "Balanced tee swings",
+        "role": "button"
+      },
+      "e29": {
+        "name": "Add Balanced tee swings to practice draft",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Diamond Live Coach Desk",
+        "role": "button"
+      },
+      "e30": {
+        "name": "A plan with purpose.",
+        "role": "heading"
+      },
+      "e31": {
+        "name": "Teach one thing well.",
+        "role": "heading"
+      },
+      "e32": {
+        "name": "Practice draft 0",
+        "role": "heading"
+      },
+      "e33": {
+        "name": "Open coaching workspace",
+        "role": "link"
+      },
+      "e34": {
+        "name": "Soft bunt targets",
+        "role": "heading"
+      },
+      "e35": {
+        "name": "Balanced tee swings",
+        "role": "heading"
+      },
+      "e4": {
+        "name": "Prototype workspace",
+        "role": "navigation"
+      },
+      "e5": {
+        "name": "Coach’s assistant",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Open workspace menu",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Current workspace",
+        "role": "link"
+      },
+      "e8": {
+        "name": "Coach Desk",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Players",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - link \"Skip to workspace\" [ref=e2]\n  - banner\n    - button \"Diamond Live Coach Desk\" [ref=e3]\n      - image\n      - strong\n        - StaticText \"Diamond Live\"\n      - StaticText \"A little more purpose. Every practice.\"\n    - navigation \"Prototype workspace\" [ref=e4]\n      - button \"Coach Desk\" [ref=e8]\n        - StaticText \"Coach Desk\"\n      - button \"Players\" [ref=e9]\n        - StaticText \"Players\"\n      - button \"Calendar\" [ref=e10]\n        - StaticText \"Calendar\"\n      - button \"Development\" [ref=e11]\n        - StaticText \"Development\"\n      - button \"Library\" [ref=e12]\n        - StaticText \"Library\"\n    - StaticText \"Interactive prototype\"\n    - button \"Coach’s assistant\" [ref=e5]\n      - image\n      - StaticText \"Coach’s assistant\"\n    - button \"Open workspace menu\" [expanded=false, ref=e6]\n      - StaticText \"NC\"\n  - image\n  - strong\n    - StaticText \"Angels\"\n  - StaticText \"/\"\n  - StaticText \"Minor B\"\n  - StaticText \"Fall development\"\n  - image\n  - StaticText \"Sample data\"\n  - StaticText \"·\"\n  - StaticText \"Session-only changes\"\n  - main\n    - generic\n      - StaticText \"GOOD COACHING, WITH A STARTING POINT\"\n      - heading \"Your next great practice.\" [level=1, ref=e13]\n      - paragraph\n        - StaticText \"Useful drills. Clear references. More time on the field.\"\n      - strong\n        - StaticText \"11\"\n      - StaticText \"purposeful drills\"\n      - LineBreak \"\\n\"\n      - StaticText \"ready to explore\"\n      - generic \"Library sections\"\n        - button \"Drills11\" [ref=e20]\n          - StaticText \"Drills11\"\n        - button \"Rules\" [ref=e21]\n        - button \"Documents\" [ref=e22]\n      - LabelText\n        - image\n        - textbox \"Search drills\" [ref=e23]\n      - heading \"Small skills. Lasting confidence.\" [level=2, ref=e14]\n      - paragraph\n        - StaticText \"Original beginner activities, with linked Little League references.\"\n      - button \"All\" [ref=e15]\n      - button \"Infield\" [ref=e16]\n      - button \"Outfield\" [ref=e17]\n      - button \"Hitting\" [ref=e18]\n      - button \"Throwing\" [ref=e19]\n      - article\n        - button \"View Soft bunt targets\" [ref=e24]\n          - StaticText \"Hitting\"\n          - image\n          - StaticText \"09\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Soft bunt targets\" [ref=e25]\n          - heading \"Soft bunt targets\" [level=3, ref=e34]\n        - paragraph\n          - StaticText \"Use safe bat control to direct gentle contact.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Soft bunt targets to practice draft\" [ref=e26]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Balanced tee swings\" [ref=e27]\n          - StaticText \"Hitting\"\n          - image\n          - StaticText \"10\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Balanced tee swings\" [ref=e28]\n          - heading \"Balanced tee swings\" [level=3, ref=e35]\n        - paragraph\n          - StaticText \"Repeat a comfortable stance and balanced finish.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Balanced tee swings to practice draft\" [ref=e29]\n          - image\n          - StaticText \"Add\"\n      - generic\n        - StaticText \"THE PRACTICE BENCH\"\n        - heading \"A plan with purpose.\" [level=2, ref=e30]\n        - paragraph\n          - StaticText \"Choose a drill to see the setup, coaching cues, and source behind it.\"\n        - image\n        - heading \"Teach one thing well.\" [level=3, ref=e31]\n        - paragraph\n          - StaticText \"Short, focused blocks give players room to try, reset, and try again.\"\n        - heading \"Practice draft 0\" [level=3, ref=e32]\n          - StaticText \"Practice draft\"\n          - StaticText \"0\"\n        - paragraph\n          - StaticText \"Add a few drills to sketch out your next session.\"\n        - StaticText \"Draft stays in this view only. Open the coaching workspace to create a saved plan.\"\n        - link \"Open coaching workspace\" [ref=e33]\n          - StaticText \"Open coaching workspace\"\n          - image\n  - contentinfo\n    - image\n    - StaticText \"Built around the coach. Focused on the player.\"\n    - link \"Current workspace\" [ref=e7]\n      - StaticText \"Current workspace\"\n      - image",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

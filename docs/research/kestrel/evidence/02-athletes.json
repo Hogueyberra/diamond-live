@@ -1,0 +1,130 @@
+{
+  "id": "b043e45c-1b7f-46ca-9ded-32043114a587",
+  "ok": true,
+  "result": {
+    "origin": "https://kestrel-os-demo.vercel.app/",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Programs",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Everyone watched",
+        "role": "tab"
+      },
+      "e12": {
+        "name": "At risk",
+        "role": "tab"
+      },
+      "e13": {
+        "name": "Watch",
+        "role": "tab"
+      },
+      "e14": {
+        "name": "Orlando",
+        "role": "tab"
+      },
+      "e15": {
+        "name": "Win-back",
+        "role": "button"
+      },
+      "e16": {
+        "name": "Send renewal",
+        "role": "button"
+      },
+      "e17": {
+        "name": "Elijah B.",
+        "role": "heading"
+      },
+      "e18": {
+        "name": "214 Sofia M. Soccer U14, Small group, 12 pack Ryan Mitchell 7 of 12 left Last 12 sessions At risk Missed her last 4 sessions",
+        "role": "button"
+      },
+      "e19": {
+        "name": "187 Amir H. Basketball U14, Small group, 12 pack Ryan Mitchell 9 of 12 left Last 12 sessions At risk Two misses in a row, no calendar note",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Kestrel OS home",
+        "role": "button"
+      },
+      "e20": {
+        "name": "101 Elijah B. Football HS, 1 on 1, 10 pack Devon Hayes 2 of 10 left Last 12 sessions At risk 2 of 10 sessions left, season in 16 days",
+        "role": "button"
+      },
+      "e21": {
+        "name": "233 Nia W. Volleyball U16, 1 on 1, 8 pack Evan Brooks 1 of 8 left Last 12 sessions At risk 1 of 8 sessions left, club season in November",
+        "role": "button"
+      },
+      "e22": {
+        "name": "118 Caleb D. Football HS, 1 on 1, 8 pack Devon Hayes 2 of 8 left Last 12 sessions At risk 2 of 8 sessions left",
+        "role": "button"
+      },
+      "e23": {
+        "name": "156 Harper L. Lacrosse U14, Speed camp Ryan Mitchell 11 of 16 left Last 12 sessions On track 10 weeks without a miss",
+        "role": "button"
+      },
+      "e24": {
+        "name": "109 Jada T. Track HS, 1 on 1, 12 pack Devon Hayes 6 of 12 left Last 12 sessions Watch 6 week re-test due this week",
+        "role": "button"
+      },
+      "e25": {
+        "name": "142 Owen K. Baseball U16, Small group, 12 pack Evan Brooks 5 of 12 left Last 12 sessions Watch Re-test due Friday",
+        "role": "button"
+      },
+      "e26": {
+        "name": "262 Miles R. Soccer U12, Small group, 8 pack Ryan Mitchell 7 of 8 left Last 12 sessions Watch Left ankle flag, no speed work yet",
+        "role": "button"
+      },
+      "e27": {
+        "name": "175 Theo S. Basketball HS, Small group, 12 pack Evan Brooks 12 of 12 left Last 12 sessions Watch Right knee soreness on landing",
+        "role": "button"
+      },
+      "e28": {
+        "name": "305 Dante M. Basketball U14, Orlando block Luke Crawford 5 of 10 left Last 12 sessions On track On track",
+        "role": "button"
+      },
+      "e29": {
+        "name": "248 Maya P. Soccer U12, Speed camp Ryan Mitchell 10 of 16 left Last 12 sessions On track Re-test Thursday",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Views",
+        "role": "navigation"
+      },
+      "e4": {
+        "name": "Chief of Staff",
+        "role": "button"
+      },
+      "e5": {
+        "name": "Athletes",
+        "role": "heading"
+      },
+      "e6": {
+        "name": "Floor",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Athletes",
+        "role": "button"
+      },
+      "e8": {
+        "name": "Assessments",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Calendar",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - banner\n    - button \"Kestrel OS home\" [ref=e2]\n      - StaticText \"Kestrel Performance\"\n      - StaticText \"Kestrel OS, \"\n      - StaticText \"Columbus and Orlando\"\n    - navigation \"Views\" [ref=e3]\n      - button \"Floor\" [ref=e6]\n      - button \"Athletes\" [ref=e7]\n        - StaticText \"Athletes\"\n      - button \"Assessments\" [ref=e8]\n      - button \"Calendar\" [ref=e9]\n      - button \"Programs\" [ref=e10]\n    - StaticText \"12\"\n    - StaticText \"agents\"\n    - StaticText \"running\"\n    - StaticText \"Tue, Sep 29\"\n    - StaticText \", \"\n    - StaticText \"4:12pm\"\n    - button \"Chief of Staff\" [ref=e4]\n      - StaticText \"Chief of Staff\"\n    - StaticText \"DH\"\n  - main\n    - heading \"Athletes\" [level=1, ref=e5]\n    - paragraph\n      - StaticText \"Athlete Success watches every check-in and package, so nobody quietly disappears.\"\n    - DescriptionList\n      - term \"active, 131 Columbus and 37 Orlando\"\n      - definition\n        - StaticText \"168\"\n      - definition\n        - StaticText \"active, 131 Columbus and 37 Orlando\"\n      - term \"at risk\"\n      - definition\n        - StaticText \"5\"\n      - definition\n        - StaticText \"at risk\"\n      - term \"sessions left on 143 packages\"\n      - definition\n        - StaticText \"986\"\n      - definition\n        - StaticText \"sessions left on 143 packages\"\n      - term \"renewals this month\"\n      - definition\n        - StaticText \"11\"\n      - definition\n        - StaticText \"renewals this month\"\n    - tablist\n      - tab \"Everyone watched\" [selected, ref=e11]\n      - tab \"At risk\" [ref=e12]\n      - tab \"Watch\" [ref=e13]\n      - tab \"Orlando\" [ref=e14]\n    - article\n      - sectionheader\n        - StaticText \"101\"\n        - generic\n          - heading \"Elijah B.\" [level=2, ref=e17]\n          - paragraph\n            - StaticText \"Football HS, Devon Hayes, Riverside\"\n        - StaticText \"At risk\"\n      - image \"Performance profile\"\n        - StaticText \"Speed\"\n        - StaticText \"84\"\n        - StaticText \"Power\"\n        - StaticText \"88\"\n        - StaticText \"Agility\"\n        - StaticText \"79\"\n        - StaticText \"Mobility\"\n        - StaticText \"70\"\n        - StaticText \"Balance\"\n        - StaticText \"74\"\n        - StaticText \"Attendance\"\n        - StaticText \"96\"\n      - StaticText \"Today\"\n      - StaticText \"First assessment\"\n      - list\n        - listitem [level=1]\n          - StaticText \"10 yard sprint\"\n          - StaticText \"1.71\"\n          - StaticText \"s\"\n          - StaticText \"-0.13s\"\n        - listitem [level=1]\n          - StaticText \"Vertical jump\"\n          - StaticText \"26.5\"\n          - StaticText \"in\"\n          - StaticText \"+3.0in\"\n        - listitem [level=1]\n          - StaticText \"Broad jump\"\n          - StaticText \"101\"\n          - StaticText \"in\"\n          - StaticText \"+7.0in\"\n        - listitem [level=1]\n          - StaticText \"5-10-5 shuttle\"\n          - StaticText \"4.52\"\n          - StaticText \"s\"\n          - StaticText \"-0.19s\"\n      - paragraph\n        - StaticText \"Last 12 sessions\"\n      - generic \"Last 12 sessions\"\n      - paragraph\n        - StaticText \"1 on 1, 10 pack\"\n      - paragraph\n        - StaticText \"2 of 10 sessions left\"\n      - paragraph\n        - StaticText \"10 yard sprint, last six tests\"\n      - paragraph\n        - StaticText \"-0.13s since July\"\n      - image \"10 yard sprint history\"\n        - StaticText \"1.71\"\n        - StaticText \"1.77\"\n        - StaticText \"1.84\"\n        - StaticText \"Jul 14\"\n        - StaticText \"Jul 28\"\n        - StaticText \"Aug 11\"\n        - StaticText \"Aug 25\"\n        - StaticText \"Sep 8\"\n        - StaticText \"Sep 22\"\n        - generic\n          - StaticText \"1.71s\"\n      - button \"Win-back\" [ref=e15]\n      - StaticText \"for \"\n      - StaticText \"Chris B., dad\"\n      - paragraph\n        - StaticText \"Vertical up 3 inches since July and his 10 yard sprint down 0.13. The renewal leads with those and holds his Monday and Wednesday slots.\"\n      - button \"Send renewal\" [ref=e16]\n      - StaticText \"Drafted in Devon's voice\"\n    - generic\n      - StaticText \"Bib\"\n      - StaticText \"Athlete\"\n      - StaticText \"Coach\"\n      - StaticText \"Package\"\n      - StaticText \"Last 12\"\n      - StaticText \"rebooked\"\n      - StaticText \"Status\"\n      - list\n        - listitem [level=1]\n          - button \"214 Sofia M. Soccer U14, Small group, 12 pack Ryan Mitchell 7 of 12 left Last 12 sessions At risk Missed her last 4 sessions\" [ref=e18]\n            - StaticText \"214\"\n            - StaticText \"Sofia M.\"\n            - StaticText \"Soccer\"\n            - StaticText \" \"\n            - StaticText \"U14\"\n            - StaticText \", \"\n            - StaticText \"Small group, 12 pack\"\n            - StaticText \"Ryan Mitchell\"\n            - StaticText \"7\"\n            - StaticText \" of \"\n            - StaticText \"12\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"At risk\"\n            - StaticText \"Missed her last 4 sessions\"\n        - listitem [level=1]\n          - button \"187 Amir H. Basketball U14, Small group, 12 pack Ryan Mitchell 9 of 12 left Last 12 sessions At risk Two misses in a row, no calendar note\" [ref=e19]\n            - StaticText \"187\"\n            - StaticText \"Amir H.\"\n            - StaticText \"Basketball\"\n            - StaticText \" \"\n            - StaticText \"U14\"\n            - StaticText \", \"\n            - StaticText \"Small group, 12 pack\"\n            - StaticText \"Ryan Mitchell\"\n            - StaticText \"9\"\n            - StaticText \" of \"\n            - StaticText \"12\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"At risk\"\n            - StaticText \"Two misses in a row, no calendar note\"\n        - listitem [level=1]\n          - button \"101 Elijah B. Football HS, 1 on 1, 10 pack Devon Hayes 2 of 10 left Last 12 sessions At risk 2 of 10 sessions left, season in 16 days\" [ref=e20]\n            - StaticText \"101\"\n            - StaticText \"Elijah B.\"\n            - StaticText \"Football\"\n            - StaticText \" \"\n            - StaticText \"HS\"\n            - StaticText \", \"\n            - StaticText \"1 on 1, 10 pack\"\n            - StaticText \"Devon Hayes\"\n            - StaticText \"2\"\n            - StaticText \" of \"\n            - StaticText \"10\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"At risk\"\n            - StaticText \"2 of 10 sessions left, season in 16 days\"\n        - listitem [level=1]\n          - button \"233 Nia W. Volleyball U16, 1 on 1, 8 pack Evan Brooks 1 of 8 left Last 12 sessions At risk 1 of 8 sessions left, club season in November\" [ref=e21]\n            - StaticText \"233\"\n            - StaticText \"Nia W.\"\n            - StaticText \"Volleyball\"\n            - StaticText \" \"\n            - StaticText \"U16\"\n            - StaticText \", \"\n            - StaticText \"1 on 1, 8 pack\"\n            - StaticText \"Evan Brooks\"\n            - StaticText \"1\"\n            - StaticText \" of \"\n            - StaticText \"8\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"At risk\"\n            - StaticText \"1 of 8 sessions left, club season in November\"\n        - listitem [level=1]\n          - button \"118 Caleb D. Football HS, 1 on 1, 8 pack Devon Hayes 2 of 8 left Last 12 sessions At risk 2 of 8 sessions left\" [ref=e22]\n            - StaticText \"118\"\n            - StaticText \"Caleb D.\"\n            - StaticText \"Football\"\n            - StaticText \" \"\n            - StaticText \"HS\"\n            - StaticText \", \"\n            - StaticText \"1 on 1, 8 pack\"\n            - StaticText \"Devon Hayes\"\n            - StaticText \"2\"\n            - StaticText \" of \"\n            - StaticText \"8\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"At risk\"\n            - StaticText \"2 of 8 sessions left\"\n        - listitem [level=1]\n          - button \"156 Harper L. Lacrosse U14, Speed camp Ryan Mitchell 11 of 16 left Last 12 sessions On track 10 weeks without a miss\" [ref=e23]\n            - StaticText \"156\"\n            - StaticText \"Harper L.\"\n            - StaticText \"Lacrosse\"\n            - StaticText \" \"\n            - StaticText \"U14\"\n            - StaticText \", \"\n            - StaticText \"Speed camp\"\n            - StaticText \"Ryan Mitchell\"\n            - StaticText \"11\"\n            - StaticText \" of \"\n            - StaticText \"16\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"On track\"\n            - StaticText \"10 weeks without a miss\"\n        - listitem [level=1]\n          - button \"109 Jada T. Track HS, 1 on 1, 12 pack Devon Hayes 6 of 12 left Last 12 sessions Watch 6 week re-test due this week\" [ref=e24]\n            - StaticText \"109\"\n            - StaticText \"Jada T.\"\n            - StaticText \"Track\"\n            - StaticText \" \"\n            - StaticText \"HS\"\n            - StaticText \", \"\n            - StaticText \"1 on 1, 12 pack\"\n            - StaticText \"Devon Hayes\"\n            - StaticText \"6\"\n            - StaticText \" of \"\n            - StaticText \"12\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"Watch\"\n            - StaticText \"6 week re-test due this week\"\n        - listitem [level=1]\n          - button \"142 Owen K. Baseball U16, Small group, 12 pack Evan Brooks 5 of 12 left Last 12 sessions Watch Re-test due Friday\" [ref=e25]\n            - StaticText \"142\"\n            - StaticText \"Owen K.\"\n            - StaticText \"Baseball\"\n            - StaticText \" \"\n            - StaticText \"U16\"\n            - StaticText \", \"\n            - StaticText \"Small group, 12 pack\"\n            - StaticText \"Evan Brooks\"\n            - StaticText \"5\"\n            - StaticText \" of \"\n            - StaticText \"12\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"Watch\"\n            - StaticText \"Re-test due Friday\"\n        - listitem [level=1]\n          - button \"262 Miles R. Soccer U12, Small group, 8 pack Ryan Mitchell 7 of 8 left Last 12 sessions Watch Left ankle flag, no speed work yet\" [ref=e26]\n            - StaticText \"262\"\n            - StaticText \"Miles R.\"\n            - StaticText \"Soccer\"\n            - StaticText \" \"\n            - StaticText \"U12\"\n            - StaticText \", \"\n            - StaticText \"Small group, 8 pack\"\n            - StaticText \"Ryan Mitchell\"\n            - StaticText \"7\"\n            - StaticText \" of \"\n            - StaticText \"8\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"Watch\"\n            - StaticText \"Left ankle flag, no speed work yet\"\n        - listitem [level=1]\n          - button \"175 Theo S. Basketball HS, Small group, 12 pack Evan Brooks 12 of 12 left Last 12 sessions Watch Right knee soreness on landing\" [ref=e27]\n            - StaticText \"175\"\n            - StaticText \"Theo S.\"\n            - StaticText \"Basketball\"\n            - StaticText \" \"\n            - StaticText \"HS\"\n            - StaticText \", \"\n            - StaticText \"Small group, 12 pack\"\n            - StaticText \"Evan Brooks\"\n            - StaticText \"12\"\n            - StaticText \" of \"\n            - StaticText \"12\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"Watch\"\n            - StaticText \"Right knee soreness on landing\"\n        - listitem [level=1]\n          - button \"305 Dante M. Basketball U14, Orlando block Luke Crawford 5 of 10 left Last 12 sessions On track On track\" [ref=e28]\n            - StaticText \"305\"\n            - StaticText \"Dante M.\"\n            - StaticText \"Basketball\"\n            - StaticText \" \"\n            - StaticText \"U14\"\n            - StaticText \", \"\n            - StaticText \"Orlando block\"\n            - StaticText \"Luke Crawford\"\n            - StaticText \"5\"\n            - StaticText \" of \"\n            - StaticText \"10\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"On track\"\n            - StaticText \"On track\"\n        - listitem [level=1]\n          - button \"248 Maya P. Soccer U12, Speed camp Ryan Mitchell 10 of 16 left Last 12 sessions On track Re-test Thursday\" [ref=e29]\n            - StaticText \"248\"\n            - StaticText \"Maya P.\"\n            - StaticText \"Soccer\"\n            - StaticText \" \"\n            - StaticText \"U12\"\n            - StaticText \", \"\n            - StaticText \"Speed camp\"\n            - StaticText \"Ryan Mitchell\"\n            - StaticText \"10\"\n            - StaticText \" of \"\n            - StaticText \"16\"\n            - StaticText \" left\"\n            - generic \"Last 12 sessions\"\n            - generic\n              - StaticText \"On track\"\n            - StaticText \"Re-test Thursday\"\n      - paragraph\n        - StaticText \"Showing the 12 athletes Athlete Success is watching. The other 156 are on track and checked every morning.\"\n      - StaticText \"5\"\n      - StaticText \" at risk\"\n      - StaticText \"5\"\n      - StaticText \" watch\"\n      - StaticText \"158\"\n      - StaticText \" on track\"",
+    "browserPageId": "c697c4cb-4441-4e66-bb0a-213f98ed2219"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

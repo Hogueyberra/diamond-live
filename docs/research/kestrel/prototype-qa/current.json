@@ -1,0 +1,13 @@
+{
+  "id": "33b08c06-1c45-410e-ab30-3e29efc46f4c",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=calendar",
+    "refs": {},
+    "snapshot": "(empty page)",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

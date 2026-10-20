@@ -1,0 +1,254 @@
+{
+  "id": "1387246f-a9b6-42da-bcc9-1f912e54fe18",
+  "ok": true,
+  "result": {
+    "origin": "https://kestrel-os-demo.vercel.app/",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Programs",
+        "role": "button"
+      },
+      "e11": {
+        "name": "All",
+        "role": "tab"
+      },
+      "e12": {
+        "name": "Riverside",
+        "role": "tab"
+      },
+      "e13": {
+        "name": "Dublin",
+        "role": "tab"
+      },
+      "e14": {
+        "name": "Orlando",
+        "role": "tab"
+      },
+      "e15": {
+        "name": "Speed group, U12 to U14",
+        "role": "heading"
+      },
+      "e16": {
+        "name": "Fill from the waitlist",
+        "role": "button"
+      },
+      "e17": {
+        "name": "Orlando block, U14 basketball 14/16",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Free assessments 3/4+2",
+        "role": "button"
+      },
+      "e19": {
+        "name": "Speed and agility, U12 10/10+1",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Kestrel OS home",
+        "role": "button"
+      },
+      "e20": {
+        "name": "Orlando assessment 1/2",
+        "role": "button"
+      },
+      "e21": {
+        "name": "1 on 1, Nia W. 1/1",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Makeup session 5/6",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Free evals 3/4",
+        "role": "button"
+      },
+      "e24": {
+        "name": "1 on 1, Elijah B. 1/1",
+        "role": "button"
+      },
+      "e25": {
+        "name": "Speed and agility, U12 9/10",
+        "role": "button"
+      },
+      "e26": {
+        "name": "Strength, HS 11/12",
+        "role": "button"
+      },
+      "e27": {
+        "name": "U14 group 6/8",
+        "role": "button"
+      },
+      "e28": {
+        "name": "Speed and agility, U10 9/10",
+        "role": "button"
+      },
+      "e29": {
+        "name": "Free assessments 4/4",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Views",
+        "role": "navigation"
+      },
+      "e30": {
+        "name": "Speed and agility, U12 9/10",
+        "role": "button"
+      },
+      "e31": {
+        "name": "Speed, U12 to U14 9/12+4",
+        "role": "button"
+      },
+      "e32": {
+        "name": "1 on 1, Jada T. 1/1",
+        "role": "button"
+      },
+      "e33": {
+        "name": "Small group, U16 5/8",
+        "role": "button"
+      },
+      "e34": {
+        "name": "Speed and agility, U12 9/10",
+        "role": "button"
+      },
+      "e35": {
+        "name": "1 on 1, Elijah B. 1/1",
+        "role": "button"
+      },
+      "e36": {
+        "name": "Strength and conditioning, HS 10/12",
+        "role": "button"
+      },
+      "e37": {
+        "name": "Small group, U14 3/8",
+        "role": "button"
+      },
+      "e38": {
+        "name": "Free assessments 2/4",
+        "role": "button"
+      },
+      "e39": {
+        "name": "Speed, U12 to U14 10/12",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Chief of Staff",
+        "role": "button"
+      },
+      "e40": {
+        "name": "Re-test, Jada T. 1/1",
+        "role": "button"
+      },
+      "e41": {
+        "name": "Strength, HS 12/12+1",
+        "role": "button"
+      },
+      "e42": {
+        "name": "HS group 7/8",
+        "role": "button"
+      },
+      "e43": {
+        "name": "Re-test, Owen K. 1/1",
+        "role": "button"
+      },
+      "e44": {
+        "name": "Vision and reactive, HS 8/10",
+        "role": "button"
+      },
+      "e45": {
+        "name": "Small group, U16 4/8",
+        "role": "button"
+      },
+      "e46": {
+        "name": "Mon 4:00pm, Free assessments All 3 booked by text, no phone tag",
+        "role": "button"
+      },
+      "e47": {
+        "name": "Mon 5:00pm, Speed and agility, U12 1 no-show, rebooked to Thursday the same day",
+        "role": "button"
+      },
+      "e48": {
+        "name": "Tue 4:00pm, Free assessments 4 of 4 booked by Booker",
+        "role": "button"
+      },
+      "e49": {
+        "name": "Tue 5:00pm, Speed and agility, U12 8 of 9 confirmed by text this afternoon",
+        "role": "button"
+      },
+      "e5": {
+        "name": "Calendar",
+        "role": "heading"
+      },
+      "e50": {
+        "name": "Tue 6:00pm, Speed group, U12 to U14 3 open spots, 4 families waiting. Fill is waiting on Devon.",
+        "role": "button"
+      },
+      "e51": {
+        "name": "Wed 7:00pm, Small group, U14 Low. 5 lapsed families get an invite tonight at 7pm.",
+        "role": "button"
+      },
+      "e52": {
+        "name": "Thu 4:00pm, Free assessments Jaylen P. and Mason E. booked by Booker",
+        "role": "button"
+      },
+      "e53": {
+        "name": "Thu 5:00pm, Speed group, U12 to U14 2 rebooked no-shows moved here",
+        "role": "button"
+      },
+      "e54": {
+        "name": "Thu 5:00pm, Re-test, Jada T. Booked by Re-test Clock on day 38",
+        "role": "button"
+      },
+      "e55": {
+        "name": "Fri 4:00pm, Re-test, Owen K. Day 41 of 42, confirmed by text",
+        "role": "button"
+      },
+      "e56": {
+        "name": "Fri 6:00pm, Small group, U16 Low. Reminder goes Thursday at 7pm.",
+        "role": "button"
+      },
+      "e57": {
+        "name": "Sat 9:00am, Free assessments Zoe V., Ava D. and Ruby S. booked by Booker",
+        "role": "button"
+      },
+      "e58": {
+        "name": "Sat 9:00am, Orlando block, U14 basketball Priya N.'s twins invited to try it",
+        "role": "button"
+      },
+      "e59": {
+        "name": "Sat 11:00am, Free assessment, Orlando Leo A. booked by Booker",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Floor",
+        "role": "button"
+      },
+      "e60": {
+        "name": "Sun 11:00am, Makeup session Makeups for missed sessions, all rebooked by text",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Athletes",
+        "role": "button"
+      },
+      "e8": {
+        "name": "Assessments",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Calendar",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - banner\n    - button \"Kestrel OS home\" [ref=e2]\n      - StaticText \"Kestrel Performance\"\n      - StaticText \"Kestrel OS, \"\n      - StaticText \"Columbus and Orlando\"\n    - navigation \"Views\" [ref=e3]\n      - button \"Floor\" [ref=e6]\n      - button \"Athletes\" [ref=e7]\n      - button \"Assessments\" [ref=e8]\n      - button \"Calendar\" [ref=e9]\n        - StaticText \"Calendar\"\n      - button \"Programs\" [ref=e10]\n    - StaticText \"10\"\n    - StaticText \"agents\"\n    - StaticText \"running\"\n    - StaticText \"Tue, Sep 29\"\n    - StaticText \", \"\n    - StaticText \"4:13pm\"\n    - button \"Chief of Staff\" [ref=e4]\n      - StaticText \"Chief of Staff\"\n    - StaticText \"DH\"\n  - main\n    - heading \"Calendar\" [level=1, ref=e5]\n    - paragraph\n      - StaticText \"September 28 to October 4. Front Desk fills the gaps and sends every reminder.\"\n    - DescriptionList\n      - term \"sessions this week\"\n      - definition\n        - StaticText \"29\"\n      - definition\n        - StaticText \"sessions this week\"\n      - term \"full\"\n      - definition\n        - StaticText \"82%\"\n      - definition\n        - StaticText \"full\"\n      - term \"no-shows rebooked by text\"\n      - definition\n        - StaticText \"5 of 7\"\n      - definition\n        - StaticText \"no-shows rebooked by text\"\n    - StaticText \"Devon\"\n    - StaticText \"Ryan\"\n    - StaticText \"Evan\"\n    - StaticText \"Luke\"\n    - tablist\n      - tab \"All\" [selected, ref=e11]\n      - tab \"Riverside\" [ref=e12]\n      - tab \"Dublin\" [ref=e13]\n      - tab \"Orlando\" [ref=e14]\n    - generic\n      - StaticText \"Mon\"\n      - StaticText \"28\"\n      - paragraph\n        - StaticText \"5 sessions, 86% full\"\n    - generic\n      - StaticText \"Tue\"\n      - StaticText \"29\"\n      - StaticText \"Today\"\n      - paragraph\n        - StaticText \"6 sessions, 82% full\"\n    - generic\n      - StaticText \"Wed\"\n      - StaticText \"30\"\n      - paragraph\n        - StaticText \"4 sessions, 74% full\"\n    - generic\n      - StaticText \"Thu\"\n      - StaticText \"1\"\n      - paragraph\n        - StaticText \"5 sessions, 86% full\"\n    - generic\n      - StaticText \"Fri\"\n      - StaticText \"2\"\n      - paragraph\n        - StaticText \"3 sessions, 68% full\"\n    - generic\n      - StaticText \"Sat\"\n      - StaticText \"3\"\n      - paragraph\n        - StaticText \"5 sessions, 88% full\"\n    - generic\n      - StaticText \"Sun\"\n      - StaticText \"4\"\n      - paragraph\n        - StaticText \"1 session, 83% full\"\n    - paragraph\n      - StaticText \"Weekend mornings, 9am to 1pm\"\n    - generic\n      - StaticText \"10am\"\n      - StaticText \"11am\"\n      - StaticText \"12pm\"\n    - generic\n      - StaticText \"School day\"\n    - generic\n      - StaticText \"School day\"\n    - generic\n      - StaticText \"School day\"\n    - generic\n      - StaticText \"School day\"\n    - generic\n      - StaticText \"School day\"\n    - generic\n      - button \"Orlando block, U14 basketball 14/16\" [ref=e17]\n        - paragraph\n          - StaticText \"Orlando block, U14 basketball\"\n        - paragraph\n          - StaticText \"14/16\"\n      - button \"Free assessments 3/4+2\" [ref=e18]\n        - paragraph\n          - StaticText \"Free assessments\"\n        - paragraph\n          - StaticText \"3/4+2\"\n      - button \"Speed and agility, U12 10/10+1\" [ref=e19]\n        - paragraph\n          - StaticText \"Speed and agility, U12\"\n        - paragraph\n          - StaticText \"10/10+1\"\n      - button \"Orlando assessment 1/2\" [ref=e20]\n        - paragraph\n          - StaticText \"Orlando assessment\"\n        - paragraph\n          - StaticText \"1/2\"\n      - button \"1 on 1, Nia W. 1/1\" [ref=e21]\n        - paragraph\n          - StaticText \"1 on 1, Nia W.\"\n        - paragraph\n          - StaticText \"1/1\"\n    - generic\n      - button \"Makeup session 5/6\" [ref=e22]\n        - paragraph\n          - StaticText \"Makeup session\"\n        - StaticText \"5\"\n        - StaticText \"/\"\n        - StaticText \"6\"\n    - paragraph\n      - StaticText \"After school, 3pm to 8pm\"\n    - generic\n      - StaticText \"4pm\"\n      - StaticText \"5pm\"\n      - StaticText \"6pm\"\n      - StaticText \"7pm\"\n    - generic\n      - button \"Free evals 3/4\" [ref=e23]\n        - paragraph\n          - StaticText \"Free evals\"\n        - paragraph\n          - StaticText \"3/4\"\n      - button \"1 on 1, Elijah B. 1/1\" [ref=e24]\n        - paragraph\n          - StaticText \"1 on 1, Elijah B.\"\n        - paragraph\n          - StaticText \"1/1\"\n      - button \"Speed and agility, U12 9/10\" [ref=e25]\n        - paragraph\n          - StaticText \"Speed and agility, U12\"\n        - StaticText \"9\"\n        - StaticText \"/\"\n        - StaticText \"10\"\n      - button \"Strength, HS 11/12\" [ref=e26]\n        - paragraph\n          - StaticText \"Strength, HS\"\n        - paragraph\n          - StaticText \"11/12\"\n      - button \"U14 group 6/8\" [ref=e27]\n        - paragraph\n          - StaticText \"U14 group\"\n        - paragraph\n          - StaticText \"6/8\"\n    - generic\n      - button \"Speed and agility, U10 9/10\" [ref=e28]\n        - paragraph\n          - StaticText \"Speed and agility, U10\"\n        - StaticText \"9\"\n        - StaticText \"/\"\n        - StaticText \"10\"\n      - button \"Free assessments 4/4\" [ref=e29]\n        - paragraph\n          - StaticText \"Free assessments\"\n        - StaticText \"4\"\n        - StaticText \"/\"\n        - StaticText \"4\"\n      - button \"Speed and agility, U12 9/10\" [ref=e30]\n        - paragraph\n          - StaticText \"Speed and agility, U12\"\n        - StaticText \"9\"\n        - StaticText \"/\"\n        - StaticText \"10\"\n      - button \"Speed, U12 to U14 9/12+4\" [ref=e31]\n        - paragraph\n          - StaticText \"Speed, U12 to U14\"\n        - paragraph\n          - StaticText \"9/12+4\"\n      - button \"1 on 1, Jada T. 1/1\" [ref=e32]\n        - paragraph\n          - StaticText \"1 on 1, Jada T.\"\n        - paragraph\n          - StaticText \"1/1\"\n      - button \"Small group, U16 5/8\" [ref=e33]\n        - paragraph\n          - StaticText \"Small group, U16\"\n        - StaticText \"5\"\n        - StaticText \"/\"\n        - StaticText \"8\"\n    - generic\n      - button \"Speed and agility, U12 9/10\" [ref=e34]\n        - paragraph\n          - StaticText \"Speed and agility, U12\"\n        - StaticText \"9\"\n        - StaticText \"/\"\n        - StaticText \"10\"\n      - button \"1 on 1, Elijah B. 1/1\" [ref=e35]\n        - paragraph\n          - StaticText \"1 on 1, Elijah B.\"\n        - StaticText \"1\"\n        - StaticText \"/\"\n        - StaticText \"1\"\n      - button \"Strength and conditioning, HS 10/12\" [ref=e36]\n        - paragraph\n          - StaticText \"Strength and conditioning, HS\"\n        - StaticText \"10\"\n        - StaticText \"/\"\n        - StaticText \"12\"\n      - button \"Small group, U14 3/8\" [ref=e37]\n        - paragraph\n          - StaticText \"Small group, U14\"\n        - StaticText \"3\"\n        - StaticText \"/\"\n        - StaticText \"8\"\n    - generic\n      - button \"Free assessments 2/4\" [ref=e38]\n        - paragraph\n          - StaticText \"Free assessments\"\n        - StaticText \"2\"\n        - StaticText \"/\"\n        - StaticText \"4\"\n      - button \"Speed, U12 to U14 10/12\" [ref=e39]\n        - paragraph\n          - StaticText \"Speed, U12 to U14\"\n        - paragraph\n          - StaticText \"10/12\"\n      - button \"Re-test, Jada T. 1/1\" [ref=e40]\n        - paragraph\n          - StaticText \"Re-test, Jada T.\"\n        - paragraph\n          - StaticText \"1/1\"\n      - button \"Strength, HS 12/12+1\" [ref=e41]\n        - paragraph\n          - StaticText \"Strength, HS\"\n        - paragraph\n          - StaticText \"12/12+1\"\n      - button \"HS group 7/8\" [ref=e42]\n        - paragraph\n          - StaticText \"HS group\"\n        - paragraph\n          - StaticText \"7/8\"\n    - generic\n      - button \"Re-test, Owen K. 1/1\" [ref=e43]\n        - paragraph\n          - StaticText \"Re-test, Owen K.\"\n        - StaticText \"1\"\n        - StaticText \"/\"\n        - StaticText \"1\"\n      - button \"Vision and reactive, HS 8/10\" [ref=e44]\n        - paragraph\n          - StaticText \"Vision and reactive, HS\"\n        - StaticText \"8\"\n        - StaticText \"/\"\n        - StaticText \"10\"\n      - button \"Small group, U16 4/8\" [ref=e45]\n        - paragraph\n          - StaticText \"Small group, U16\"\n        - StaticText \"4\"\n        - StaticText \"/\"\n        - StaticText \"8\"\n    - generic\n      - StaticText \"Closed\"\n    - generic\n      - StaticText \"Closed\"\n    - complementary\n      - paragraph\n        - StaticText \"Tue, 6:00pm to 7:00pm\"\n      - heading \"Speed group, U12 to U14\" [level=2, ref=e15]\n      - StaticText \"Ryan Mitchell\"\n      - StaticText \", \"\n      - StaticText \"Riverside\"\n      - paragraph\n        - StaticText \"9/12\"\n      - paragraph\n        - StaticText \"booked\"\n      - paragraph\n        - StaticText \"3\"\n      - paragraph\n        - StaticText \"open spots\"\n      - paragraph\n        - StaticText \"4\"\n      - paragraph\n        - StaticText \"waiting\"\n      - StaticText \"Reminder\"\n      - paragraph\n        - StaticText \"3 open spots, 4 families waiting. Fill is waiting on Devon.\"\n      - button \"Fill from the waitlist\" [ref=e16]\n      - paragraph\n        - StaticText \"Agents touched 15 sessions this week\"\n      - list\n        - listitem [level=1]\n          - button \"Mon 4:00pm, Free assessments All 3 booked by text, no phone tag\" [ref=e46]\n            - StaticText \"Mon\"\n            - StaticText \" \"\n            - StaticText \"4:00pm\"\n            - StaticText \", \"\n            - StaticText \"Free assessments\"\n            - StaticText \"All 3 booked by text, no phone tag\"\n        - listitem [level=1]\n          - button \"Mon 5:00pm, Speed and agility, U12 1 no-show, rebooked to Thursday the same day\" [ref=e47]\n            - StaticText \"Mon\"\n            - StaticText \" \"\n            - StaticText \"5:00pm\"\n            - StaticText \", \"\n            - StaticText \"Speed and agility, U12\"\n            - StaticText \"1 no-show, rebooked to Thursday the same day\"\n        - listitem [level=1]\n          - button \"Tue 4:00pm, Free assessments 4 of 4 booked by Booker\" [ref=e48]\n            - StaticText \"Tue\"\n            - StaticText \" \"\n            - StaticText \"4:00pm\"\n            - StaticText \", \"\n            - StaticText \"Free assessments\"\n            - StaticText \"4 of 4 booked by Booker\"\n        - listitem [level=1]\n          - button \"Tue 5:00pm, Speed and agility, U12 8 of 9 confirmed by text this afternoon\" [ref=e49]\n            - StaticText \"Tue\"\n            - StaticText \" \"\n            - StaticText \"5:00pm\"\n            - StaticText \", \"\n            - StaticText \"Speed and agility, U12\"\n            - StaticText \"8 of 9 confirmed by text this afternoon\"\n        - listitem [level=1]\n          - button \"Tue 6:00pm, Speed group, U12 to U14 3 open spots, 4 families waiting. Fill is waiting on Devon.\" [ref=e50]\n            - StaticText \"Tue\"\n            - StaticText \" \"\n            - StaticText \"6:00pm\"\n            - StaticText \", \"\n            - StaticText \"Speed group, U12 to U14\"\n            - StaticText \"3 open spots, 4 families waiting. Fill is waiting on Devon.\"\n        - listitem [level=1]\n          - button \"Wed 7:00pm, Small group, U14 Low. 5 lapsed families get an invite tonight at 7pm.\" [ref=e51]\n            - StaticText \"Wed\"\n            - StaticText \" \"\n            - StaticText \"7:00pm\"\n            - StaticText \", \"\n            - StaticText \"Small group, U14\"\n            - StaticText \"Low. 5 lapsed families get an invite tonight at 7pm.\"\n        - listitem [level=1]\n          - button \"Thu 4:00pm, Free assessments Jaylen P. and Mason E. booked by Booker\" [ref=e52]\n            - StaticText \"Thu\"\n            - StaticText \" \"\n            - StaticText \"4:00pm\"\n            - StaticText \", \"\n            - StaticText \"Free assessments\"\n            - StaticText \"Jaylen P. and Mason E. booked by Booker\"\n        - listitem [level=1]\n          - button \"Thu 5:00pm, Speed group, U12 to U14 2 rebooked no-shows moved here\" [ref=e53]\n            - StaticText \"Thu\"\n            - StaticText \" \"\n            - StaticText \"5:00pm\"\n            - StaticText \", \"\n            - StaticText \"Speed group, U12 to U14\"\n            - StaticText \"2 rebooked no-shows moved here\"\n        - listitem [level=1]\n          - button \"Thu 5:00pm, Re-test, Jada T. Booked by Re-test Clock on day 38\" [ref=e54]\n            - StaticText \"Thu\"\n            - StaticText \" \"\n            - StaticText \"5:00pm\"\n            - StaticText \", \"\n            - StaticText \"Re-test, Jada T.\"\n            - StaticText \"Booked by Re-test Clock on day 38\"\n        - listitem [level=1]\n          - button \"Fri 4:00pm, Re-test, Owen K. Day 41 of 42, confirmed by text\" [ref=e55]\n            - StaticText \"Fri\"\n            - StaticText \" \"\n            - StaticText \"4:00pm\"\n            - StaticText \", \"\n            - StaticText \"Re-test, Owen K.\"\n            - StaticText \"Day 41 of 42, confirmed by text\"\n        - listitem [level=1]\n          - button \"Fri 6:00pm, Small group, U16 Low. Reminder goes Thursday at 7pm.\" [ref=e56]\n            - StaticText \"Fri\"\n            - StaticText \" \"\n            - StaticText \"6:00pm\"\n            - StaticText \", \"\n            - StaticText \"Small group, U16\"\n            - StaticText \"Low. Reminder goes Thursday at 7pm.\"\n        - listitem [level=1]\n          - button \"Sat 9:00am, Free assessments Zoe V., Ava D. and Ruby S. booked by Booker\" [ref=e57]\n            - StaticText \"Sat\"\n            - StaticText \" \"\n            - StaticText \"9:00am\"\n            - StaticText \", \"\n            - StaticText \"Free assessments\"\n            - StaticText \"Zoe V., Ava D. and Ruby S. booked by Booker\"\n        - listitem [level=1]\n          - button \"Sat 9:00am, Orlando block, U14 basketball Priya N.'s twins invited to try it\" [ref=e58]\n            - StaticText \"Sat\"\n            - StaticText \" \"\n            - StaticText \"9:00am\"\n            - StaticText \", \"\n            - StaticText \"Orlando block, U14 basketball\"\n            - StaticText \"Priya N.'s twins invited to try it\"\n        - listitem [level=1]\n          - button \"Sat 11:00am, Free assessment, Orlando Leo A. booked by Booker\" [ref=e59]\n            - StaticText \"Sat\"\n            - StaticText \" \"\n            - StaticText \"11:00am\"\n            - StaticText \", \"\n            - StaticText \"Free assessment, Orlando\"\n            - StaticText \"Leo A. booked by Booker\"\n        - listitem [level=1]\n          - button \"Sun 11:00am, Makeup session Makeups for missed sessions, all rebooked by text\" [ref=e60]\n            - StaticText \"Sun\"\n            - StaticText \" \"\n            - StaticText \"11:00am\"\n            - StaticText \", \"\n            - StaticText \"Makeup session\"\n            - StaticText \"Makeups for missed sessions, all rebooked by text\"",
+    "browserPageId": "c697c4cb-4441-4e66-bb0a-213f98ed2219"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

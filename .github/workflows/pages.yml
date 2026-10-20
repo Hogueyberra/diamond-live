@@ -34,11 +34,18 @@ jobs:
         run: npm test
 
       - name: Build
-        run: npm run build
+        run: |
+          if [[ -n "$VITE_CLERK_PUBLISHABLE_KEY" && "$VITE_CLERK_PUBLISHABLE_KEY" != pk_live_* ]]; then
+            echo "Production requires a Clerk production publishable key."
+            exit 1
+          fi
+          npm run build
         env:
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
+          VITE_CLERK_SUPABASE_PROVIDER: ${{ vars.VITE_CLERK_SUPABASE_PROVIDER }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -62,3 +69,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify public routes and clubhouse assets
+        run: node scripts/verify-public-site.mjs "$SITE_URL"
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}

@@ -1,0 +1,22 @@
+[
+  {
+    "view": "Players",
+    "headingFound": true
+  },
+  {
+    "view": "Development",
+    "headingFound": true
+  },
+  {
+    "view": "Calendar",
+    "headingFound": true
+  },
+  {
+    "view": "Library",
+    "headingFound": true
+  },
+  {
+    "view": "Coach Desk",
+    "headingFound": true
+  }
+]
