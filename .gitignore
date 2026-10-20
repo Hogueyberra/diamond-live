@@ -17,3 +17,9 @@ docs/uiverse-integration.md
 
 # Supabase CLI cache.
 supabase/.temp/
+
+# Machine-local assistant state, credentials, logs and experiment outputs.
+.assistant-local/
+dist-assistant/
+tmp/
+output/ai-evaluation/

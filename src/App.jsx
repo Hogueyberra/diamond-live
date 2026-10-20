@@ -124,7 +124,7 @@ function Shell({ coachingHome }) {
       ) : null}
       <nav className="nav" aria-label="Saturday">
         {LINKS.map(([to, label]) => (
-          <NavLink key={to} to={to} end={to === "/"}>
+          <NavLink key={to} to={`${to}${coachingHome === '/workspace/demo' ? '?return=workspace-demo' : coachingHome === '/workspace' ? '?return=workspace' : ''}`} end={to === "/"}>
             {label}
           </NavLink>
         ))}
@@ -142,21 +142,36 @@ function LegacyProjectRedirect() {
   return <Navigate replace to={{ pathname: legacyProjectPath(location.pathname) ?? '/', search: location.search, hash: location.hash }} />;
 }
 
-export function AppRoutes() {
-  const coachingStore = useCoachingStore(INITIAL_COACHING_DATA);
-  const account = useAccount();
+function SharedTeamRoute({ account, localStore, demoPreview = false }) {
   const shared = useSharedWorkspace(account.repository, account.teams.find((team) => team.id === account.activeTeamId), account.user?.id);
+  return <WorkspaceGateway localStore={localStore} account={account} shared={shared} demoPreview={demoPreview} />;
+}
+
+function ClubhouseRedirect() {
+  const location = useLocation();
+  return <Navigate replace to={{ pathname: '/', search: location.search, hash: location.hash }} />;
+}
+
+export function AppRoutes() {
+  const account = useAccount();
+  const localStore = useCoachingStore(INITIAL_COACHING_DATA);
+  const location = useLocation();
+  const returnTo = new URLSearchParams(location.search).get('return');
+  const coachingHome = returnTo === 'workspace-demo' ? '/workspace/demo' : returnTo === 'workspace' ? '/workspace' : '/';
+  const clubhouse = <Suspense fallback={<p role="status">Opening Coach Desk…</p>}><Prototype account={account} /></Suspense>;
   return (
     <GameProvider>
       <Routes>
         <Route path="diamond-live/*" element={<LegacyProjectRedirect />} />
-        <Route path="/" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} />} />
-        <Route path="preview" element={<WorkspaceGateway localStore={coachingStore} account={account} shared={shared} demoPreview />} />
+        <Route path="/" element={clubhouse} />
+        <Route path="preview" element={<ClubhouseRedirect />} />
+        <Route path="workspace" element={<SharedTeamRoute account={account} localStore={localStore} />} />
+        <Route path="workspace/demo" element={<SharedTeamRoute account={account} localStore={localStore} demoPreview />} />
         <Route path="sign-in/*" element={<Suspense fallback={<p role="status">Opening sign-in…</p>}><SignInPage account={account} /></Suspense>} />
         <Route path="auth/connect" element={<Suspense fallback={<p role="status">Opening your account…</p>}><ClerkConnect account={account} /></Suspense>} />
         <Route path="auth/callback" element={<Suspense fallback={<p role="status">Completing sign-in…</p>}><AuthCallback account={account} /></Suspense>} />
-        <Route path="prototype" element={<Suspense fallback={<p role="status">Opening Coach Desk…</p>}><Prototype /></Suspense>} />
-        <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>
+        <Route path="prototype" element={clubhouse} />
+        <Route element={<GameBoundary><Shell coachingHome={coachingHome} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />
           <Route path="scorebook" element={<Scorebook />} />

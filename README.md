@@ -110,3 +110,7 @@ The Overview setup checklist leads coaches through Players → Schedule → Asse
 The importer links the official [GameChanger calendar instructions](https://help.gc.com/hc/en-us/articles/115005457626-Integrating-Your-Personal-Calendar) and [season stats export instructions](https://help.gc.com/hc/en-us/articles/360043583651-Exporting-Season-Stats). A stats export is only a starting point for preparing a roster; it is not represented as a complete roster export.
 
 See [practice recommendations, permissions, and drill sources](docs/practice-planning.md). Database permission and simultaneous-claim tests run with `supabase/tests/run-local.sh` in an isolated PostgreSQL cluster. The additive `manager_practice_assignments` migration must be applied before publishing this UI.
+
+## Local coaching assistant
+
+This branch opens the new clubhouse at the default home route. Its **Coach’s assistant** connects source-backed league questions, demo-assessment-based starter practices with parent versions, and short local AI coaching replies. The demo roster remains browser-local; existing shared records are accessible from the account menu. See [setup, model tests, and operating instructions](docs/LOCAL_AI_SETUP.md). The local pilot uses Ollama and Qwen 2.5 14B; the protected Cloudflare pilot is enabled and verified through a real signed-in account. The latest GitHub clubhouse and sign-in work is included in [draft PR #15](https://github.com/Hogueyberra/diamond-live/pull/15).

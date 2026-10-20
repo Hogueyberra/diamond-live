@@ -18,7 +18,7 @@ beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(new Date('2026-09-29T19:00:00Z'));
   localStorage.clear();
-  window.history.replaceState(null, "", "/preview");
+  window.history.replaceState(null, "", "/workspace/demo");
   Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
     configurable: true,
     value() { this.setAttribute("open", ""); },
@@ -149,7 +149,7 @@ describe("coaching workspace", () => {
 
   it("retains an unsaved pitch while navigating through coaching and retries that same event", () => {
     localStorage.setItem(ROLE_KEY, "scorekeeper");
-    window.history.replaceState(null, "", "/scorebook");
+    window.history.replaceState(null, "", "/scorebook?return=workspace-demo");
     renderApp();
     fireEvent.click(screen.getByRole("button", { name: "Start first pitch" }));
     const before = activeSavedGame();
