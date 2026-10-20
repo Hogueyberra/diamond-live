@@ -28,13 +28,19 @@ export function WorkspaceGateway({ localStore, account, shared, demoPreview = fa
   }, [account.user?.id, team?.id, canScout]);
   const preventLoss = () => { if (shared.pending || scoutingPending) throw new Error('You have unsaved team or scouting changes. Finish or discard any open scouting form, and resolve pending saves before leaving this workspace or changing accounts.'); };
   const safeAccount = { ...account,
+    signInWithPassword: (...args) => { preventLoss(); return account.signInWithPassword(...args); },
     verifyCode: (...args) => { preventLoss(); return account.verifyCode(...args); },
     setActiveTeamId: (id) => { preventLoss(); account.setActiveTeamId(id); },
     createTeam: (details) => { preventLoss(); return account.createTeam(details); },
     joinTeam: (code) => { preventLoss(); return account.joinTeam(code); },
     signOut: () => { preventLoss(); return account.signOut(); },
   };
-  const openAccount = () => setAccountOpen(true);
+  const openAccount = () => {
+    if (!account.user && account.clerk?.enabled) {
+      try { preventLoss(); setNavigationError(''); navigate('/sign-in'); }
+      catch (error) { setNavigationError(error.message); }
+    } else setAccountOpen(true);
+  };
   const openDemo = () => { navigate('/preview'); window.scrollTo(0, 0); };
   const returnHome = (event) => {
     event?.preventDefault();

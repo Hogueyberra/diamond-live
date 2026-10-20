@@ -5,11 +5,15 @@ import { loadEnv } from "vite";
 import { readCloudConfig } from "./src/cloudConfig.js";
 import { resolveBase } from "./src/base.js";
 import { copyIndexTo404 } from "./src/spaFallback.js";
+import { readClerkConfig } from './src/authConfig.js';
 
 export default defineConfig(({ command, mode }) => {
   const cloud = readCloudConfig(loadEnv(mode, process.cwd(), 'VITE_'));
+  const clerk = readClerkConfig(loadEnv(mode, process.cwd(), 'VITE_'));
+  if (clerk.error) throw new Error('Invalid Clerk browser configuration. Set the publishable key and custom OAuth provider together; never a secret key.');
   // Stop before Vite embeds public environment values in a browser bundle.
   if (cloud.error) throw new Error('Invalid public Supabase configuration. Use a project HTTPS URL and publishable key; never a server secret.');
+  if (clerk.enabled && !cloud.configured) throw new Error('Clerk sign-in requires the existing account service configuration.');
   return ({
   base: resolveBase({ command, env: process.env }),
   build: {

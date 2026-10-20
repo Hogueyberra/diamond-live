@@ -21,6 +21,7 @@ function makeAccount(overrides = {}) {
   return {
     configured: true, configError: '', loading: false, user: null, profile: null, teams: [], activeTeamId: null,
     setActiveTeamId: vi.fn().mockResolvedValue(undefined), requestCode: vi.fn().mockResolvedValue(undefined),
+    signInWithPassword: vi.fn().mockResolvedValue(undefined),
     verifyCode: vi.fn().mockResolvedValue(undefined), saveProfile: vi.fn().mockResolvedValue(undefined),
     createTeam: vi.fn().mockResolvedValue(undefined), joinTeam: vi.fn().mockResolvedValue(undefined),
     signOut: vi.fn().mockResolvedValue(undefined), createInvite: vi.fn().mockResolvedValue({ code: 'COACH-ABCD', expiresAt: '2026-10-02T23:00:00Z' }),
@@ -34,6 +35,19 @@ const ownerTeam = { id: 'angels-real', name: 'Angels', league: 'HVLL', division:
 const change = (label, value) => fireEvent.change(screen.getByLabelText(label), { target: { value } });
 
 describe('account panel', () => {
+  it('signs existing accounts in with a password and clears it after an error', async () => {
+    const account = makeAccount({ signInWithPassword: vi.fn().mockRejectedValue(new Error('Invalid credentials')) });
+    render(<AccountPanel account={account} onClose={vi.fn()} />);
+    change('Email address', 'coach@example.com'); change('Password', '  exact password  ');
+    fireEvent.click(screen.getByRole('button', { name: 'Continue', exact: true }));
+    await screen.findByText(/We couldn’t sign you in/);
+    expect(account.signInWithPassword).toHaveBeenCalledWith('coach@example.com', '  exact password  ');
+    expect(screen.getByLabelText('Password').value).toBe('');
+    expect(screen.getByLabelText('Email address').value).toBe('coach@example.com');
+    expect(screen.getByLabelText('Password').autocomplete).toBe('current-password');
+    fireEvent.click(screen.getByRole('button', { name: 'Email me a code' }));
+    await screen.findByLabelText('Email sign-in code');
+  });
   it('explains unavailable account setup without offering a fake sign-in action', () => {
     const account = makeAccount({ configured: false });
     render(<AccountPanel account={account} onClose={vi.fn()} />);
@@ -48,7 +62,7 @@ describe('account panel', () => {
     change('Email address', 'coach@example.com');
     fireEvent.click(screen.getByRole('button', { name: 'Email me a code' }));
     await screen.findByLabelText('Email sign-in code');
-    expect(account.requestCode).toHaveBeenCalledWith('coach@example.com');
+    expect(account.requestCode).toHaveBeenCalledWith('coach@example.com', { existingOnly: false });
     change('Email sign-in code', '1234 5678');
     fireEvent.click(screen.getByRole('button', { name: 'Verify & sign in' }));
     await screen.findByText('That code has expired.');
