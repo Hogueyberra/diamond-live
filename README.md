@@ -34,6 +34,14 @@ Signed-in shared records remain in the existing Supabase project. A different we
 
 ## Run locally
 
+The new **Coach Desk prototype** is available at `/prototype` (for example, `http://localhost:4173/prototype` when using port 4173). It explores the Kestrel-inspired coaching command center with an interactive clubhouse, player profiles, development proposals, a calendar, illustrated drill guides, and a prepared-answer assistant. Click the dugout for Players, batting cage for Development, planning desk for Calendar, or equipment wall for Library. The Library supports step-by-step and playable stick-figure demonstrations plus saved social/video links, creator credit, coaching notes, and skill matching in Development. Video links persist in this browser; fictional team proposals and practice drafts remain session-only. See the [implementation plan](docs/research/kestrel/PLAN.md), [visual verification](design-qa.md), and [interactive library update](docs/research/kestrel/INTERACTIVE-LIBRARY.md). The current coaching app remains at `/preview`.
+
+The prototype also has a quick-capture screen at `/prototype?capture=1`, a Drill Inbox, and an iPhone Shortcut setup guide under **Library → Video links → iPhone sharing**. The production receiver is `https://diamondliveapp.com/prototype?capture=1#` followed by the shared video URL. See [iPhone capture setup and current limits](docs/research/kestrel/IPHONE-SHARING.md). Captured links currently stay in that browser.
+
+Under **Players → select a player → Record assessment**, enter 1–10 category ratings with a date, coach, setting, and observation note. Partial assessments keep earlier scores for skipped skills. History and the Development focus use the same saved observations. These records persist in this browser and remain separate from the existing detailed scouting evaluations. See [player assessment behavior](docs/research/kestrel/PLAYER-ASSESSMENTS.md).
+
+Tap the **umpire behind home plate → Consult the Rules** to open a rules chat with a division selector, suggested questions, original passages, and source page links from the saved 2026 HVLL rulebook. See [umpire artwork and rules-chat scope](docs/research/kestrel/UMPIRE-RULES.md).
+
 ```bash
 npm ci
 npm run dev
@@ -52,6 +60,7 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 
 - `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
 - `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Rules, and Scouting tabs
+- `/prototype` interactive clubhouse, player assessments, development plans, calendar, drill/video library, and source-linked rules chat
 - `/demo` original Saturday board for the role you are viewing as
 - `/lineup` batting order, positions, and who has arrived
 - `/scorebook` count, diamond, complete pitch history, and audited undo

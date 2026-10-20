@@ -1,0 +1,302 @@
+{
+  "id": "1adfd59b-8345-4e7b-a063-b3af84d25cff",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=library",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Development",
+        "role": "button"
+      },
+      "e12": {
+        "name": "Library",
+        "role": "button"
+      },
+      "e13": {
+        "name": "Your next great practice.",
+        "role": "heading"
+      },
+      "e14": {
+        "name": "Small skills. Lasting confidence.",
+        "role": "heading"
+      },
+      "e15": {
+        "name": "All",
+        "role": "button"
+      },
+      "e16": {
+        "name": "Infield",
+        "role": "button"
+      },
+      "e17": {
+        "name": "Outfield",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Hitting",
+        "role": "button"
+      },
+      "e19": {
+        "name": "Throwing",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Skip to workspace",
+        "role": "link"
+      },
+      "e20": {
+        "name": "Drills11",
+        "role": "button"
+      },
+      "e21": {
+        "name": "Rules",
+        "role": "button"
+      },
+      "e22": {
+        "name": "Documents",
+        "role": "button"
+      },
+      "e23": {
+        "name": "Search drills",
+        "role": "textbox"
+      },
+      "e24": {
+        "name": "View Quiet glove grounders",
+        "role": "button"
+      },
+      "e25": {
+        "name": "Quiet glove grounders",
+        "role": "button"
+      },
+      "e26": {
+        "name": "Added Quiet glove grounders to practice draft",
+        "role": "button"
+      },
+      "e27": {
+        "name": "View Field, gather, aim",
+        "role": "button"
+      },
+      "e28": {
+        "name": "Field, gather, aim",
+        "role": "button"
+      },
+      "e29": {
+        "name": "Add Field, gather, aim to practice draft",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Diamond Live Coach Desk",
+        "role": "button"
+      },
+      "e30": {
+        "name": "View Read and move",
+        "role": "button"
+      },
+      "e31": {
+        "name": "Read and move",
+        "role": "button"
+      },
+      "e32": {
+        "name": "Add Read and move to practice draft",
+        "role": "button"
+      },
+      "e33": {
+        "name": "View Short target throws",
+        "role": "button"
+      },
+      "e34": {
+        "name": "Short target throws",
+        "role": "button"
+      },
+      "e35": {
+        "name": "Add Short target throws to practice draft",
+        "role": "button"
+      },
+      "e36": {
+        "name": "View Track and secure",
+        "role": "button"
+      },
+      "e37": {
+        "name": "Track and secure",
+        "role": "button"
+      },
+      "e38": {
+        "name": "Add Track and secure to practice draft",
+        "role": "button"
+      },
+      "e39": {
+        "name": "View Turn and track",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Prototype workspace",
+        "role": "navigation"
+      },
+      "e40": {
+        "name": "Turn and track",
+        "role": "button"
+      },
+      "e41": {
+        "name": "Add Turn and track to practice draft",
+        "role": "button"
+      },
+      "e42": {
+        "name": "View Outfield first step",
+        "role": "button"
+      },
+      "e43": {
+        "name": "Outfield first step",
+        "role": "button"
+      },
+      "e44": {
+        "name": "Add Outfield first step to practice draft",
+        "role": "button"
+      },
+      "e45": {
+        "name": "View Find the cutoff",
+        "role": "button"
+      },
+      "e46": {
+        "name": "Find the cutoff",
+        "role": "button"
+      },
+      "e47": {
+        "name": "Add Find the cutoff to practice draft",
+        "role": "button"
+      },
+      "e48": {
+        "name": "View Soft bunt targets",
+        "role": "button"
+      },
+      "e49": {
+        "name": "Soft bunt targets",
+        "role": "button"
+      },
+      "e5": {
+        "name": "",
+        "role": "button"
+      },
+      "e50": {
+        "name": "Add Soft bunt targets to practice draft",
+        "role": "button"
+      },
+      "e51": {
+        "name": "View Balanced tee swings",
+        "role": "button"
+      },
+      "e52": {
+        "name": "Balanced tee swings",
+        "role": "button"
+      },
+      "e53": {
+        "name": "Add Balanced tee swings to practice draft",
+        "role": "button"
+      },
+      "e54": {
+        "name": "View Bullpen target & reset",
+        "role": "button"
+      },
+      "e55": {
+        "name": "Bullpen target & reset",
+        "role": "button"
+      },
+      "e56": {
+        "name": "Add Bullpen target & reset to practice draft",
+        "role": "button"
+      },
+      "e57": {
+        "name": "A plan with purpose.",
+        "role": "heading"
+      },
+      "e58": {
+        "name": "Teach one thing well.",
+        "role": "heading"
+      },
+      "e59": {
+        "name": "Practice draft 1",
+        "role": "heading"
+      },
+      "e6": {
+        "name": "Open workspace menu",
+        "role": "button"
+      },
+      "e60": {
+        "name": "Open coaching workspace",
+        "role": "link"
+      },
+      "e61": {
+        "name": "Quiet glove grounders",
+        "role": "heading"
+      },
+      "e62": {
+        "name": "Field, gather, aim",
+        "role": "heading"
+      },
+      "e63": {
+        "name": "Read and move",
+        "role": "heading"
+      },
+      "e64": {
+        "name": "Short target throws",
+        "role": "heading"
+      },
+      "e65": {
+        "name": "Track and secure",
+        "role": "heading"
+      },
+      "e66": {
+        "name": "Turn and track",
+        "role": "heading"
+      },
+      "e67": {
+        "name": "Outfield first step",
+        "role": "heading"
+      },
+      "e68": {
+        "name": "Find the cutoff",
+        "role": "heading"
+      },
+      "e69": {
+        "name": "Soft bunt targets",
+        "role": "heading"
+      },
+      "e7": {
+        "name": "Current workspace",
+        "role": "link"
+      },
+      "e70": {
+        "name": "Balanced tee swings",
+        "role": "heading"
+      },
+      "e71": {
+        "name": "Bullpen target & reset",
+        "role": "heading"
+      },
+      "e72": {
+        "name": "Remove Quiet glove grounders",
+        "role": "button"
+      },
+      "e8": {
+        "name": "Coach Desk",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Players",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - link \"Skip to workspace\" [ref=e2]\n  - banner\n    - button \"Diamond Live Coach Desk\" [ref=e3]\n      - image\n      - strong\n        - StaticText \"Diamond Live\"\n    - navigation \"Prototype workspace\" [ref=e4]\n      - button \"Coach Desk\" [ref=e8]\n        - image\n        - StaticText \"Coach Desk\"\n      - button \"Players\" [ref=e9]\n        - image\n        - StaticText \"Players\"\n      - button \"Calendar\" [ref=e10]\n        - image\n        - StaticText \"Calendar\"\n      - button \"Development\" [ref=e11]\n        - image\n        - StaticText \"Development\"\n      - button \"Library\" [ref=e12]\n        - image\n        - StaticText \"Library\"\n    - button [ref=e5]\n      - image\n    - button \"Open workspace menu\" [expanded=false, ref=e6]\n      - StaticText \"NC\"\n  - image\n  - strong\n    - StaticText \"Angels\"\n  - StaticText \"/\"\n  - StaticText \"Minor B\"\n  - StaticText \"Fall development\"\n  - main\n    - generic\n      - StaticText \"GOOD COACHING, WITH A STARTING POINT\"\n      - heading \"Your next great practice.\" [level=1, ref=e13]\n      - paragraph\n        - StaticText \"Useful drills. Clear references. More time on the field.\"\n      - generic \"Library sections\"\n        - button \"Drills11\" [ref=e20]\n          - StaticText \"Drills11\"\n        - button \"Rules\" [ref=e21]\n        - button \"Documents\" [ref=e22]\n      - LabelText\n        - image\n        - textbox \"Search drills\" [ref=e23]\n      - heading \"Small skills. Lasting confidence.\" [level=2, ref=e14]\n      - paragraph\n        - StaticText \"Original beginner activities, with linked Little League references.\"\n      - button \"All\" [ref=e15]\n      - button \"Infield\" [ref=e16]\n      - button \"Outfield\" [ref=e17]\n      - button \"Hitting\" [ref=e18]\n      - button \"Throwing\" [ref=e19]\n      - article\n        - button \"View Quiet glove grounders\" [ref=e24]\n          - StaticText \"Infield\"\n          - image\n          - StaticText \"01\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Quiet glove grounders\" [ref=e25]\n          - heading \"Quiet glove grounders\" [level=3, ref=e61]\n        - paragraph\n          - StaticText \"Receive a slow ground ball with control.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Added Quiet glove grounders to practice draft\" [ref=e26]\n          - image\n          - StaticText \"Added\"\n      - article\n        - button \"View Field, gather, aim\" [ref=e27]\n          - StaticText \"Infield\"\n          - image\n          - StaticText \"02\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Field, gather, aim\" [ref=e28]\n          - heading \"Field, gather, aim\" [level=3, ref=e62]\n        - paragraph\n          - StaticText \"Arrive balanced and line up toward a target.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Field, gather, aim to practice draft\" [ref=e29]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Read and move\" [ref=e30]\n          - StaticText \"Infield\"\n          - image\n          - StaticText \"03\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Read and move\" [ref=e31]\n          - heading \"Read and move\" [level=3, ref=e63]\n        - paragraph\n          - StaticText \"React to a direction while staying balanced.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Read and move to practice draft\" [ref=e32]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Short target throws\" [ref=e33]\n          - StaticText \"Infield\"\n          - image\n          - StaticText \"04\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Short target throws\" [ref=e34]\n          - heading \"Short target throws\" [level=3, ref=e64]\n        - paragraph\n          - StaticText \"Make a comfortable throw toward a broad target.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Short target throws to practice draft\" [ref=e35]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Track and secure\" [ref=e36]\n          - StaticText \"Outfield\"\n          - image\n          - StaticText \"05\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Track and secure\" [ref=e37]\n          - heading \"Track and secure\" [level=3, ref=e65]\n        - paragraph\n          - StaticText \"Follow an easy toss and secure the catch.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Track and secure to practice draft\" [ref=e38]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Turn and track\" [ref=e39]\n          - StaticText \"Outfield\"\n          - image\n          - StaticText \"06\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Turn and track\" [ref=e40]\n          - heading \"Turn and track\" [level=3, ref=e66]\n        - paragraph\n          - StaticText \"Turn toward a landing area without backpedaling.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Turn and track to practice draft\" [ref=e41]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Outfield first step\" [ref=e42]\n          - StaticText \"Outfield\"\n          - image\n          - StaticText \"07\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Outfield first step\" [ref=e43]\n          - heading \"Outfield first step\" [level=3, ref=e67]\n        - paragraph\n          - StaticText \"Respond to a direction cue with confidence.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Outfield first step to practice draft\" [ref=e44]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Find the cutoff\" [ref=e45]\n          - StaticText \"Outfield\"\n          - image\n          - StaticText \"08\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Find the cutoff\" [ref=e46]\n          - heading \"Find the cutoff\" [level=3, ref=e68]\n        - paragraph\n          - StaticText \"Line up a short throw to a ready receiver.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Find the cutoff to practice draft\" [ref=e47]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Soft bunt targets\" [ref=e48]\n          - StaticText \"Hitting\"\n          - image\n          - StaticText \"09\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Soft bunt targets\" [ref=e49]\n          - heading \"Soft bunt targets\" [level=3, ref=e69]\n        - paragraph\n          - StaticText \"Use safe bat control to direct gentle contact.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Soft bunt targets to practice draft\" [ref=e50]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Balanced tee swings\" [ref=e51]\n          - StaticText \"Hitting\"\n          - image\n          - StaticText \"10\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Balanced tee swings\" [ref=e52]\n          - heading \"Balanced tee swings\" [level=3, ref=e70]\n        - paragraph\n          - StaticText \"Repeat a comfortable stance and balanced finish.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Balanced tee swings to practice draft\" [ref=e53]\n          - image\n          - StaticText \"Add\"\n      - article\n        - button \"View Bullpen target & reset\" [ref=e54]\n          - StaticText \"Throwing\"\n          - image\n          - StaticText \"11\"\n          - image\n          - StaticText \"8\"\n          - StaticText \" min\"\n        - button \"Bullpen target & reset\" [ref=e55]\n          - heading \"Bullpen target & reset\" [level=3, ref=e71]\n        - paragraph\n          - StaticText \"Practice a calm setup and a comfortable throw toward a target.\"\n        - StaticText \"Beginner friendly\"\n        - button \"Add Bullpen target & reset to practice draft\" [ref=e56]\n          - image\n          - StaticText \"Add\"\n      - generic\n        - StaticText \"THE PRACTICE BENCH\"\n        - heading \"A plan with purpose.\" [level=2, ref=e57]\n        - paragraph\n          - StaticText \"Choose a drill to see the setup, coaching cues, and source behind it.\"\n        - image\n        - heading \"Teach one thing well.\" [level=3, ref=e58]\n        - paragraph\n          - StaticText \"Short, focused blocks give players room to try, reset, and try again.\"\n        - heading \"Practice draft 1\" [level=3, ref=e59]\n          - StaticText \"Practice draft\"\n          - StaticText \"1\"\n        - generic\n          - list\n            - listitem [level=1]\n              - StaticText \"Quiet glove grounders\"\n              - generic\n                - StaticText \"8 minutes\"\n              - button \"Remove Quiet glove grounders\" [ref=e72]\n                - image\n          - paragraph\n            - StaticText \"8 minutes selected · local preview\"\n        - StaticText \"Draft stays in this view only. Open the coaching workspace to create a saved plan.\"\n        - link \"Open coaching workspace\" [ref=e60]\n          - StaticText \"Open coaching workspace\"\n          - image\n  - contentinfo\n    - image\n    - StaticText \"Built around the coach. Focused on the player.\"\n    - link \"Current workspace\" [ref=e7]\n      - StaticText \"Current workspace\"\n      - image",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

@@ -1,0 +1,15 @@
+# Large retained REA Evidence remains available locally for follow-up analysis.
+rea-static.json
+rea-focused-static.json
+rea-*-input.json
+
+# Downloaded third-party executable bundles are local inspection material.
+artifacts/
+bundle-readable.js
+evidence/*.js
+evidence/*.css
+evidence/*.html
+
+# Machine-specific CLI discovery output.
+browser-help.json
+view-schema.json

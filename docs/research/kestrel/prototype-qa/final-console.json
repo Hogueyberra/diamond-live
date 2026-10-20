@@ -1,0 +1,453 @@
+{
+  "id": "7836688d-cfe1-4ed4-9fcc-a8764ae51ae5",
+  "ok": true,
+  "result": {
+    "messages": [
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/Prototype.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/Prototype.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/prototype.css"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/prototype.css",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/LibraryView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/LibraryView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/LibraryView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/LibraryView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/CalendarView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/CalendarView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/Prototype.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/Prototype.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/DevelopmentView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/DevelopmentView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/prototype.css"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/prototype.css",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/coach-desk.css"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/coach-desk.css",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/prototype.css"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/prototype.css",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/calendar-library.css"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/calendar-library.css",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/players-development.css"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/players-development.css",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/PlayersView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/PlayersView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/CoachDesk.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/CoachDesk.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/Prototype.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/Prototype.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/LibraryView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/LibraryView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/CalendarView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/CalendarView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/DevelopmentView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/DevelopmentView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/LibraryView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/LibraryView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "%s\n\n%s\n"
+          },
+          {
+            "type": "string",
+            "value": "An error occurred in the <LibraryView> component."
+          },
+          {
+            "type": "string",
+            "value": "Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries."
+          }
+        ],
+        "text": "%s\n\n%s\n An error occurred in the <LibraryView> component. Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.",
+        "type": "warning"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/CalendarView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/CalendarView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "%s\n\n%s\n"
+          },
+          {
+            "type": "string",
+            "value": "An error occurred in the <CalendarView> component."
+          },
+          {
+            "type": "string",
+            "value": "Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries."
+          }
+        ],
+        "text": "%s\n\n%s\n An error occurred in the <CalendarView> component. Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.",
+        "type": "warning"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/PlayersView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/PlayersView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "%s\n\n%s\n"
+          },
+          {
+            "type": "string",
+            "value": "An error occurred in the <CalendarView> component."
+          },
+          {
+            "type": "string",
+            "value": "Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries."
+          }
+        ],
+        "text": "%s\n\n%s\n An error occurred in the <CalendarView> component. Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.",
+        "type": "warning"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/DevelopmentView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/DevelopmentView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "%s\n\n%s\n"
+          },
+          {
+            "type": "string",
+            "value": "An error occurred in the <CalendarView> component."
+          },
+          {
+            "type": "string",
+            "value": "Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries."
+          }
+        ],
+        "text": "%s\n\n%s\n An error occurred in the <CalendarView> component. Consider adding an error boundary to your tree to customize error handling behavior.\nVisit https://react.dev/link/error-boundaries to learn more about error boundaries.",
+        "type": "warning"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/CalendarView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/CalendarView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite]"
+          },
+          {
+            "type": "string",
+            "value": "hot updated: /src/prototype/LibraryView.jsx"
+          }
+        ],
+        "text": "[vite] hot updated: /src/prototype/LibraryView.jsx",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite] connecting..."
+          }
+        ],
+        "text": "[vite] connecting...",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "[vite] connected."
+          }
+        ],
+        "text": "[vite] connected.",
+        "type": "debug"
+      },
+      {
+        "args": [
+          {
+            "type": "string",
+            "value": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools"
+          },
+          {
+            "type": "string",
+            "value": "font-weight:bold"
+          }
+        ],
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "type": "info"
+      }
+    ]
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

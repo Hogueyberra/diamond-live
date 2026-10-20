@@ -1,0 +1,46 @@
+{
+  "id": "8e620c97-ebc6-4dde-9f4d-8db34547eb7f",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=library",
+    "refs": {
+      "e1": {
+        "name": "What needs my review?",
+        "role": "button"
+      },
+      "e2": {
+        "name": "Help me plan practice",
+        "role": "button"
+      },
+      "e3": {
+        "name": "Where are the rules?",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Coach’s assistant",
+        "role": "heading"
+      },
+      "e5": {
+        "name": "Close assistant",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Plan development",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Ask the prototype guide",
+        "role": "textbox"
+      },
+      "e8": {
+        "name": "Send message",
+        "role": "button"
+      }
+    },
+    "snapshot": "- dialog \"Coach’s assistant\"\n  - banner\n    - image\n    - heading \"Coach’s assistant\" [level=2, ref=e4]\n    - paragraph\n      - StaticText \"Prototype guide · prepared answers\"\n    - button \"Close assistant\" [ref=e5]\n      - image\n  - log \"Conversation\"\n    - paragraph\n      - StaticText \"Good afternoon, Coach. Let’s make the next practice count. What would you like to explore?\"\n    - paragraph\n      - StaticText \"Help me plan practice\"\n    - paragraph\n      - StaticText \"Development connects an observed skill to a proposed drill and a reviewed practice plan. You can explore the approval flow here. In the current workspace, approved blocks can be assigned to coaches and tracked through completion.\"\n    - button \"Plan development\" [ref=e6]\n      - StaticText \"Plan development\"\n      - image\n  - button \"What needs my review?\" [ref=e1]\n  - button \"Help me plan practice\" [ref=e2]\n  - button \"Where are the rules?\" [ref=e3]\n  - form\n    - LabelText\n      - StaticText \"Ask the prototype guide\"\n    - textbox \"Ask the prototype guide\" [ref=e7]\n    - button \"Send message\" [disabled, ref=e8]\n      - image\n  - paragraph\n    - StaticText \"Sample workspace. No messages are sent to families.\"",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}

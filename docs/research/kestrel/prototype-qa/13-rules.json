@@ -1,0 +1,110 @@
+{
+  "id": "f589f0e1-834e-4e0b-a26b-e7dfda1bba24",
+  "ok": true,
+  "result": {
+    "origin": "http://localhost:4173/prototype?view=library",
+    "refs": {
+      "e1": {
+        "name": "",
+        "role": "generic"
+      },
+      "e10": {
+        "name": "Calendar",
+        "role": "button"
+      },
+      "e11": {
+        "name": "Development",
+        "role": "button"
+      },
+      "e12": {
+        "name": "Library",
+        "role": "button"
+      },
+      "e13": {
+        "name": "Your next great practice.",
+        "role": "heading"
+      },
+      "e14": {
+        "name": "Know the rule. Find the source.",
+        "role": "heading"
+      },
+      "e15": {
+        "name": "Drills11",
+        "role": "button"
+      },
+      "e16": {
+        "name": "Rules",
+        "role": "button"
+      },
+      "e17": {
+        "name": "Documents",
+        "role": "button"
+      },
+      "e18": {
+        "name": "Search rules",
+        "role": "textbox"
+      },
+      "e19": {
+        "name": "Playing time rotation",
+        "role": "heading"
+      },
+      "e2": {
+        "name": "Skip to workspace",
+        "role": "link"
+      },
+      "e20": {
+        "name": "Page 26",
+        "role": "link"
+      },
+      "e21": {
+        "name": "Continuous batting order",
+        "role": "heading"
+      },
+      "e22": {
+        "name": "Page 26",
+        "role": "link"
+      },
+      "e23": {
+        "name": "Pitching innings",
+        "role": "heading"
+      },
+      "e24": {
+        "name": "Page 27",
+        "role": "link"
+      },
+      "e3": {
+        "name": "Diamond Live Coach Desk",
+        "role": "button"
+      },
+      "e4": {
+        "name": "Prototype workspace",
+        "role": "navigation"
+      },
+      "e5": {
+        "name": "Coach’s assistant",
+        "role": "button"
+      },
+      "e6": {
+        "name": "Open workspace menu",
+        "role": "button"
+      },
+      "e7": {
+        "name": "Current workspace",
+        "role": "link"
+      },
+      "e8": {
+        "name": "Coach Desk",
+        "role": "button"
+      },
+      "e9": {
+        "name": "Players",
+        "role": "button"
+      }
+    },
+    "snapshot": "- generic [ref=e1] clickable [onclick]\n  - link \"Skip to workspace\" [ref=e2]\n  - banner\n    - button \"Diamond Live Coach Desk\" [ref=e3]\n      - image\n      - strong\n        - StaticText \"Diamond Live\"\n      - StaticText \"A little more purpose. Every practice.\"\n    - navigation \"Prototype workspace\" [ref=e4]\n      - button \"Coach Desk\" [ref=e8]\n        - StaticText \"Coach Desk\"\n      - button \"Players\" [ref=e9]\n        - StaticText \"Players\"\n      - button \"Calendar\" [ref=e10]\n        - StaticText \"Calendar\"\n      - button \"Development\" [ref=e11]\n        - StaticText \"Development\"\n      - button \"Library\" [ref=e12]\n        - StaticText \"Library\"\n    - StaticText \"Interactive prototype\"\n    - button \"Coach’s assistant\" [ref=e5]\n      - image\n      - StaticText \"Coach’s assistant\"\n    - button \"Open workspace menu\" [expanded=false, ref=e6]\n      - StaticText \"NC\"\n  - image\n  - strong\n    - StaticText \"Angels\"\n  - StaticText \"/\"\n  - StaticText \"Minor B\"\n  - StaticText \"Fall development\"\n  - image\n  - StaticText \"Sample data\"\n  - StaticText \"·\"\n  - StaticText \"Session-only changes\"\n  - main\n    - generic\n      - StaticText \"GOOD COACHING, WITH A STARTING POINT\"\n      - heading \"Your next great practice.\" [level=1, ref=e13]\n      - paragraph\n        - StaticText \"Useful drills. Clear references. More time on the field.\"\n      - strong\n        - StaticText \"11\"\n      - StaticText \"purposeful drills\"\n      - LineBreak \"\\n\"\n      - StaticText \"ready to explore\"\n      - generic \"Library sections\"\n        - button \"Drills11\" [ref=e15]\n          - StaticText \"Drills11\"\n        - button \"Rules\" [ref=e16]\n        - button \"Documents\" [ref=e17]\n      - LabelText\n        - image\n        - textbox \"Search rules\" [ref=e18]\n      - heading \"Know the rule. Find the source.\" [level=2, ref=e14]\n      - paragraph\n        - StaticText \"Existing Minor B references · 2026 HVLL Bylaws · coach review pending.\"\n      - article\n        - image\n        - StaticText \"Minor B\"\n        - StaticText \" · \"\n        - StaticText \"Section X.A.1–2\"\n        - heading \"Playing time rotation\" [level=3, ref=e19]\n        - paragraph\n          - StaticText \"During preseason and regular-season games, each player present and not held out for disciplinary reasons must sit one inning before anyone sits a second. Division Championship players must play at least six defensive outs per game, unless the Board adopts different District 62 TOC rules.\"\n        - StaticText \"Source checked · Coach review pending\"\n        - link \"Page 26\" [ref=e20]\n          - StaticText \"Page 26\"\n          - image\n      - article\n        - image\n        - StaticText \"Minor B\"\n        - StaticText \" · \"\n        - StaticText \"Section X.E\"\n        - heading \"Continuous batting order\" [level=3, ref=e21]\n        - paragraph\n          - StaticText \"All eligible players present bat continuously through the roster, regardless of who is playing defense. Sitting a defensive inning does not remove a player from the batting order.\"\n        - StaticText \"Source checked · Coach review pending\"\n        - link \"Page 26\" [ref=e22]\n          - StaticText \"Page 26\"\n          - image\n      - article\n        - image\n        - StaticText \"Minor B\"\n        - StaticText \" · \"\n        - StaticText \"Section X.K.3–5\"\n        - heading \"Pitching innings\" [level=3, ref=e23]\n        - paragraph\n          - StaticText \"During the regular season, a player may pitch at most three innings per game and six per Monday–Sunday week. Throwing one pitch counts as an inning pitched. Division Championship has no daily or weekly inning limit. Little League pitch-count and rest regulations always apply separately.\"\n        - StaticText \"Source checked · Coach review pending\"\n        - link \"Page 27\" [ref=e24]\n          - StaticText \"Page 27\"\n          - image\n  - contentinfo\n    - image\n    - StaticText \"Built around the coach. Focused on the player.\"\n    - link \"Current workspace\" [ref=e7]\n      - StaticText \"Current workspace\"\n      - image",
+    "browserPageId": "0b38470d-4919-459e-8ef3-6d36a5a2d0ef"
+  },
+  "_meta": {
+    "runtimeId": "5a3ccce1-ba5e-4c48-8074-9fe01a5a25d1"
+  }
+}
