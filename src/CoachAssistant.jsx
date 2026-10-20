@@ -6,7 +6,7 @@ import './coachAssistant.css';
 
 const divisions = ['Majors', 'Minor A', 'Minor B', 'Minor C', 'Farm', 'Rookie Ball', 'Tee Ball'];
 const prompts = ['Can a Minor B pitcher pitch a fourth inning after only 25 pitches?', 'When can we use a courtesy runner?', 'What happens if we only have eight players?'];
-const methods = { 'verified-rule': 'Source-checked rule', 'source-passages': 'Source passages', 'quoted-rule': 'Answer from the source', 'general-chat': 'AI coaching draft', 'guided-practice': 'Guided practice · coach review', clarification: 'More context needed' };
+const methods = { 'verified-rule': 'Source-checked rule', 'source-passages': 'Source passages', 'quoted-rule': 'Answer from the source', 'general-chat': 'AI coaching draft', 'guided-coaching': 'Coaching guide · coach review', 'guided-practice': 'Guided practice · coach review', clarification: 'More context needed' };
 
 function SourceCard({ source, repository }) {
   const [url, setUrl] = useState(source.url);

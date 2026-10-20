@@ -74,3 +74,9 @@ Copy these separately if exact historical raw research is needed. A future downl
 The latest implemented requests are the clickable clubhouse destinations, social/video drill capture, player rating entry/history, and the umpire rules chat. The prototype still uses fictional examples and prepared assistant responses; saved prototype links/ratings are browser-local. The existing signed-in coaching workspace continues to use its established team permissions and cloud storage.
 
 The next pending setup decision is the Clerk application selection. Its frontend and existing-account password fallback are already published, but real Clerk sign-in and verified identity linking have not been activated. Read [the Clerk setup record](clerk-auth-setup.md) before continuing. Current research and product directions are in [the Kestrel plan](research/kestrel/PLAN.md).
+
+## Local AI pilot continuation — October 20
+
+The Mac's AI work is saved on `codex/local-ai-coach` in [draft PR #15](https://github.com/Hogueyberra/diamond-live/pull/15), with `main` through `1a2ddf4` merged in. Continue from that branch to keep both computers' work. It includes the protected Ollama assistant, source-backed league rules, constrained team/parent practices, startup services, and the approved temporary Cloudflare pilot. The real-account pilot check passed. See [the complete local AI runbook](LOCAL_AI_SETUP.md) for the current address, operating commands, and measured limitations.
+
+The live AI is in the signed-in coaching workspace's **Assistant** tab. The clubhouse prototype retains its prepared guide and browser-local records. Clerk remains optional and disabled in this pilot; existing password/email-code access works. The pilot branch has not been merged into the primary site's `main` branch.

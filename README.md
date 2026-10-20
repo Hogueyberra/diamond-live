@@ -113,4 +113,4 @@ See [practice recommendations, permissions, and drill sources](docs/practice-pla
 
 ## Local coaching assistant
 
-The Assistant view adds source-backed league questions, assessment-based starter practices with parent versions, and short local AI coaching replies. See [setup, model tests, and operating instructions](docs/LOCAL_AI_SETUP.md). The local pilot uses Ollama and Qwen 2.5 14B; a protected Cloudflare pilot is enabled, with the first real signed-in coach check pending. The latest GitHub clubhouse and sign-in work is included.
+The Assistant view adds source-backed league questions, assessment-based starter practices with parent versions, and short local AI coaching replies. See [setup, model tests, and operating instructions](docs/LOCAL_AI_SETUP.md). The local pilot uses Ollama and Qwen 2.5 14B; the protected Cloudflare pilot is enabled and verified through a real signed-in account. The latest GitHub clubhouse and sign-in work is included in [draft PR #15](https://github.com/Hogueyberra/diamond-live/pull/15).

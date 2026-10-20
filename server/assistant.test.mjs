@@ -75,6 +75,30 @@ function client({ user = { id: 'user-1' }, role = 'coach', authError = null, dbE
 }
 const teamId = '00000000-0000-4000-8000-000000000001';
 const config = { url: 'https://example.supabase.co', key: 'sb_publishable_test', localToken: 'local-test-secret' };
+describe('coaching relevance', () => {
+  const input = { mode: 'general', question: 'How can I keep eight-year-olds engaged while they wait for a turn fielding ground balls?' };
+  it('replaces the unrelated activities observed in the live fielding test with reviewed guidance', async () => {
+    const result = await answerRequest(input, { corpus, generateImpl: async () => 'Practice throwing to a target. Use soft toss hitting. Play a relay race or tag game.' });
+    expect(result.method).toBe('guided-coaching');
+    expect(result.answer).toContain('outside the ball path');
+    expect(result.answer).toContain('enough adults and safe space');
+    expect(result.answer).not.toMatch(/throw|hitting|relay|tag game/);
+  });
+  it('does not suggest extra groups without supervision, while preserving relevant drafts', async () => {
+    const unsafe = await answerRequest(input, { corpus, generateImpl: async () => 'Send waiting children to their own stations.' });
+    expect(unsafe.method).toBe('guided-coaching');
+    const answer = 'Have players notice soft knees, then rehearse without a ball in a safe waiting spot.';
+    expect((await answerRequest(input, { corpus, generateImpl: async () => answer })).answer).toBe(answer);
+  });
+  it('keeps this fielding guidance scoped and still routes rules questions to the sources', async () => {
+    const answer = 'Keep throwing feedback brief and encouraging.';
+    expect((await answerRequest({ mode: 'general', question: 'How should I encourage someone learning to throw?' }, { corpus, generateImpl: async () => answer })).answer).toBe(answer);
+    const model = vi.fn();
+    const rule = await answerRequest({ ...input, question: 'What rules apply if my pitcher wants another turn after 42 pitches yesterday?' }, { corpus, generateImpl: model });
+    expect(rule.method).toBe('source-passages');
+    expect(model).not.toHaveBeenCalled();
+  });
+});
 describe('assistant access', () => {
   it('requires a token and rejects invalid, anonymous, viewer and other-team access', async () => {
     await expect(authorize({ headers: {} }, { teamId }, config)).rejects.toMatchObject({ status: 401 });
