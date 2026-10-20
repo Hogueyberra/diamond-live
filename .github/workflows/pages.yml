@@ -62,3 +62,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify public routes and clubhouse assets
+        run: node scripts/verify-public-site.mjs "$SITE_URL"
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
