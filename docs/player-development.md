@@ -49,13 +49,13 @@ With default bunting eligibility, **54 home drills** are visible; confirming eli
 
 The **Development** tab now connects one player goal to approved practice/home snapshots, an optional check-in date, an easier home substitute, and private coach notes. Coaches can create a plan from a profile or home drill, edit it with history preserved, link an approved practice block, export its approved home card, record family feedback, and close it. See [development plan behavior, privacy, and migration](development-plans.md).
 
-Families receive manual handouts and return notes at practice. Child accounts, guardian/player links, child-submitted completion, medical-plan storage, and notifications remain future work. Practice celebrates effort; ability scores change only after coach reassessment.
+Families can use manual handouts or verified guardian **My Practice**, with approved home challenges and optional child-friendly reflections submitted to coaches. See [family access and verification](my-practice.md). Separate child accounts, medical-plan storage, and notifications remain future work. Practice celebrates effort; ability scores change only after coach reassessment.
 
-Before implementing in-app homework:
+The in-app homework boundary (implemented locally; hosted verification pending):
 
-1. Add guardian-mediated access to one child's assignments, enforced server-side. Existing viewer memberships can see ordinary team plans and are not a child-specific privacy boundary. Exclude assessments, draft boards, coach-only notes, and other children's assignments from family payloads.
-2. Expose a family-safe view of the implemented coach-approved plan snapshots: drill/version, objective, adapted instructions, equipment/helper check, time ceiling, and optional check-in. Enforce guardian authorization on every read/write and exclude private notes and evaluation data.
-3. Let the child/guardian record tried it, reflection, fun feedback, or “I need help.” Avoid punitive streaks or ability points; offer substitutions for equipment/time barriers.
+1. Owner-managed, verified guardian links provide access to one child's assignments, enforced server-side. Existing viewer memberships can see ordinary team plans and are not a child-specific privacy boundary. Exclude assessments, draft boards, coach-only notes, and other children's assignments from family payloads.
+2. My Practice exposes a family-safe view of the implemented coach-approved plan snapshots: drill/version, objective, adapted instructions, equipment/helper check, time ceiling, and optional check-in. Enforce guardian authorization on every read/write and exclude private notes and evaluation data.
+3. The child/guardian can record tried it, reflection, fun feedback, or “I need help.” Avoid punitive streaks or ability points; offer substitutions for equipment/time barriers.
 4. Provide coach follow-up and a new dated assessment when comparable evidence supports a skill change.
 5. For rehab, use a clinician-provided plan, guardian-controlled access, restrictions, and review/expiry dates. Clinicians define activity, dose, and stop criteria. Rankings never diagnose injuries, select PT exercises, progress rehab load, or determine return to play. No generic PT routine is bundled here.
 

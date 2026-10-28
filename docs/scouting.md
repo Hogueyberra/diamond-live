@@ -18,7 +18,7 @@ The coach-only ranking review in **Drills** and **Scoring guide** explains the w
 
 Bunting practice suggestions are conditional on the division permitting it. A drill suggestion is a starting point for coach review. Recording practice does not award score points; a coach must reassess the observed skill.
 
-Player and family access, automated video assessment, league draft administration, and links from scouting goals into the shared schedule are future work. Draft status is a coaching planning note, not official league registration.
+Player/family access to scouting, automated video assessment, and league draft administration remain future work. Approved home challenges and reflections are available through separate verified guardian [My Practice](my-practice.md); development plans can link approved practice blocks without exposing scouting. Draft status is a coaching planning note, not official league registration.
 
 ## Scoring rules
 

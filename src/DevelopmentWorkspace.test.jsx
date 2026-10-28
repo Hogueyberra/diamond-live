@@ -53,6 +53,20 @@ async function save() {
   await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
 }
 describe('coach development workflow with real scoped synchronization',()=>{
+  it('shows family-submitted reflections separately without adding coach reviews or changing the plan',async()=>{
+    const repository=server(); const familyRepository={feedback:vi.fn().mockResolvedValue([]),access:vi.fn()};
+    await open(repository,{familyRepository,isManager:true}); await start(); await save();
+    const before=repository.inspect(); const plan=before.data.plans[0];
+    familyRepository.feedback.mockResolvedValue([{id:uid(888),teamId:team.id,planId:plan.id,version:1,outcome:'needs-help',reflection:'Please show the easier game.',fun:2,createdAt:'2026-10-06T20:00:00Z'}]);
+    fireEvent.click(screen.getByRole('button',{name:'Refresh family reflections'})); await screen.findByText('Please show the easier game.');
+    expect(screen.getByText('Family submitted: Need help')).toBeTruthy(); expect(repository.inspect()).toEqual(before);
+    expect(screen.getByRole('button',{name:'Manage family access'})).toBeTruthy(); expect(familyRepository.access).not.toHaveBeenCalled();
+  });
+  it('lets assistants review family feedback while keeping invitations owner-only',async()=>{
+    const repository=server(); const familyRepository={feedback:vi.fn().mockResolvedValue([]),access:vi.fn()};
+    await open(repository,{familyRepository,isManager:false}); await waitFor(()=>expect(familyRepository.feedback).toHaveBeenCalledWith(team.id));
+    expect(screen.queryByRole('button',{name:'Manage family access'})).toBeNull(); expect(familyRepository.access).not.toHaveBeenCalled();
+  });
   it('creates, customizes, versions, follows up and closes a plan while retaining its approved instructions',async()=>{
     const repository=server(); const onPlanPractice=vi.fn(); await open(repository,{isManager:true,onPlanPractice}); await start();
     change('Optional follow-up date','2026-10-09'); change('Home setup','Use two socks on clear grass.'); await save();
