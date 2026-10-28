@@ -6,7 +6,7 @@
 
 The interactive clubhouse, drill/video library, iPhone capture workflow, player assessments, and umpire rules chat are published at [the Coach Desk prototype](https://diamondliveapp.com/prototype). The [sign-in page](https://diamondliveapp.com/sign-in) supports existing account passwords and email codes. Clerk's frontend flow is implemented, with its card above existing-account access when enabled; application selection, provider configuration, and live identity-linking verification remain pending. See [Clerk activation status and setup](docs/clerk-auth-setup.md).
 
-The latest application release passed **391 tests across 41 files**, a production build, database permission/concurrency checks, and public deployment verification. Source, original artwork, fonts/licenses, database migrations, screenshots, and setup/research notes are committed to this repository. The older implementation notes below describe the original coaching workspace and its development history.
+The latest application release passed **428 tests across 46 files**, a production build, database permission/concurrency checks, and public deployment verification. Source, original artwork, fonts/licenses, database migrations, screenshots, and setup/research notes are committed to this repository. The older implementation notes below describe the original coaching workspace and its development history.
 
 Coaching workspace prototype for the **Angels, Huntington Valley Little League Minor B**, with an isolated **Seals** demo team. The home screen connects team schedules, coaching observations, practice activities, and source-linked division rules. Events, locations, and notes are clearly labeled demo data; the actual Angels schedule and roster have not been added.
 
@@ -16,7 +16,7 @@ The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`.
 
 Signed-out visitors begin on the public homepage: **Great seasons. Lifelong athletes.** It introduces the current coaching tools through an interactive product tour, explains three setup steps, and connects the product to long-term player development. **Start your team** opens email sign-in; **Explore the demo** opens `/preview`. Signed-in users enter their private team workspace. See the [homepage brief](docs/homepage-brief.md) and [original image notes](docs/homepage-imagery.md).
 
-The coaching workspace has **Overview, Players, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
+The coaching workspace has **Overview, Players, Schedule, Coaching, Drills, Development, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
 Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
 
@@ -67,7 +67,7 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 ## Routes
 
 - `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
-- `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Rules, and Scouting tabs
+- `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Drills, Development, Rules, and Scouting tabs
 - `/prototype` interactive clubhouse, player assessments, development plans, calendar, drill/video library, and source-linked rules chat
 - `/sign-in` existing email/password and email-code access, with Clerk above it when configured
 - `/auth/connect` Clerk-to-account-service connection; `/auth/callback` PKCE return route
@@ -97,6 +97,8 @@ The **Scouting** tab provides private draft boards, player profiles, dated asses
 
 Only owners and coaches can access team scouting. Evaluations use a separate Supabase table and guarded RPCs, independent of the viewer-readable coaching workspace. Cloud drafts stay in memory until acknowledged, with retry/export/conflict recovery. Signed-out scouting contains clearly labeled synthetic examples saved only in that browser. Player/family progress views and video evidence remain future work.
 
+The **Development** tab adds coach-only player plans: one goal, an approved practice drill, optional home challenge/substitute, check-in date, private notes, and follow-ups. Plans preserve earlier instructions, link to approved practice blocks, export family-safe cards, and support retry/conflict recovery. Completing a plan does not change ratings. The additive `20261002183655_coach_development_plans.sql` migration is ready and tested locally; it has not been applied to the hosted project by this development phase. See [development plans and release checks](docs/development-plans.md).
+
 ## Team setup and practice planning
 
 The Overview setup checklist leads coaches through Players → Schedule → Assessments → Practice plan. Players and Scouting share the same coach-only roster and player IDs. The team owner acts as manager.
@@ -109,4 +111,8 @@ The Overview setup checklist leads coaches through Players → Schedule → Asse
 
 The importer links the official [GameChanger calendar instructions](https://help.gc.com/hc/en-us/articles/115005457626-Integrating-Your-Personal-Calendar) and [season stats export instructions](https://help.gc.com/hc/en-us/articles/360043583651-Exporting-Season-Stats). A stats export is only a starting point for preparing a roster; it is not represented as a complete roster export.
 
+The **Drills** tab includes 58 activities for ages 7–12, 55 home versions with downloadable family cards, and a coach-only ranking review and feedback worksheet. Search by skill, age, setting, training guide, throwing, and helper needs; choose alternatives from rating suggestions. Existing scores stay unchanged. Guardian access, child-submitted homework, and clinician-managed rehab remain future work. See [player development and rubric review](docs/player-development.md) and the [earlier project reuse map](docs/legacy-project-reuse.md).
+
 See [practice recommendations, permissions, and drill sources](docs/practice-planning.md). Database permission and simultaneous-claim tests run with `supabase/tests/run-local.sh` in an isolated PostgreSQL cluster. The additive `manager_practice_assignments` migration must be applied before publishing this UI.
+
+The [player-development build plan](docs/development-build-plan.md) connects this foundation to coach assignments, guardian access and My Practice, revised assessment criteria, and guided programs. Coach development assignments are the next recommended implementation milestone.

@@ -13,20 +13,21 @@ A player's name and drill in an approved plan are visible to team members, inclu
 
 ## How suggestions work
 
-This release uses a deterministic mapping of observed skills to beginner activities. It is not an AI diagnosis or video analysis feature.
+This release uses a deterministic mapping of observed skills to beginner activities from the expanded 58-drill catalog. Each rated skill has multiple options; managers can review alternatives, and suggestions prefer drills not already in the current practice. See [player development and the library](player-development.md) for catalog fit, home cards, and rubric review. It is not an AI diagnosis or video analysis feature.
 
 - For each active player, select the latest evaluation event dated on or before the practice. Existing scouting aggregation uses each coach's latest submission within that event.
 - Do not backfill missing skills from an older event or treat unobserved skills as a low score.
 - Scores of 5 or below are candidates for more practice. This is a product heuristic based on the current scouting anchors, not a validated performance threshold.
 - Rank team themes by number of players who could use practice, then average skill score, then skill ID. Show up to three themes.
 - Show the lowest observed eligible skill as an individual starting point, with a stable skill-ID tie break. Coaches choose the actual focus.
+- Check catalog ages against known roster ages. Team suggestions must fit all active players with known ages. Unrecorded ages still require coach review.
 - Bunting suggestions are omitted by default until division eligibility is confirmed. Pitching is a manually selected activity; an arm-accuracy score does not diagnose release mechanics or prescribe bullpen work.
 
 The activity payload is deliberately limited to instruction fields, player identity (if selected), time/order, and coach assignment. It excludes evaluation IDs, scores, rankings, and recommendation reasons.
 
 ## Instruction sources and editorial scope
 
-Reviewed September 30, 2026. The short activity sheets are original Diamond Live instructions for fundamental, supervised practice. Links lead to official guidance or demonstrations; the activities are not official Little League plans or an endorsement.
+Reviewed September 30, 2026. The short activity sheets include Diamond Live instructions and adaptations from the earlier Ballgame Builders manuscripts for fundamental, supervised practice. See [the reuse map](legacy-project-reuse.md). Links lead to official guidance or demonstrations; the activities are not official Little League plans or an endorsement.
 
 - [Little League: Fielding](https://www.littleleague.org/university/articles/tee-ball-drills-fielding/) — a foundation for gentle rolled-ball work.
 - [Little League: Left Field, Center Field, Right Field](https://www.littleleague.org/university/articles/tee-ball-drills-left-field-center-field-right-field/) — direction cues and movement between cones.
