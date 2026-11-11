@@ -4,6 +4,8 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-li
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PracticePlanner } from './PracticePlanner.jsx';
 import { createDemoScoutingData } from './scouting.js';
+import { DRILL_LIBRARY } from './drillLibrary.js';
+import { validatePracticeFields } from './practicePlanning.js';
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 const event = { id: 'practice', teamId: 'team', seasonId: 'season', date: '2026-10-01', startTime: '16:30', endTime: '17:30' };
 const block = { id: 'block', eventId: event.id, title: 'Warm-up', objective: 'Get moving', measure: 'Ready to practice', minutes: 10, completed: false };
@@ -14,6 +16,43 @@ function Harness({ initialEvent = event, initialActivities = [], onSave = vi.fn(
 }
 
 describe('PracticePlanner', () => {
+  it('retains recovered provenance and optional game rules in a shared-compatible approved snapshot', async () => {
+    const save = vi.fn(); const drill = DRILL_LIBRARY.find((item) => item.id === 'command-team-shield');
+    const practice = { ...event, type: 'practice', seasonId: 'season' };
+    render(<Harness initialEvent={practice} initialDrill={drill} onSave={save} />);
+    const form = screen.getByRole('form', { name: 'Review and approve drill' });
+    expect(within(form).getByLabelText('Set up the station').value).toContain('Adapted from: Command Quest · Build the Team Shield');
+    expect(within(form).getByLabelText('Steps · one per line').value).toContain('never a player rating');
+    expect(save).not.toHaveBeenCalled();
+    fireEvent.click(within(form).getByRole('button', { name: 'Approve & add to practice' }));
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+    const activities = save.mock.calls[0][0];
+    expect(activities[0].setup).toContain('Command Quest');
+    expect(activities[0].steps.some((step) => step.includes('No total to complete'))).toBe(true);
+    expect(activities[0]).not.toHaveProperty('playScore');
+    expect(activities[0]).not.toHaveProperty('home');
+    expect(() => validatePracticeFields({ events: [practice], activities })).not.toThrow();
+  });
+  it('opens a selected library drill for approval and saves the station, challenge, and adaptations', async () => {
+    const save = vi.fn(); const drill = DRILL_LIBRARY.find((item) => item.id === 'glove-gate');
+    render(<Harness initialDrill={drill} onSave={save} />);
+    const form = screen.getByRole('form', { name: 'Review and approve drill' });
+    expect(within(form).getByLabelText('Set up the station').value).toContain('Rotation:');
+    expect(within(form).getByLabelText('Steps · one per line').value).toContain('Fun challenge:');
+    fireEvent.click(within(form).getByRole('button', { name: 'Approve & add to practice' }));
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+    expect(save.mock.calls[0][0][0].steps.some((step) => step.startsWith('Easier:'))).toBe(true);
+    expect(save.mock.calls[0][0][0]).not.toHaveProperty('home');
+  });
+  it('keeps an individual player selected when a coach chooses an alternative drill', () => {
+    const data = createDemoScoutingData();
+    render(<Harness scoutingData={data} initialPlayerId={data.players[0].id} />);
+    fireEvent.click(screen.getByText('Other drills for this skill'));
+    const alternative = screen.getAllByRole('button', { name: /^Review / }).find((button) => button.textContent !== 'Review this drill');
+    fireEvent.click(alternative);
+    const form = screen.getByRole('form', { name: 'Review and approve drill' });
+    expect(within(form).getByLabelText('Who is this for?').value).toBe(data.players[0].id);
+  });
   it('requires coach approval, explains shared player names, and adds a timed individual drill without scores', async () => {
     const data = createDemoScoutingData(); const save = vi.fn();
     render(<Harness scoutingData={data} initialPlayerId={data.players[0].id} onSave={save} />);

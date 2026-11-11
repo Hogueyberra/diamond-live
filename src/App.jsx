@@ -10,6 +10,7 @@ import { useCoachingStore } from "./coachingStore.js";
 import { useAccount } from "./useAccount.js";
 import { useSharedWorkspace } from "./useSharedWorkspace.js";
 
+const MyPracticeGateway = lazy(() => import('./MyPractice.jsx').then((module) => ({ default: module.MyPracticeGateway })));
 const Prototype = lazy(() => import('./prototype/Prototype.jsx'));
 const SignInPage = lazy(() => import('./AuthPages.jsx').then((module) => ({ default: module.SignInPage })));
 const ClerkConnect = lazy(() => import('./AuthPages.jsx').then((module) => ({ default: module.ClerkConnect })));
@@ -156,6 +157,8 @@ export function AppRoutes() {
         <Route path="auth/connect" element={<Suspense fallback={<p role="status">Opening your account…</p>}><ClerkConnect account={account} /></Suspense>} />
         <Route path="auth/callback" element={<Suspense fallback={<p role="status">Completing sign-in…</p>}><AuthCallback account={account} /></Suspense>} />
         <Route path="prototype" element={<Suspense fallback={<p role="status">Opening Coach Desk…</p>}><Prototype /></Suspense>} />
+        <Route path="my-practice" element={<Suspense fallback={<p role="status">Opening My Practice…</p>}><MyPracticeGateway account={account} /></Suspense>} />
+        <Route path="practice-preview" element={<Suspense fallback={<p role="status">Opening the sample family…</p>}><MyPracticeGateway account={account} demo /></Suspense>} />
         <Route element={<GameBoundary><Shell coachingHome={account.user ? '/' : '/preview'} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />
