@@ -2,13 +2,13 @@
 
 **Continuing on another computer?** Start with the [setup and backup handoff](docs/continue-on-another-computer.md), including the files and browser data that a Git clone does not transfer.
 
-## Latest branch checkpoint — November 16, 2026
+## Current clubhouse — November 16, 2026
 
 The new clubhouse is the default at `/`. Signed-in owners and coaches use their selected team's actual roster, assessments, shared calendar, practice plans, and document library. `/prototype` remains an explicit sample clubhouse. Team selection is remembered per account after checking current membership. Private player records are never copied to demo storage. Development includes detailed skill assessments and individual plans; Library includes the current drill catalog and shared league documents. Main through `b5d3714`, including guardian access and `/my-practice`, is integrated.
 
 The Mac-hosted assistant answers source-linked league questions and builds constrained team/parent practice sessions from saved skill summaries. Owners review and save generated plans as new calendar drafts, then assign/release blocks through the shared practice planner. The selected Angels Spring 2027 roster is intentionally empty pending import; no sample players or test practices were inserted. Available 2026 rules are labeled separately from a 2027 team season. See [local assistant setup and pilot status](docs/LOCAL_AI_SETUP.md).
 
-This branch and the protected Mac pilot contain these changes. The main `diamondliveapp.com` deployment is separate and has not been updated by this work. The historical release and prototype notes below describe earlier versions.
+The current clubhouse is the default on `main` and is deployed to [diamondliveapp.com](https://diamondliveapp.com/) by GitHub Pages. Fresh checkouts should use updated `main` and open `/`. The assistant remains on the Mac behind the protected pilot; Pages connects through the public `VITE_DIAMOND_ASSISTANT_URL` repository variable. The historical notes below describe earlier versions.
 
 Coaching workspace prototype for the **Angels, Huntington Valley Little League Minor B**, with an isolated **Seals** demo team. The home screen connects team schedules, coaching observations, practice activities, and source-linked division rules. Events, locations, and notes are clearly labeled demo data; the actual Angels schedule and roster have not been added.
 

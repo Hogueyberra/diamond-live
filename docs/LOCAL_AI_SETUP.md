@@ -122,9 +122,9 @@ Evaluation output is saved locally under `output/ai-evaluation/` and ignored by 
 
 The user approved the persistent protected pilot on October 20. It is now running through the per-user `com.diamondlive.pilot` service and starts at login. The current address is:
 
-**https://newer-volume-separation-racks.trycloudflare.com/**
+**https://booking-java-watershed-magnet.trycloudflare.com/**
 
-Sign in at `/sign-in` with an existing Diamond Live password or email code. The homepage, clubhouse demo, and bundled league PDFs are public. AI requests require a verified owner/coach membership; the local demo bypass is rejected on forwarded requests. Ollama stays on loopback and its raw endpoints are not published. The primary `diamondliveapp.com` deployment is unchanged by this pilot.
+Sign in at `/sign-in` with an existing Diamond Live password or email code. The homepage, clubhouse demo, and bundled league PDFs are public. AI requests require a verified owner/coach membership; the local demo bypass is rejected on forwarded requests. Ollama stays on loopback and its raw endpoints are not published. The primary `diamondliveapp.com` frontend connects to this protected service through the `VITE_DIAMOND_ASSISTANT_URL` GitHub Actions variable; Ollama continues running only on the Mac.
 
 The public HTTPS checks passed for the homepage, prototype, capture, preview, sign-in and callback routes, clubhouse/umpire images, and league PDF. Unsigned, invalid-session, and fake-demo-token AI requests returned 401. Raw model routes and local configuration/server source paths returned 404. The user signed in manually, and the owner/coach-protected assistant completed rules, practice, copying the parent handout, and coaching requests through that session. Unit tests cover viewer and other-team denial, and GitHub's isolated database-security checks passed. No messages or sign-in codes were sent automatically.
 
@@ -134,12 +134,17 @@ A quick tunnel changes its address on restart and has no uptime guarantee. Find 
 
 To verify a current pilot URL, run `node scripts/verify-assistant-pilot.mjs https://CURRENT.trycloudflare.com` and `node scripts/verify-public-site.mjs https://CURRENT.trycloudflare.com`. To stop public access, run `launchctl bootout gui/$(id -u)/com.diamondlive.pilot`; moving its plist out of `~/Library/LaunchAgents/` also disables the next-login start. This does not stop the private local assistant.
 
-## GitHub continuation checkpoint
+## GitHub and another computer
 
-Merged GitHub `main` at `1a2ddf4` (the October 20 cross-computer handoff) into `codex/local-ai-coach`, preserving the clubhouse, drill/video library, local player assessments, umpire rules lookup, and password/optional-Clerk sign-in. At the user’s request, the new clubhouse is now the default home at `/`; `/preview` redirects there and `/prototype` remains compatible. The **Coach’s assistant** button now opens the live assistant in the clubhouse’s light design, replacing its prepared guide. Sign-in returns to the clubhouse.
+The current clubhouse, shared-team integration, protected assistant, and main through `b5d3714` are included in PR #15 for the `main` release. Use updated `main` and open `/` on another computer. The complete [cross-computer setup guide](continue-on-another-computer.md) replaces the older instructions to use the AI branch or the legacy workspace route.
 
-Practice planning reads the demo’s broad hitting, throwing, fielding, and baserunning assessments without inventing granular scouting scores. Only observed/needs-practice counts leave the browser. The user’s real team ID authorizes the request and scopes shared rule sources; the demo roster and records are never uploaded into that team. Existing shared records remain available from the account menu at `/workspace`, with the older local demo at `/workspace/demo`.
+GitHub Pages builds with `VITE_DIAMOND_ASSISTANT_URL`, which must be the protected HTTPS endpoint ending in `/api/assistant`. The backend permits `https://diamondliveapp.com` and standard local development on port 5173 while continuing to require verified owner/coach membership for every AI request. No local bypass token is included in a public build.
 
-Browser verification confirmed the signed-in default clubhouse and a demo-player-based plan (15 minutes team, 10 minutes home) in the new assistant. The planner selected balance work for a low hitting assessment. Public route/artwork and unauthorized-access checks passed again. Account/team changes abort assistant work and clear prior answers; guest and viewer accounts do not receive private assistant controls.
+When the temporary tunnel restarts and its address changes, run `npm run assistant:pilot-status` on the Mac, verify the new address, then update the repository variable and rebuild Pages:
 
-Compatible dependency fixes updated Vite to 8.3.4 and source-map-js to 1.2.2 with their build dependencies. The post-update audit reported zero vulnerabilities. Source, lockfile, tests, and startup scripts are saved together in [draft PR #15](https://github.com/Hogueyberra/diamond-live/pull/15). The unrelated budget PDF was not changed or published.
+```sh
+gh variable set VITE_DIAMOND_ASSISTANT_URL --repo Hogueyberra/diamond-live --body 'https://CURRENT.trycloudflare.com/api/assistant'
+gh workflow run pages.yml --repo Hogueyberra/diamond-live --ref main
+```
+
+Restart development servers on other computers after updating their matching `.env.local` value. A named tunnel with a stable hostname would remove this manual endpoint update; it is not configured by this release.
