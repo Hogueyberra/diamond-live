@@ -1,0 +1,134 @@
+\set ON_ERROR_STOP on
+begin;
+select set_config('test.development_fixture', :'development_fixture', true);
+-- Fixture-only helper lets this transaction simulate an Auth-managed email change.
+create function test.change_email(p_id uuid,p_email text) returns void language sql security definer set search_path='' as $$ update auth.users set email=p_email where id=p_id; $$;
+grant execute on function test.change_email(uuid,text) to authenticated;
+select test.assert((select bool_and(relrowsecurity) from pg_class where oid in ('diamond_private.guardian_links'::regclass,'diamond_private.guardian_invites'::regclass,'diamond_private.family_reflections'::regclass)), 'Family tables have RLS');
+select test.assert(not has_table_privilege('authenticated','diamond_private.guardian_links','select,insert,update,delete'), 'Family relationships are RPC-only');
+select test.assert(not has_function_privilege('anon','public.load_my_practice()','execute'), 'Anonymous family read denied');
+select test.assert(not has_function_privilege('anon','public.save_family_reflection(jsonb)','execute'), 'Anonymous reflection writes denied');
+select test.assert((select bool_and(proconfig @> array['search_path=""']) from pg_proc where oid in ('public.load_my_practice()'::regprocedure,'public.save_family_reflection(jsonb)'::regprocedure,'public.claim_guardian_invite(text)'::regprocedure)), 'Family RPC search paths fixed');
+set local role authenticated;
+do $$
+#variable_conflict use_variable
+declare
+  owner_id uuid:='10000000-0000-4000-8000-000000000001';
+  parent_id uuid:='10000000-0000-4000-8000-000000000002';
+  other_id uuid:='10000000-0000-4000-8000-000000000003';
+  coach_id uuid:='10000000-0000-4000-8000-000000000004';
+  team_id uuid; other_team uuid; season_id uuid; player_id uuid:='30000000-0000-4000-8000-000000000002';
+  second_player uuid:='30000000-0000-4000-8000-000000000003';
+  data jsonb:=current_setting('test.development_fixture')::jsonb; roster jsonb; second_plan jsonb;
+  invite jsonb; other_invite jsonb; outstanding jsonb; snapshot jsonb; ratings jsonb; draft jsonb; saved jsonb;
+  changed jsonb; version jsonb; coach_invite jsonb; link_id uuid;
+begin
+  perform set_config('request.jwt.claim.sub',owner_id::text,true);
+  perform public.save_profile('Family test owner');
+  team_id:=(public.create_team('Family test','HVLL','Minor B','Fall 2026')->>'id')::uuid;
+  other_team:=(public.create_team('Other family team','HVLL','Minor B','Fall 2026')->>'id')::uuid;
+  season_id:=((public.load_workspace(team_id)->'data'->'teams'->0)->>'seasonId')::uuid;
+  data:=jsonb_set(data,'{plans,0,seasonId}',to_jsonb(season_id::text));
+  second_plan:=data->'plans'->0||jsonb_build_object('id',gen_random_uuid(),'playerId',second_player);
+  data:=jsonb_set(data,'{plans}',data->'plans'||jsonb_build_array(second_plan));
+  roster:=jsonb_build_object('schemaVersion',1,'players',jsonb_build_array(jsonb_build_object('id',player_id,'name','Alex Example','number','2','age',7,'positions','','notes','PRIVATE roster note','archived',false,'draftStatus','available'),jsonb_build_object('id',second_player,'name','Jordan Other Household','number','3','age',7,'positions','','notes','','archived',false,'draftStatus','available')),'sessions','[]'::jsonb,'evaluations','[]'::jsonb,'goals','[]'::jsonb);
+  perform public.save_scouting_workspace(team_id,0,roster,gen_random_uuid());
+  ratings:=public.load_scouting_workspace(team_id);
+  perform public.save_development_workspace(team_id,0,data,gen_random_uuid());
+  invite:=public.create_guardian_invite(team_id,player_id,' TEST-2@example.com ');
+  outstanding:=public.create_guardian_invite(team_id,player_id,'test-2@example.com');
+  other_invite:=public.create_guardian_invite(team_id,second_player,'test-3@example.com');
+  coach_invite:=public.create_team_invite(team_id,'coach');
+  perform test.assert(length(invite->>'code')=64,'Strong one-use family code returned only on creation');
+  perform test.rejects(format('select public.create_guardian_invite(%L,%L,%L)',other_team,player_id,'test-2@example.com'),'22023');
+
+  perform set_config('request.jwt.claim.sub',parent_id::text,true);
+  perform test.assert(public.load_my_practice()='{"children":[],"plans":[],"reflections":[]}'::jsonb,'No membership or household inferred before link');
+  perform test.rejects(format('select public.claim_guardian_invite(%L)',other_invite->>'code'),'22023');
+  perform test.rejects(format('select public.create_guardian_invite(%L,%L,%L)',team_id,player_id,'test-2@example.com'),'42501');
+  perform public.claim_guardian_invite(invite->>'code');
+  perform public.claim_guardian_invite(invite->>'code');
+  snapshot:=public.load_my_practice();
+  perform test.assert(jsonb_array_length(snapshot->'children')=1 and snapshot->'children'->0->>'playerName'='Alex Example' and jsonb_array_length(snapshot->'plans')=1,'Verified account gets only linked child');
+  perform test.assert(snapshot::text not like '%PRIVATE%' and snapshot::text not like '%privateNotes%' and snapshot::text not like '%Synthetic private%' and snapshot::text not like '%Jordan%' and not (snapshot->'plans'->0 ? 'practice'),'Read payload excludes coach-only content and other household');
+  perform test.assert(not exists(select 1 from public.team_memberships m where m.team_id=team_id and m.user_id=parent_id),'Claim never adds team membership');
+  perform test.rejects(format('select public.load_workspace(%L)',team_id),'42501');
+  perform test.rejects(format('select public.load_scouting_workspace(%L)',team_id),'42501');
+  perform test.rejects(format('select public.load_development_workspace(%L)',team_id),'42501');
+  draft:=jsonb_build_object('id',gen_random_uuid(),'teamId',team_id,'planId',data->'plans'->0->>'id','version',1,'outcome','needs-help','reflection','Please show me the easier version.','fun',2);
+  saved:=public.save_family_reflection(draft);
+  perform test.assert(public.save_family_reflection(draft)=saved,'Exact reflection retry is idempotent');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('guardianId',other_id)),'22023');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('reflection','Changed same request')),'22023');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('id',gen_random_uuid(),'teamId',other_team)),'42501');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('id',gen_random_uuid(),'planId',second_plan->>'id')),'42501');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('id',gen_random_uuid(),'version',2)),'40001');
+
+  perform set_config('request.jwt.claim.sub',other_id::text,true);
+  perform public.claim_guardian_invite(other_invite->>'code');
+  snapshot:=public.load_my_practice();
+  perform test.assert(jsonb_array_length(snapshot->'plans')=1 and jsonb_array_length(snapshot->'reflections')=0 and snapshot::text not like '%Alex%', 'Second family cannot see first family or reflections');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft),'42501');
+  perform test.rejects(format('select public.list_family_feedback(%L)',team_id),'42501');
+
+  perform set_config('request.jwt.claim.sub',coach_id::text,true); perform public.save_profile('Family test coach'); perform public.join_team(coach_invite->>'code');
+  perform test.assert(jsonb_array_length(public.list_family_feedback(team_id))=1,'Coaches can read separately attributed family feedback');
+  perform test.assert(jsonb_array_length(public.load_my_practice()->'children')=0,'Coaching access does not infer a guardian link');
+  perform test.rejects(format('select public.list_guardian_access(%L)',team_id),'42501');
+  perform test.rejects(format('select public.create_guardian_invite(%L,%L,%L)',team_id,player_id,'test-4@example.com'),'42501');
+
+  perform set_config('request.jwt.claim.sub',owner_id::text,true);
+  version:=data->'plans'->0->'versions'->0||jsonb_build_object('version',2,'createdAt','2026-10-06T20:00:00Z','goal','Try the easier balance game.');
+  data:=jsonb_set(data,'{plans,0,versions}',data->'plans'->0->'versions'||jsonb_build_array(version));
+  perform public.save_development_workspace(team_id,1,data,gen_random_uuid());
+  perform set_config('request.jwt.claim.sub',parent_id::text,true);
+  perform test.assert(public.save_family_reflection(draft)=saved,'Already-saved retry succeeds after newer version');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('id',gen_random_uuid())),'40001');
+  perform test.assert((public.load_my_practice()->'plans'->0->>'version')::integer=2,'Family sees latest approved instructions');
+  perform set_config('request.jwt.claim.sub',owner_id::text,true);
+  version:=version||jsonb_build_object('version',3,'createdAt','2026-10-06T21:00:00Z','status','closed');
+  data:=jsonb_set(data,'{plans,0,versions}',data->'plans'->0->'versions'||jsonb_build_array(version));
+  perform public.save_development_workspace(team_id,2,data,gen_random_uuid());
+  perform test.assert(public.load_scouting_workspace(team_id)=ratings,'Family reflections never change ratings');
+  perform set_config('request.jwt.claim.sub',parent_id::text,true);
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft||jsonb_build_object('id',gen_random_uuid(),'version',3)),'40001');
+  perform set_config('request.jwt.claim.sub',owner_id::text,true);
+  roster:=jsonb_set(roster,'{players,0,archived}','true');
+  perform public.save_scouting_workspace(team_id,1,roster,gen_random_uuid());
+  perform set_config('request.jwt.claim.sub',parent_id::text,true);
+  perform test.assert(public.load_my_practice()='{"children":[],"plans":[],"reflections":[]}'::jsonb,'Archiving a player removes family visibility');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft),'42501');
+  perform set_config('request.jwt.claim.sub',owner_id::text,true);
+  roster:=jsonb_set(roster,'{players,0,archived}','false');
+  perform public.save_scouting_workspace(team_id,2,roster,gen_random_uuid());
+  perform test.change_email(parent_id,'changed-parent@example.com');
+  select (item->>'id')::uuid into link_id from jsonb_array_elements(public.list_guardian_access(team_id)->'links') item where item->>'playerId'=player_id::text;
+  perform public.revoke_guardian_access(team_id,link_id,'link');
+  perform test.change_email(parent_id,'test-2@example.com');
+  perform set_config('request.jwt.claim.sub',parent_id::text,true);
+  perform test.assert(public.load_my_practice()='{"children":[],"plans":[],"reflections":[]}'::jsonb,'Removed guardian loses all linked records immediately');
+  perform test.rejects(format('select public.save_family_reflection(%L::jsonb)',draft),'42501');
+  perform test.rejects(format('select public.claim_guardian_invite(%L)',invite->>'code'),'22023');
+  perform test.rejects(format('select public.claim_guardian_invite(%L)',outstanding->>'code'),'22023');
+  raise notice 'Passed: verified links, email binding, household isolation, RPC allowlists, separate feedback, idempotency, stale versions, closure and revocation.';
+end $$;
+reset role;
+do $$
+declare v_invite jsonb; v_team uuid;
+begin
+  perform set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000001',true);
+  select id into v_team from public.teams where name='Family test';
+  v_invite:=public.create_guardian_invite(v_team,'30000000-0000-4000-8000-000000000002','test-2@example.com');
+  update diamond_private.guardian_invites set expires_at=now()-interval '1 second' where id=(v_invite->>'id')::uuid;
+  perform set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000002',true);
+  perform test.rejects(format('select public.claim_guardian_invite(%L)',v_invite->>'code'),'22023');
+end $$;
+update auth.users set email_confirmed_at=null where id='10000000-0000-4000-8000-000000000002';
+set local role authenticated;
+select set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000002',true);
+select test.rejects('select public.load_my_practice()','42501');
+reset role;
+update auth.users set email_confirmed_at=now(),is_anonymous=true where id='10000000-0000-4000-8000-000000000002';
+set local role authenticated;
+select test.rejects('select public.load_my_practice()','42501');
+rollback;

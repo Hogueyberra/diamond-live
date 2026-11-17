@@ -36,3 +36,5 @@
 .tc-app .cw-alert { color: #852c26; background: #fff0ed; border-color: #e7b3aa; }
 .tc-app .cw-success { color: #386544; background: #eef6ed; border-color: #bed2b9; }
 @media (max-width: 760px) { .tc-main { padding: 24px 16px; } .tc-heading { align-items: flex-start; flex-direction: column; } .tc-event { align-items: flex-start; flex-direction: column; } .tc-team-select select { max-width: 200px; } .tc-app .pr-context { gap: 12px; align-items: flex-start; flex-direction: column; } }
+
+.tc-section-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }

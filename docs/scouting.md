@@ -14,9 +14,11 @@ The current release contains ten skills:
 | Outfield | Glove fielding, footwork, agility, arm accuracy |
 | Hitting | Bunting, swing mechanics |
 
+The coach-only ranking review in **Drills** and **Scoring guide** explains the weights and limitations, proposes observable qualities for discussion, and supplies a coach-feedback worksheet. The expanded library has 40 practice activities and 37 home variants. See [player development and rubric review](player-development.md). Proposed criteria are not scored yet; existing assessments retain their original meaning.
+
 Bunting practice suggestions are conditional on the division permitting it. A drill suggestion is a starting point for coach review. Recording practice does not award score points; a coach must reassess the observed skill.
 
-Player and family access, automated video assessment, league draft administration, and links from scouting goals into the shared schedule are future work. Draft status is a coaching planning note, not official league registration.
+Player/family access to scouting, automated video assessment, and league draft administration remain future work. Approved home challenges and reflections are available through separate verified guardian [My Practice](my-practice.md); development plans can link approved practice blocks without exposing scouting. Draft status is a coaching planning note, not official league registration.
 
 ## Scoring rules
 

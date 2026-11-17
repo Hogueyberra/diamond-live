@@ -6,12 +6,15 @@ import Prototype from './Prototype.jsx';
 import { createEmptyScoutingData } from '../scouting.js';
 import { createAssistantPractice } from '../assistantPractice.js';
 
-const mocks = vi.hoisted(() => ({ shared: null, scouting: null, sharedHook: vi.fn(), scoutingHook: vi.fn(), scoutingRepository: vi.fn(), ask: vi.fn(), guidelines: vi.fn() }));
+const mocks = vi.hoisted(() => ({ shared: null, scouting: null, developmentHook: vi.fn(), developmentRepository: vi.fn(), sharedHook: vi.fn(), scoutingHook: vi.fn(), scoutingRepository: vi.fn(), ask: vi.fn(), guidelines: vi.fn() }));
 vi.mock('../useSharedWorkspace.js', () => ({ useSharedWorkspace: (...args) => { mocks.sharedHook(...args); return mocks.shared; } }));
 vi.mock('../useScouting.js', () => ({ useScouting: (args) => { mocks.scoutingHook(args); return mocks.scouting; } }));
 vi.mock('../supabaseClient.js', () => ({ supabase: {} }));
 vi.mock('../scoutingRepository.js', () => ({ createScoutingRepository: mocks.scoutingRepository }));
 vi.mock('../cloudGuidelines.js', () => ({ createCloudGuidelinesRepository: mocks.guidelines }));
+vi.mock('../useDevelopment.js', () => ({ useDevelopment: (args) => { mocks.developmentHook(args); return { data: { schemaVersion: 1, plans: [], reviews: [] }, revision: 0, status: 'synced', pending: false, refresh: vi.fn() }; } }));
+vi.mock('../developmentRepository.js', () => ({ createDevelopmentRepository: mocks.developmentRepository }));
+vi.mock('../familyRepository.js', () => ({ createFamilyRepository: () => ({ feedback: async () => [] }) }));
 vi.mock('../assistantClient.js', () => ({ askAssistant: mocks.ask }));
 vi.mock('../practiceStaff.js', () => ({ listPracticeStaff: async () => [] }));
 const team = { id: '11111111-1111-4111-8111-111111111111', seasonId: '22222222-2222-4222-8222-222222222222', name: 'Connected team', league: 'HVLL', division: 'Minor B', season: 'Fall 2026', role: 'owner' };
@@ -27,6 +30,7 @@ beforeEach(() => {
   HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); };
   mocks.shared = { mode: 'cloud', data: { schemaVersion: 1, teams: [{ ...team }], events: [], activities: [], observations: [] }, status: 'synced', revision: 7, pending: false, readOnly: false, save: vi.fn(async (update, revision) => { expect(revision).toBe(7); mocks.shared.data = update(mocks.shared.data); mocks.shared.revision = 8; return { revision: 8 }; }), retrySave: vi.fn(), loadLatest: vi.fn(), exportData: vi.fn() };
   mocks.scouting = { data: { ...createEmptyScoutingData(), players: [player] }, status: 'synced', revision: 3, pending: false, loading: false, readOnly: false, save: vi.fn(), refresh: vi.fn(), retrySave: vi.fn() };
+  mocks.developmentRepository.mockReturnValue({ loadWorkspace: vi.fn(), saveWorkspace: vi.fn() });
   mocks.scoutingRepository.mockReturnValue({ loadWorkspace: vi.fn(), saveWorkspace: vi.fn() });
   mocks.guidelines.mockReturnValue({ list: async () => [], scopeKey: team.id });
   mocks.ask.mockImplementation(async (input) => ({ plan: createAssistantPractice(input.practice), method: 'guided-practice', elapsedMs: 5 }));
@@ -110,4 +114,21 @@ it('closes private answers and changes repository scope immediately when switchi
   expect(screen.queryByRole('dialog')).toBeNull();
   expect(mocks.scoutingHook.mock.calls.at(-1)[0].scopeKey).toBe(other.id);
   expect(screen.getByRole('heading', { name: '0 active players' })).toBeTruthy();
+});
+
+it('connects the merged development plans to the same private team and keeps loading lazy', async () => {
+  render(app(account(), '/?view=development'));
+  const plans = await screen.findByRole('button', { name: 'Development plans', exact: true });
+  expect(mocks.developmentHook.mock.calls.at(-1)[0]).toMatchObject({ repository: null, demo: false });
+  fireEvent.click(plans);
+  await screen.findByRole('button', { name: 'Create development plan' });
+  expect(mocks.developmentHook.mock.calls.at(-1)[0]).toMatchObject({ scopeKey: team.id, authorId: user.id, repository: expect.any(Object), demo: false });
+  expect(mocks.shared.save).not.toHaveBeenCalled();
+});
+it('makes the merged real drill catalog available beside the shared rules library', async () => {
+  render(app(account(), '/?view=library'));
+  fireEvent.click(await screen.findByRole('button', { name: 'Practice and home drills' }));
+  await screen.findByRole('region', { name: 'Drill library' });
+  expect(screen.getAllByRole('button', { name: 'Review for practice' }).length).toBeGreaterThan(0);
+  expect(mocks.shared.save).not.toHaveBeenCalled();
 });

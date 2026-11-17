@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Plus, Trash, UsersThree } from '@phosphor-icons/react';
 import { Button, Field } from './WorkspaceUI.jsx';
-import { ARM_CARE_SOURCE, PRACTICE_DRILLS, canAddPracticeBlock, createPracticeActivity, getPracticeRecommendations, getPracticeTimeline, updatePracticeAssignment } from './practicePlanning.js';
+import { canAddPracticeBlock, createPracticeActivity, getPracticeRecommendations, getPracticeTimeline, updatePracticeAssignment } from './practicePlanning.js';
+import { DrillLibrary } from './DrillLibrary.jsx';
 import './practicePlanning.css';
 
 const timeLabel = (time) => { const [hour, minute] = time.split(':').map(Number); return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`; };
 const blankDrill = () => ({ title: '', objective: '', measure: '', setup: '', equipment: '', steps: [], coachingCue: '', safetyNote: '', minutes: 10 });
+const prepareDrillReview = (item) => ({ ...item, setup: [item.setup, item.players && `Group: ${item.players}`, item.rotation && `Rotation: ${item.rotation}`, item.sourceGuide && `Adapted from: ${item.sourceGuide} · ${item.sourceActivity}`].filter(Boolean).join('\n'), steps: [...(item.steps ?? []), ...[['Fun challenge', item.challenge], ['Easier', item.easier], ['Next step', item.harder], ['Celebrate', item.celebrate]].filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`), ...(item.playScore ?? []).map((line) => `Optional play points (never a player rating): ${line}`)] });
 const memberId = (member) => member.userId ?? member.id;
 const memberName = (member) => member.displayName ?? member.name ?? 'Coach';
 
 /** Receives only this event's activities. Parent saves them and nextEvent atomically. */
-export function PracticePlanner({ event, activities = [], scoutingData, members = [], currentUserId, currentUserName = 'Coach', isManager = false, canCoach = true, disabled = false, onChange, initialPlayerId = '', onPendingChange }) {
+export function PracticePlanner({ event, activities = [], scoutingData, members = [], currentUserId, currentUserName = 'Coach', isManager = false, canCoach = true, disabled = false, onChange, initialPlayerId = '', initialDrill = null, onPendingChange }) {
   const [selection, setSelection] = useState(initialPlayerId);
-  const [editing, setEditing] = useState(null);
-  const [draftMinutes, setDraftMinutes] = useState(8);
+  const [editing, setEditing] = useState(() => initialDrill ? prepareDrillReview(initialDrill) : null);
+  const [draftMinutes, setDraftMinutes] = useState(initialDrill?.minutes ?? 8);
   const [targetPlayer, setTargetPlayer] = useState(initialPlayerId);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -25,6 +27,11 @@ export function PracticePlanner({ event, activities = [], scoutingData, members 
   useEffect(() => { onPendingChange?.(busy || hasDraft); }, [busy, hasDraft, onPendingChange]);
   useEffect(() => () => onPendingChange?.(false), [onPendingChange]);
   const reviewRef = useRef(null);
+  useEffect(() => {
+    if (!initialDrill) return;
+    const frame = requestAnimationFrame(() => { reviewRef.current?.scrollIntoView?.({ block: 'start' }); reviewRef.current?.focus(); });
+    return () => cancelAnimationFrame(frame);
+  }, [initialDrill]);
   const prefix = useId();
   const locked = disabled || busy;
   const timeline = getPracticeTimeline(event, activities);
@@ -32,9 +39,8 @@ export function PracticePlanner({ event, activities = [], scoutingData, members 
   const players = (scoutingData?.players ?? []).filter((player) => !player.archived).sort((a, b) => a.name.localeCompare(b.name));
   const staff = members.filter((member) => ['owner', 'coach'].includes(member.role));
   if (currentUserId && canCoach && !staff.some((member) => memberId(member) === currentUserId)) staff.push({ userId: currentUserId, displayName: currentUserName, role: isManager ? 'owner' : 'coach' });
-  const recommendations = useMemo(() => getPracticeRecommendations(scoutingData, { asOfDate: event.date }), [scoutingData, event.date]);
+  const recommendations = useMemo(() => getPracticeRecommendations(scoutingData, { asOfDate: event.date, recentDrillIds: activities.map((item) => item.drillId).filter(Boolean) }), [scoutingData, event.date, activities]);
   const displayed = selection ? recommendations.individual.filter((item) => item.playerId === selection) : recommendations.team;
-  const library = PRACTICE_DRILLS.filter((item) => item.skillId !== 'hit_bunting');
 
   async function persist(nextActivities, nextEvent = event, text = 'Practice plan saved.') {
     if (locked) return false;
@@ -46,7 +52,7 @@ export function PracticePlanner({ event, activities = [], scoutingData, members 
   function review(item) {
     if (editing) { setError('Finish or cancel your current drill review before choosing another drill.'); return; }
     setReviewVersion((version) => version + 1);
-    setEditing({ ...item, steps: [...(item.steps ?? [])] }); setDraftMinutes(item.minutes ?? 8); setTargetPlayer(item.playerId ?? selection); setError(''); setMessage('');
+    setEditing(prepareDrillReview(item)); setDraftMinutes(item.minutes ?? 8); setTargetPlayer(item.playerId ?? selection); setError(''); setMessage('');
     requestAnimationFrame(() => { reviewRef.current?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' }); reviewRef.current?.focus(); });
   }
   async function approve(e) {
@@ -101,13 +107,12 @@ export function PracticePlanner({ event, activities = [], scoutingData, members 
     </li>)}</ol>
     {!activities.length && <div className="pp-empty"><h4>Your practice starts here.</h4><p>{isManager ? 'Review a suggested drill or add your own block, including warm-up and water breaks.' : 'The manager will add the practice blocks here.'}</p></div>}
     {canCoach && isManager && <section className="pp-suggestions" aria-labelledby={`${prefix}-suggestions`}><div className="pp-section-head"><div><span className="pp-eyebrow">Coach review comes first</span><h4 id={`${prefix}-suggestions`}>Turn observations into a practice.</h4></div></div><p>Suggestions use the latest observed skills on or before this practice date. Unobserved skills are left out. Completing a drill never changes a rating.</p><Field label="Practice focus"><select className="cl-select" value={selection} disabled={locked} onChange={(e) => setSelection(e.target.value)}><option value="">Team themes</option>{players.map((player) => <option key={player.id} value={player.id}>{player.name}</option>)}</select></Field>
-      {displayed.length ? <div className="pp-suggestion-grid">{displayed.map((item) => <article className="pp-suggestion" key={item.recommendationId}><span>{item.audience} · {item.skillLabel}</span><h5>{item.title}</h5><p>{item.reason}</p><Button disabled={locked} onClick={() => review(item)}>Review this drill</Button></article>)}</div> : <p className="pp-empty">{recommendations.observedPlayers ? 'No developing skill in these observations needs a suggested block. Choose a drill for repetition, or add your own focus.' : 'Add a player assessment in Scouting to get suggestions. You can still build a practice from the drill library.'}</p>}
-      <details className="pp-library"><summary>Browse the drill library</summary><div className="pp-library-grid">{library.map((item) => <button type="button" key={item.id} disabled={locked} onClick={() => review(item)}><strong>{item.title}</strong><span>{item.id === 'bullpen-reset' ? 'Coach-selected pitching focus' : SCOPES[item.skillId?.split('_')[0]]}</span></button>)}</div><p>Confirm age, division rules, readiness, and field setup before using a drill. Bunting is omitted until division eligibility can be confirmed.</p><a href={ARM_CARE_SOURCE} target="_blank" rel="noreferrer">Throwing workload and rest guidance · Little League ↗</a></details>
+      {displayed.length ? <div className="pp-suggestion-grid">{displayed.map((item) => <article className="pp-suggestion" key={item.recommendationId}><span>{item.audience} · {item.skillLabel}</span><h5>{item.title}</h5><p>{item.reason}</p><Button disabled={locked} onClick={() => review(item)}>Review this drill</Button>{item.alternatives?.length > 0 && <details className="pp-alternatives"><summary>Other drills for this skill</summary>{item.alternatives.map((alternative) => <Button key={alternative.id} disabled={locked} onClick={() => review({ ...alternative, playerId: item.playerId, playerName: item.playerName })}>Review {alternative.title}</Button>)}</details>}</article>)}</div> : <p className="pp-empty">{recommendations.observedPlayers ? 'No eligible suggestions fit these observations and known ages. Check the library for a suitable activity, or add a custom block.' : 'Add a player assessment in Scouting to get suggestions. You can still build a practice from the drill library.'}</p>}
+      <details className="pp-library"><summary>Browse the drill library</summary><DrillLibrary compact onSelect={review} disabled={locked} /></details>
     </section>}
-    {editing && isManager && <form key={reviewVersion} className="pp-review cw-form" onSubmit={approve} aria-label="Review and approve drill"><h4 ref={reviewRef} tabIndex={-1}>Make this drill ready for your coaches.</h4><p>Review the instructions, choose the players, then approve it for this practice. A player’s name and drill become visible to team members; scouting ratings stay private.</p><Field label="Drill name"><input className="cl-input" name="title" defaultValue={editing.title} key={`title-${editing.id ?? 'custom'}`} maxLength={100} required disabled={locked} /></Field><div className="cw-form-pair"><Field label="Who is this for?"><select className="cl-select" value={targetPlayer} onChange={(e) => setTargetPlayer(e.target.value)} disabled={locked}><option value="">Whole team</option>{players.map((player) => <option key={player.id} value={player.id}>{player.name}</option>)}</select></Field><Field label="Block length (minutes)"><input className="cl-input" name="minutes" type="number" min="1" max="120" value={draftMinutes} onChange={(e) => setDraftMinutes(e.target.value)} disabled={locked} required /></Field></div>{[['objective', 'Objective', 1000], ['equipment', 'Equipment', 500], ['setup', 'Set up the station', 1000], ['steps', 'Steps · one per line', 4000], ['coachingCue', 'One cue for the coach', 500], ['measure', 'What would progress look like?', 250], ['safetyNote', 'Readiness and supervision notes', 1000]].map(([name, label, maxLength]) => <Field key={`${editing.id ?? 'custom'}-${name}`} label={label}><textarea className="cl-textarea" name={name} defaultValue={name === 'steps' ? editing.steps.join('\n') : editing[name] ?? ''} maxLength={maxLength} disabled={locked} required={['objective', 'setup', 'steps', 'measure'].includes(name)} /></Field>)}<div className="pp-actions"><Button type="submit" variant="primary" disabled={locked || !canAddPracticeBlock(event, activities, Number(draftMinutes))}><Check size={17} />Approve & add to practice</Button><Button disabled={locked} onClick={() => setEditing(null)}>Cancel review</Button></div>{!canAddPracticeBlock(event, activities, Number(draftMinutes)) && <p role="status">Choose 1–{Math.min(120, Math.max(0, timeline.remainingMinutes))} minutes, or make room in the plan.</p>}</form>}
+    {editing && isManager && <form key={reviewVersion} className="pp-review cw-form" onSubmit={approve} aria-label="Review and approve drill"><h4 ref={reviewRef} tabIndex={-1}>Make this drill ready for your coaches.</h4><p>Review the instructions, choose the players, then approve it for this practice. A player’s name and drill become visible to team members; scouting ratings stay private.</p>{editing.ages && <p>Catalog guide: ages {editing.ages.join('–')}{editing.difficulty ? ` · ${editing.difficulty}` : ''}. Check readiness and adapt the instructions for your players.</p>}<Field label="Drill name"><input className="cl-input" name="title" defaultValue={editing.title} key={`title-${editing.id ?? 'custom'}`} maxLength={100} required disabled={locked} /></Field><div className="cw-form-pair"><Field label="Who is this for?"><select className="cl-select" value={targetPlayer} onChange={(e) => setTargetPlayer(e.target.value)} disabled={locked}><option value="">Whole team</option>{players.map((player) => <option key={player.id} value={player.id}>{player.name}</option>)}</select></Field><Field label="Block length (minutes)"><input className="cl-input" name="minutes" type="number" min="1" max="120" value={draftMinutes} onChange={(e) => setDraftMinutes(e.target.value)} disabled={locked} required /></Field></div>{[['objective', 'Objective', 1000], ['equipment', 'Equipment', 500], ['setup', 'Set up the station', 1000], ['steps', 'Steps · one per line', 4000], ['coachingCue', 'One cue for the coach', 500], ['measure', 'What would progress look like?', 250], ['safetyNote', 'Readiness and supervision notes', 1000]].map(([name, label, maxLength]) => <Field key={`${editing.id ?? 'custom'}-${name}`} label={label}><textarea className="cl-textarea" name={name} defaultValue={name === 'steps' ? editing.steps.join('\n') : editing[name] ?? ''} maxLength={maxLength} disabled={locked} required={['objective', 'setup', 'steps', 'measure'].includes(name)} /></Field>)}<div className="pp-actions"><Button type="submit" variant="primary" disabled={locked || !canAddPracticeBlock(event, activities, Number(draftMinutes))}><Check size={17} />Approve & add to practice</Button><Button disabled={locked} onClick={() => setEditing(null)}>Cancel review</Button></div>{!canAddPracticeBlock(event, activities, Number(draftMinutes)) && <p role="status">Choose 1–{Math.min(120, Math.max(0, timeline.remainingMinutes))} minutes, or make room in the plan.</p>}</form>}
   </section>;
 }
-const SCOPES = { if: 'Infield', of: 'Outfield', hit: 'Hitting' };
 
 // Keep a typed outcome when a refresh arrives or a save fails. The workspace's
 // revision check decides whether the draft can be saved against the newer plan.

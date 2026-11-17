@@ -16,8 +16,8 @@ import { addReviewedPractice, localDate, dateLabel } from './livePractice.js';
 import './coach-desk.css';
 import './team-clubhouse.css';
 
-const ScoutingWorkspace = lazy(() => import('../ScoutingWorkspace.jsx').then((module) => ({ default: module.ScoutingWorkspace })));
-const GuidelinesLibrary = lazy(() => import('../GuidelinesLibrary.jsx').then((module) => ({ default: module.GuidelinesLibrary })));
+const TeamDevelopment = lazy(() => import('./TeamDevelopment.jsx'));
+const TeamLibrary = lazy(() => import('./TeamLibrary.jsx'));
 const VIEWS = [
   { id: 'desk', name: 'Coach Desk', icon: House },
   { id: 'players', name: 'Players', icon: UsersThree, area: 'Team dugout' },
@@ -39,6 +39,8 @@ function TeamScope({ account, selected }) {
   const [accountOpen, setAccountOpen] = useState(false);
   const [assistant, setAssistant] = useState(null);
   const [playerRequest, setPlayerRequest] = useState(null);
+  const [developmentRequest, setDevelopmentRequest] = useState(null);
+  const [practiceRequest, setPracticeRequest] = useState(null);
   const [rosterDirty, setRosterDirty] = useState(false);
   const [assessmentDirty, setAssessmentDirty] = useState(false);
   const [calendarDirty, setCalendarDirty] = useState(false);
@@ -74,11 +76,21 @@ function TeamScope({ account, selected }) {
     if (rosterDirty || assessmentDirty || calendarDirty || scouting.pending) { setNotice('Save or discard the open player or practice form before asking the assistant.'); return; }
     setAssistant({ mode, playerId });
   };
-  const evaluate = (id) => { setPlayerRequest(id ? { id, request: crypto.randomUUID() } : null); navigate('development'); };
+  const evaluate = (id) => { try { preventLoss(); } catch (error) { setNotice(error.message); return; } setPlayerRequest(id ? { id, request: crypto.randomUUID() } : null); navigate('development'); };
   const ready = Boolean(account.user && !account.loading && !account.error && team && record && shared.data);
   const players = scouting.data?.players.filter((player) => !player.archived) ?? [];
   const events = shared.data?.events.filter((item) => item.teamId === team?.id && item.seasonId === team?.seasonId) ?? [];
   const nextPractice = events.filter((event) => event.type === 'practice' && !['completed', 'cancelled'].includes(event.status) && event.date >= localDate()).sort((a, b) => `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`))[0];
+  const reviewDrill = (drill, playerId = '') => {
+    try { preventLoss(); } catch (error) { setNotice(error.message); return; }
+    navigate('calendar');
+    if (!nextPractice) { setNotice('Add a practice to the calendar, then return to the drill or development plan to review it.'); return; }
+    setPracticeRequest({ key: crypto.randomUUID(), eventId: nextPractice.id, drill, playerId });
+  };
+  const assignHome = (homeDrillId) => {
+    try { preventLoss(); } catch (error) { setNotice(error.message); return; }
+    setDevelopmentRequest({ key: crypto.randomUUID(), homeDrillId }); navigate('development');
+  };
   const skillsReady = canCoach && scouting.data && !scouting.loading && !scouting.error && !scouting.pending;
   const status = shared.status === 'synced' && (!canCoach || scouting.status === 'synced') ? 'Synced with your team' : shared.pending || scouting.pending ? 'Changes not yet synced' : 'Checking team connection';
   return <div className="pr-app tc-app">
@@ -86,7 +98,7 @@ function TeamScope({ account, selected }) {
     <header className="pr-header"><button className="pr-brand" onClick={() => navigate('desk')} aria-label="Diamond Live Coach Desk"><span className="pr-brand-mark"><Baseball size={26} weight="duotone" /></span><span><strong>Diamond Live</strong><small>A little more purpose. Every practice.</small></span></button>
       <nav className="pr-navigation" aria-label="Clubhouse navigation">{VIEWS.filter((view) => canCoach || !['players', 'development'].includes(view.id)).map(({ id, name: label, icon: Icon }) => <button key={id} aria-current={active === id ? 'page' : undefined} onClick={() => navigate(id)}><Icon size={17} /><span>{label}</span></button>)}</nav>
       <div className="pr-header-actions"><span className="pr-demo-badge"><span />My team</span>{canCoach && <button className="pr-assistant-trigger" onClick={() => openAssistant()}><Flag size={17} /><span>Coach’s assistant</span></button>}<button className="pr-avatar" aria-label="Open workspace menu" aria-expanded={menu} onClick={() => setMenu(!menu)}>{initials}</button></div>
-      {menu && <div className="pr-workspace-menu"><strong>{name}</strong><p>{selected?.name ?? 'Choose your team'}</p><button onClick={openAccount}>Your account and teams</button><Link to="/prototype" onClick={(event) => { try { preventLoss(); } catch (error) { event.preventDefault(); setNotice(error.message); } }}>Explore sample clubhouse<ArrowUpRight size={15} /></Link><button onClick={() => setMenu(false)}>Close menu</button></div>}
+      {menu && <div className="pr-workspace-menu"><strong>{name}</strong><p>{selected?.name ?? 'Choose your team'}</p><button onClick={openAccount}>Your account and teams</button><Link to="/prototype" onClick={(event) => { try { preventLoss(); } catch (error) { event.preventDefault(); setNotice(error.message); } }}>Explore sample clubhouse<ArrowUpRight size={15} /></Link><Link to="/my-practice" onClick={(event) => { try { preventLoss(); } catch (error) { event.preventDefault(); setNotice(error.message); } }}>Family My Practice<ArrowUpRight size={15} /></Link><button onClick={() => setMenu(false)}>Close menu</button></div>}
     </header>
     <div className="pr-context"><span><Baseball size={15} /><label className="tc-team-select">Team <select aria-label="Active team" value={selected?.id ?? ''} onChange={(event) => { try { safeAccount.setActiveTeamId(event.target.value); } catch (error) { setNotice(error.message); } }} disabled={account.loading}>{!selected && <option value="">Choose a team</option>}{account.teams?.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.season} · {item.division}</option>)}</select></label><span className="pr-context-divider">/</span>{team?.division}<span className="pr-season">{team?.season}</span></span><span role="status"><CheckCircle size={14} />{ready ? status : 'Opening your team'}{selected?.role === 'viewer' ? ' · Read only' : ''}</span></div>
     <main id="team-main" className="tc-main" tabIndex={-1}>
@@ -99,9 +111,9 @@ function TeamScope({ account, selected }) {
         </div>
         <Suspense fallback={<p role="status">Opening team records…</p>}>
           {(visited.has('players') || active === 'players') && <div hidden={active !== 'players'}>{canCoach ? <TeamRoster team={team} store={scouting} onEvaluate={evaluate} onPendingChange={setRosterDirty} /> : <p>Player records are available to team owners and coaches.</p>}</div>}
-          {(visited.has('development') || active === 'development') && <div hidden={active !== 'development'}>{canCoach ? <ScoutingWorkspace team={team} repository={scoutingRepository} store={scouting} authorId={account.user.id} authorName={name} playerRequest={playerRequest} onPendingChange={setAssessmentDirty} onPlanPractice={(playerId) => openAssistant('practice', playerId)} /> : <p>Assessments are available to team owners and coaches.</p>}</div>}
-          {(visited.has('calendar') || active === 'calendar') && <div hidden={active !== 'calendar'}><TeamCalendar team={team} store={shared} scouting={scouting} user={account.user} authorName={name} onPendingChange={setCalendarDirty} onAssistant={() => openAssistant('practice')} /></div>}
-          {(visited.has('library') || active === 'library') && <div hidden={active !== 'library'}><GuidelinesLibrary division={team.division} repository={guidelines} /></div>}
+          {(visited.has('development') || active === 'development') && <div hidden={active !== 'development'}>{canCoach ? <TeamDevelopment team={team} events={events} activities={shared.data.activities.filter((item) => item.teamId === team.id && item.seasonId === team.seasonId)} scoutingRepository={scoutingRepository} scouting={scouting} authorId={account.user.id} authorName={name} playerRequest={playerRequest} request={developmentRequest} onPendingChange={setAssessmentDirty} onAssistant={openAssistant} onReviewDrill={reviewDrill} /> : <p>Assessments are available to team owners and coaches.</p>}</div>}
+          {(visited.has('calendar') || active === 'calendar') && <div hidden={active !== 'calendar'}><TeamCalendar team={team} store={shared} scouting={scouting} user={account.user} authorName={name} onPendingChange={setCalendarDirty} onAssistant={() => openAssistant('practice')} request={practiceRequest} /></div>}
+          {(visited.has('library') || active === 'library') && <div hidden={active !== 'library'}><TeamLibrary team={team} repository={guidelines} canCoach={canCoach} disabled={pending || shared.readOnly} onReviewDrill={reviewDrill} onAssignHome={assignHome} /></div>}
         </Suspense>
       </>}
     </main>

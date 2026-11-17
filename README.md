@@ -4,7 +4,7 @@
 
 ## Latest branch checkpoint — November 16, 2026
 
-The new clubhouse is the default at `/`. Signed-in owners and coaches use their selected team's actual roster, assessments, shared calendar, practice plans, and document library. `/prototype` remains an explicit sample clubhouse. Team selection is remembered per account after checking current membership. Private player records are never copied to demo storage.
+The new clubhouse is the default at `/`. Signed-in owners and coaches use their selected team's actual roster, assessments, shared calendar, practice plans, and document library. `/prototype` remains an explicit sample clubhouse. Team selection is remembered per account after checking current membership. Private player records are never copied to demo storage. Development includes detailed skill assessments and individual plans; Library includes the current drill catalog and shared league documents. Main through `b5d3714`, including guardian access and `/my-practice`, is integrated.
 
 The Mac-hosted assistant answers source-linked league questions and builds constrained team/parent practice sessions from saved skill summaries. Owners review and save generated plans as new calendar drafts, then assign/release blocks through the shared practice planner. The selected Angels Spring 2027 roster is intentionally empty pending import; no sample players or test practices were inserted. Available 2026 rules are labeled separately from a 2027 team season. See [local assistant setup and pilot status](docs/LOCAL_AI_SETUP.md).
 
@@ -18,7 +18,7 @@ The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`.
 
 Signed-out visitors begin on the public homepage: **Great seasons. Lifelong athletes.** It introduces the current coaching tools through an interactive product tour, explains three setup steps, and connects the product to long-term player development. **Start your team** opens email sign-in; **Explore the demo** opens `/preview`. Signed-in users enter their private team workspace. See the [homepage brief](docs/homepage-brief.md) and [original image notes](docs/homepage-imagery.md).
 
-The coaching workspace has **Overview, Players, Schedule, Coaching, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
+The coaching workspace has **Overview, Players, Schedule, Coaching, Drills, Development, Rules, and Scouting** tabs within one screen. You can create and filter games and practices, open event details, capture coaching notes, review a note into a timed practice activity with an objective and success measure, and record completion and an outcome. Records are scoped to the selected demo team and its fixed demo season.
 
 Uses the licensed **Clinch** design system. See the [design guidance](DESIGN.md), [license](src/design-system/LICENSE.md), and [attribution notices](src/design-system/ATTRIBUTION.md).
 
@@ -98,7 +98,11 @@ The signed-out demo continues using browser storage. Signed-in teams begin empty
 
 The **Scouting** tab provides private draft boards, player profiles, dated assessments, ten separate 1–10 skill ratings, coach observations, and development goals. Infield, Outfield, and Hitting each contribute one-third of the overall score; all ten skills must be observed to rank a player. The latest assessment submission from each coach counts once. Practice logs record effort without automatically raising ratings. See [scouting behavior, privacy, and setup](docs/scouting.md).
 
-Only owners and coaches can access team scouting. Evaluations use a separate Supabase table and guarded RPCs, independent of the viewer-readable coaching workspace. Cloud drafts stay in memory until acknowledged, with retry/export/conflict recovery. Signed-out scouting contains clearly labeled synthetic examples saved only in that browser. Player/family progress views and video evidence remain future work.
+Only owners and coaches can access team scouting. Evaluations use a separate Supabase table and guarded RPCs, independent of the viewer-readable coaching workspace. Cloud drafts stay in memory until acknowledged, with retry/export/conflict recovery. Signed-out scouting contains clearly labeled synthetic examples saved only in that browser. My Practice supplies a separate guardian-authorized home view. Video evidence remains future work.
+
+The **Development** tab adds coach-only player plans: one goal, an approved practice drill, optional home challenge/substitute, check-in date, private notes, and follow-ups. Plans preserve earlier instructions, link to approved practice blocks, export family-safe cards, and support retry/conflict recovery. Completing a plan does not change ratings. The additive `20261002183655_coach_development_plans.sql` migration is ready and tested locally; it has not been applied to the hosted project by this development phase. See [development plans and release checks](docs/development-plans.md).
+
+The family **My Practice** view adds email-bound guardian invitations, approved home challenges, easier alternatives, and optional child-friendly reflections shared with coaches. Guardians can use it without a coaching team membership. Private ratings and coach notes stay excluded. The additive `20261006221511_guardian_my_practice.sql` migration is tested locally and remains unapplied to the hosted project. See [guardian workflow, privacy, and release checks](docs/my-practice.md).
 
 ## Team setup and practice planning
 
@@ -111,6 +115,8 @@ The Overview setup checklist leads coaches through Players → Schedule → Asse
 - Ratings and draft rankings remain coach-only. An explicitly approved individual drill shares the selected player's name and instructions with team members. No ratings are copied into shared plans.
 
 The importer links the official [GameChanger calendar instructions](https://help.gc.com/hc/en-us/articles/115005457626-Integrating-Your-Personal-Calendar) and [season stats export instructions](https://help.gc.com/hc/en-us/articles/360043583651-Exporting-Season-Stats). A stats export is only a starting point for preparing a roster; it is not represented as a complete roster export.
+
+The **Drills** tab includes 58 activities for ages 7–12, 55 home versions with downloadable family cards, and a coach-only ranking review and feedback worksheet. Search by skill, age, setting, training guide, throwing, and helper needs; choose alternatives from rating suggestions. Existing scores stay unchanged. Verified guardian access and child-friendly reflections are implemented in My Practice; clinician-managed rehab remains separate future work. See [player development and rubric review](docs/player-development.md) and the [earlier project reuse map](docs/legacy-project-reuse.md).
 
 See [practice recommendations, permissions, and drill sources](docs/practice-planning.md). Database permission and simultaneous-claim tests run with `supabase/tests/run-local.sh` in an isolated PostgreSQL cluster. The additive `manager_practice_assignments` migration must be applied before publishing this UI.
 

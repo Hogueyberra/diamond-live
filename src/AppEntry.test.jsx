@@ -10,6 +10,8 @@ vi.mock('./coachingStore.js', () => ({ useCoachingStore: () => mocks.local }));
 vi.mock('./useSharedWorkspace.js', () => ({ useSharedWorkspace: (...args) => { mocks.sharedHook(...args); return mocks.shared; } }));
 vi.mock('./supabaseClient.js', () => ({ supabase: mocks.client }));
 vi.mock('./cloudGuidelines.js', () => ({ createCloudGuidelinesRepository: mocks.guidelines }));
+vi.mock('./developmentRepository.js', () => ({ createDevelopmentRepository: vi.fn(() => ({ loadWorkspace: vi.fn(), saveWorkspace: vi.fn() })) }));
+vi.mock('./familyRepository.js', () => ({ createFamilyRepository: vi.fn(() => ({})) }));
 vi.mock('./scoutingRepository.js', () => ({ createScoutingRepository: mocks.scouting }));
 vi.mock('./prototype/Prototype.jsx', () => ({ default: (props) => { mocks.clubhouse(props); return <main><h1>New clubhouse</h1></main>; } }));
 vi.mock('./CoachingWorkspace.jsx', () => ({ CoachingWorkspace: (props) => { mocks.workspace(props); return <main><h1>Private team records</h1></main>; } }));

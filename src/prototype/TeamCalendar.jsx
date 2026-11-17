@@ -9,12 +9,13 @@ import { validateCoachingData } from '../coachingStore.js';
 import TeamSaveRecovery from './TeamSaveRecovery.jsx';
 import { localDate, dateLabel } from './livePractice.js';
 
-export default function TeamCalendar({ team, store, scouting, user, authorName, onPendingChange, onAssistant }) {
+export default function TeamCalendar({ team, store, scouting, user, authorName, onPendingChange, onAssistant, request }) {
   const [modal, setModal] = useState(null);
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [createdId, setCreatedId] = useState(null);
   const [staff, setStaff] = useState([]);
   const [staffError, setStaffError] = useState('');
   const [staffAttempt, setStaffAttempt] = useState(0);
@@ -30,7 +31,11 @@ export default function TeamCalendar({ team, store, scouting, user, authorName, 
     listPracticeStaff(supabase, team.id).then((members) => { if (live) { setStaff(members); setStaffError(''); } }).catch((reason) => { if (live) setStaffError(reason.message); });
     return () => { live = false; };
   }, [team.id, canCoach, staffAttempt]);
-  const open = (type, eventId) => { setError(''); setDirty(false); setModal({ type, eventId, revision: store.revision }); };
+  useEffect(() => {
+    if (modal?.type === 'create' && createdId && !store.pending && store.status === 'synced' && store.data.events.some((event) => event.id === createdId)) { setModal(null); setDirty(false); setCreatedId(null); setMessage('Added to your shared team calendar.'); }
+  }, [modal?.type, createdId, store.pending, store.status, store.data.events]);
+  const open = (type, eventId) => { setCreatedId(null); setError(''); setDirty(false); setModal({ type, eventId, revision: store.revision }); };
+  useEffect(() => { if (request) { setError(''); setDirty(false); setModal({ type: 'details', eventId: request.eventId, revision: store.revision, drill: request.drill, playerId: request.playerId, requestKey: request.key }); } }, [request]);
   const close = () => {
     if (busy || store.pending) { setError('Wait for this save or resolve the unsynced changes before closing.'); return; }
     if (dirty && !window.confirm('Discard the unsaved changes in this practice form?')) return;
@@ -40,6 +45,7 @@ export default function TeamCalendar({ team, store, scouting, user, authorName, 
     event.preventDefault(); setBusy(true); setError('');
     const values = Object.fromEntries(new FormData(event.currentTarget));
     const record = { ...values, title: values.title.trim(), location: values.location.trim(), id: crypto.randomUUID(), teamId: team.id, seasonId: team.seasonId, status: 'scheduled', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, ...(values.type === 'practice' ? { planStatus: 'draft' } : {}) };
+    setCreatedId(record.id);
     try {
       await store.save((current) => { const next = { ...current, events: [...current.events, record] }; validateCoachingData(next); return next; }, modal.revision);
       setModal(null); setDirty(false); setMessage('Added to your shared team calendar.');
@@ -57,6 +63,6 @@ export default function TeamCalendar({ team, store, scouting, user, authorName, 
     <div className="tc-event-list">{events.map((event) => <article className="tc-event" key={event.id}><div><span className="tc-eyebrow">{dateLabel(event.date)} · {event.status}</span><h2>{event.title}</h2><p>{event.startTime}–{event.endTime} · {event.location}</p><small>{event.type === 'practice' ? `${event.planStatus === 'released' ? 'Released plan' : 'Draft plan'} · ${store.data.activities.filter((item) => item.eventId === event.id).length} blocks` : 'Team game'}</small></div><Button onClick={() => open('details', event.id)}>{event.type === 'practice' ? 'Open practice plan' : 'View event'}</Button></article>)}</div>
     {modal?.type === 'import' && <TeamImportDialog kind="schedule" team={team} existingRecords={events} busy={locked} canImport={owner && !locked} recovery={<TeamSaveRecovery store={store} onRecovered={() => { setModal(null); setDirty(false); }} />} onClose={close} onImport={async (records) => { await store.save((current) => ({ ...current, events: [...current.events, ...records.map((record) => ({ ...record, id: crypto.randomUUID(), teamId: team.id, seasonId: team.seasonId }))] }), modal.revision); setModal(null); setMessage('Schedule imported into your team calendar.'); }} />}
     {modal?.type === 'create' && <Modal title="Add to your team calendar" onClose={close}><TeamSaveRecovery store={store} onRecovered={() => { setModal(null); setDirty(false); }} /><form className="cw-form" onSubmit={saveEvent} onChange={() => setDirty(true)}><Field label="Event name"><input className="cl-input" name="title" required maxLength={120} disabled={locked} /></Field><div className="cw-form-pair"><Field label="Type"><select className="cl-select" name="type" disabled={locked}><option value="practice">Practice</option><option value="game">Game</option></select></Field><Field label="Date"><input className="cl-input" type="date" name="date" defaultValue={localDate()} required disabled={locked} /></Field></div><div className="cw-form-pair"><Field label="Start time"><input className="cl-input" type="time" name="startTime" defaultValue="17:00" required disabled={locked} /></Field><Field label="End time"><input className="cl-input" type="time" name="endTime" defaultValue="18:00" required disabled={locked} /></Field></div><Field label="Location"><input className="cl-input" name="location" maxLength={200} required disabled={locked} /></Field><Field label="Team notes"><textarea className="cl-input" name="notes" maxLength={4000} disabled={locked} /></Field>{error && <p role="alert">{error}</p>}<Button variant="primary" type="submit" disabled={locked}>{busy ? 'Saving…' : 'Save event'}</Button></form></Modal>}
-    {modal?.type === 'details' && activeEvent && <Modal title={activeEvent.title} onClose={close}><TeamSaveRecovery store={store} onRecovered={() => { setModal(null); setDirty(false); }} /><p>{dateLabel(activeEvent.date)} · {activeEvent.startTime}–{activeEvent.endTime} · {activeEvent.location}</p>{activeEvent.type === 'practice' && <>{staffError && <p role="alert">{staffError} <Button onClick={() => setStaffAttempt((n) => n + 1)}>Retry staff list</Button></p>}<PracticePlanner event={activeEvent} activities={store.data.activities.filter((item) => item.eventId === activeEvent.id)} scoutingData={canCoach && !scouting.pending && !scouting.error ? scouting.data : null} members={staff} currentUserId={user.id} currentUserName={authorName} isManager={owner} canCoach={canCoach} disabled={locked} onChange={savePractice} onPendingChange={setDirty} /></>}{activeEvent.notes && <details className="tc-parent-notes"><summary>Team notes and parent instructions</summary><p>{activeEvent.notes}</p><Button onClick={async () => { try { await navigator.clipboard.writeText(activeEvent.notes); setMessage('Notes copied. Review before sharing with families.'); } catch { setError('Select the notes above to copy them.'); } }}>Copy notes</Button></details>}{error && <p role="alert">{error}</p>}</Modal>}
+    {modal?.type === 'details' && activeEvent && <Modal title={activeEvent.title} onClose={close}><TeamSaveRecovery store={store} onRecovered={() => { setModal(null); setDirty(false); }} /><p>{dateLabel(activeEvent.date)} · {activeEvent.startTime}–{activeEvent.endTime} · {activeEvent.location}</p>{activeEvent.type === 'practice' && <>{staffError && <p role="alert">{staffError} <Button onClick={() => setStaffAttempt((n) => n + 1)}>Retry staff list</Button></p>}<PracticePlanner key={`${activeEvent.id}:${modal.requestKey ?? 'manual'}`} initialDrill={modal.drill} initialPlayerId={modal.playerId} event={activeEvent} activities={store.data.activities.filter((item) => item.eventId === activeEvent.id)} scoutingData={canCoach && !scouting.pending && !scouting.error ? scouting.data : null} members={staff} currentUserId={user.id} currentUserName={authorName} isManager={owner} canCoach={canCoach} disabled={locked} onChange={savePractice} onPendingChange={setDirty} /></>}{activeEvent.notes && <details className="tc-parent-notes"><summary>Team notes and parent instructions</summary><p>{activeEvent.notes}</p><Button onClick={async () => { try { await navigator.clipboard.writeText(activeEvent.notes); setMessage('Notes copied. Review before sharing with families.'); } catch { setError('Select the notes above to copy them.'); } }}>Copy notes</Button></details>}{error && <p role="alert">{error}</p>}</Modal>}
   </section>;
 }
