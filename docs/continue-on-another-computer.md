@@ -2,6 +2,8 @@
 
 Updated November 17, 2026. The canonical repository is **https://github.com/Hogueyberra/diamond-live** and the default development/deployment branch is **`main`**. The public app is **https://diamondliveapp.com/**.
 
+**Replacing the AI-hosting Mac with the M5 Pro laptop?** Use the [Codex laptop handoff and encrypted-backup restore checklist](CODEX_LAPTOP_HANDOFF.md), which also records the current product decisions and the order for moving the permanent tunnel without retiring the old server prematurely.
+
 The new Diamond clubhouse is the home screen at `/`. Signed-in users enter their selected team's shared clubhouse; guests see the labeled sample clubhouse. `/prototype` is the explicit sample version, `/preview` redirects to `/`, and `/workspace` is the older coaching interface retained for compatibility. Do not open `/workspace` expecting the new design.
 
 ## Open the current version
