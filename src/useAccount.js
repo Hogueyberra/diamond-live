@@ -4,6 +4,12 @@ import { createCloudRepository } from './cloudRepository.js';
 import { useClerkConnection } from './AuthContext.js';
 import { authPath } from './authConfig.js';
 
+// Only a navigation preference is stored here, never roster or assessment data.
+const teamPreferenceKey = (userId) => `diamond-live.active-team.${userId}`;
+function preferredTeam(userId) {
+  try { return localStorage.getItem(teamPreferenceKey(userId)); } catch { return null; }
+}
+
 export function useAccount() {
   const clerk = useClerkConnection();
   const [session, setSession] = useState(null);
@@ -44,7 +50,7 @@ export function useAccount() {
     const [nextProfile, nextTeams] = await Promise.all([repository.getProfile(), repository.listTeams()]);
     if (identity.current !== userId || serial !== loadSerial.current) return;
     setProfile(nextProfile); setTeams(nextTeams);
-    selectTeam((current) => nextTeams.some((team) => team.id === current) ? current : nextTeams[0]?.id ?? null);
+    selectTeam((current) => nextTeams.some((team) => team.id === current) ? current : nextTeams.find((team) => team.id === preferredTeam(userId))?.id ?? nextTeams[0]?.id ?? null);
     setError('');
   }, [repository, userId]);
   useEffect(() => {
@@ -57,6 +63,10 @@ export function useAccount() {
     window.addEventListener('focus', refresh);
     return () => { live = false; clearInterval(timer); window.removeEventListener('focus', refresh); };
   }, [userId, reload]);
+  useEffect(() => {
+    if (!userId || !activeTeamId || !teams.some((team) => team.id === activeTeamId)) return;
+    try { localStorage.setItem(teamPreferenceKey(userId), activeTeamId); } catch { /* Team selection still works for this session. */ }
+  }, [userId, activeTeamId, teams]);
   const requireAccount = () => { if (!supabase || !userId) throw new Error('Sign in to your account first.'); };
   const throwError = (result) => { if (result.error) throw result.error; return result.data; };
   return {

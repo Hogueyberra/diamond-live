@@ -170,7 +170,7 @@ export function AppRoutes() {
         <Route path="sign-in/*" element={<Suspense fallback={<p role="status">Opening sign-in…</p>}><SignInPage account={account} /></Suspense>} />
         <Route path="auth/connect" element={<Suspense fallback={<p role="status">Opening your account…</p>}><ClerkConnect account={account} /></Suspense>} />
         <Route path="auth/callback" element={<Suspense fallback={<p role="status">Completing sign-in…</p>}><AuthCallback account={account} /></Suspense>} />
-        <Route path="prototype" element={clubhouse} />
+        <Route path="prototype" element={<Suspense fallback={<p role="status">Opening demo…</p>}><Prototype account={account} demoPreview /></Suspense>} />
         <Route element={<GameBoundary><Shell coachingHome={coachingHome} /></GameBoundary>}>
           <Route path="demo" element={<Saturday />} />
           <Route path="lineup" element={<Lineup />} />

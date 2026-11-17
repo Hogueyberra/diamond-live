@@ -61,3 +61,32 @@ it('preserves broad category meaning, ignores future observations, and does not 
   expect(demoAssessmentSummary([], 'unknown', '2026-10-20')).toEqual([]);
   expect(createAssistantPractice({ summary }).team.blocks.some((block) => block.id === 'balance')).toBe(true);
 });
+it('uses the actual roster and saved skill assessments in live mode without sending names or rankings', async () => {
+  askAssistant.mockImplementation(async (input) => ({ plan: createAssistantPractice(input.practice), method: 'guided-practice', elapsedMs: 5 }));
+  const { createEmptyScoutingData, createEmptyRatings } = await import('../scouting.js');
+  const data = { ...createEmptyScoutingData(), players: [{ id: 'real-player', name: 'Private Child', archived: false }, { id: 'archived', name: 'Archived Child', archived: true }], sessions: [{ id: 'session', name: 'Baseline', date: '2026-10-01' }], evaluations: [{ id: 'eval', playerId: 'real-player', sessionId: 'session', authorId: 'coach', createdAt: '2026-10-01T12:00:00Z', ratings: { ...createEmptyRatings(), if_footwork: 3 }, notes: 'Private observation' }] };
+  const review = vi.fn();
+  render(<MemoryRouter><ClubhouseAssistant account={account} live scoutingData={data} initialMode="practice" initialPlayerId="real-player" onReviewPlan={review} onClose={() => {}} onAccount={() => {}} /></MemoryRouter>);
+  expect(screen.getByLabelText('Practice focus').value).toBe('real-player');
+  expect(screen.queryByRole('option', { name: 'Archived Child' })).toBeNull();
+  expect(screen.queryByRole('option', { name: /Mason/ })).toBeNull();
+  expect(screen.getByLabelText('Children at team practice').value).toBe('1');
+  fireEvent.click(screen.getByRole('button', { name: 'Build practice plan' }));
+  await screen.findByText(/Focus selected from the selected player/);
+  const request = askAssistant.mock.calls[0][0];
+  expect(request.teamId).toBe('real-team');
+  expect(request.practice.summary).toContainEqual({ skillId: 'if_footwork', observed: 1, needsPractice: 1 });
+  expect(JSON.stringify(request)).not.toMatch(/Private|Child|real-player|notes|rank/);
+  expect(review).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: 'Review and save to team calendar' }));
+  expect(review).toHaveBeenCalledOnce();
+});
+it('blocks live practice generation while assessment loading or syncing is unresolved, while keeping rules available', async () => {
+  render(<MemoryRouter><ClubhouseAssistant account={account} live initialMode="practice" practiceUnavailable="Wait for saved assessments." onClose={() => {}} onAccount={() => {}} /></MemoryRouter>);
+  expect(screen.getByRole('button', { name: 'Build practice plan' }).disabled).toBe(true);
+  expect(screen.queryByText(/No assessments yet/)).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: 'Build practice plan' }));
+  expect(askAssistant).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: 'League rules' }));
+  expect(screen.getByRole('button', { name: 'Ask assistant' }).disabled).toBe(false);
+});

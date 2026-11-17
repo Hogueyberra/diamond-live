@@ -21,6 +21,7 @@ const authEvent = async (next) => act(async () => { mock.listener(next ? 'SIGNED
 
 beforeEach(() => {
   vi.clearAllMocks();
+  localStorage.clear();
   for (const fn of Object.values(mock.repository)) fn.mockReset().mockResolvedValue(undefined);
   for (const fn of Object.values(mock.auth)) fn.mockReset();
   mock.auth.onAuthStateChange.mockImplementation((listener) => { mock.listener = listener; return { data: { subscription: { unsubscribe: mock.unsubscribe } } }; });
@@ -36,6 +37,21 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe('account identity and asynchronous responses', () => {
+  it('restores the selected team only after confirming current account membership', async () => {
+    localStorage.setItem('diamond-live.active-team.account-a', 'a-preferred');
+    localStorage.setItem('diamond-live.active-team.account-b', 'a-preferred');
+    mock.auth.getSession.mockResolvedValue({ data: { session: session('account-a') } });
+    mock.repository.listTeams.mockResolvedValue([team('a-first'), team('a-preferred')]);
+    const { result } = renderHook(() => useAccount());
+    await waitFor(() => expect(result.current.activeTeamId).toBe('a-preferred'));
+    act(() => result.current.setActiveTeamId('a-first'));
+    expect(localStorage.getItem('diamond-live.active-team.account-a')).toBe('a-first');
+    mock.repository.listTeams.mockResolvedValue([team('b-team')]);
+    await authEvent(session('account-b'));
+    await waitFor(() => expect(result.current.activeTeamId).toBe('b-team'));
+    expect(localStorage.getItem('diamond-live.active-team.account-a')).toBe('a-first');
+    expect(localStorage.getItem('diamond-live.active-team.account-b')).toBe('b-team');
+  });
   it('uses Clerk OIDC with a same-origin callback and signs out of both services', async () => {
     const clerk = { enabled: true, isLoaded: true, isSignedIn: true, provider: 'custom:clerk', signOut: vi.fn().mockResolvedValue(undefined) };
     mock.auth.signInWithOAuth.mockResolvedValue({ data: { url: 'https://auth.example.com/authorize' } });

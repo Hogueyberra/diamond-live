@@ -23,6 +23,7 @@ import ShareCapture from "./ShareCapture.jsx";
 import { usePlayerAssessments } from "./playerAssessments.js";
 import RulesAssistant from "./RulesAssistant.jsx";
 import ClubhouseAssistant from "./ClubhouseAssistant.jsx";
+import TeamClubhouse from "./TeamClubhouse.jsx";
 import { AccountPanel } from "../AccountPanel.jsx";
 import "./prototype.css";
 
@@ -34,7 +35,12 @@ const VIEWS = [
   { id: "library", name: "Library", icon: Books, component: LibraryView },
 ];
 
-export default function Prototype({ account }) {
+export default function Prototype({ account, demoPreview = false }) {
+  if (!demoPreview && (account?.user || account?.loading || account?.error)) return <TeamClubhouse account={account} />;
+  return <DemoClubhouse account={account} />;
+}
+
+function DemoClubhouse({ account }) {
   const videoLibrary = useVideoLibrary();
   const assessments = usePlayerAssessments();
   const [params, setParams] = useSearchParams();
@@ -143,6 +149,7 @@ export default function Prototype({ account }) {
               <strong>{account?.user ? accountName : "Demo coach"}</strong>
               <p>Angels demo · Sample team data</p>
               {account?.user ? <button onClick={openAccount}>Your account and teams</button> : <Link to="/sign-in">Sign in to your team<ArrowUpRight size={15} /></Link>}
+              {account?.user && <Link to="/">Open my team clubhouse<ArrowUpRight size={15} /></Link>}
               <Link to="/workspace">
                 Shared team records
                 <ArrowUpRight size={15} />

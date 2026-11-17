@@ -2,17 +2,19 @@
 
 **Continuing on another computer?** Start with the [setup and backup handoff](docs/continue-on-another-computer.md), including the files and browser data that a Git clone does not transfer.
 
-## Latest checkpoint — October 20, 2026
+## Latest branch checkpoint — November 16, 2026
 
-The interactive clubhouse, drill/video library, iPhone capture workflow, player assessments, and umpire rules chat are published at [the Coach Desk prototype](https://diamondliveapp.com/prototype). The [sign-in page](https://diamondliveapp.com/sign-in) supports existing account passwords and email codes. Clerk's frontend flow is implemented, with its card above existing-account access when enabled; application selection, provider configuration, and live identity-linking verification remain pending. See [Clerk activation status and setup](docs/clerk-auth-setup.md).
+The new clubhouse is the default at `/`. Signed-in owners and coaches use their selected team's actual roster, assessments, shared calendar, practice plans, and document library. `/prototype` remains an explicit sample clubhouse. Team selection is remembered per account after checking current membership. Private player records are never copied to demo storage.
 
-The latest application release passed **391 tests across 41 files**, a production build, database permission/concurrency checks, and public deployment verification. Source, original artwork, fonts/licenses, database migrations, screenshots, and setup/research notes are committed to this repository. The older implementation notes below describe the original coaching workspace and its development history.
+The Mac-hosted assistant answers source-linked league questions and builds constrained team/parent practice sessions from saved skill summaries. Owners review and save generated plans as new calendar drafts, then assign/release blocks through the shared practice planner. The selected Angels Spring 2027 roster is intentionally empty pending import; no sample players or test practices were inserted. Available 2026 rules are labeled separately from a 2027 team season. See [local assistant setup and pilot status](docs/LOCAL_AI_SETUP.md).
+
+This branch and the protected Mac pilot contain these changes. The main `diamondliveapp.com` deployment is separate and has not been updated by this work. The historical release and prototype notes below describe earlier versions.
 
 Coaching workspace prototype for the **Angels, Huntington Valley Little League Minor B**, with an isolated **Seals** demo team. The home screen connects team schedules, coaching observations, practice activities, and source-linked division rules. Events, locations, and notes are clearly labeled demo data; the actual Angels schedule and roster have not been added.
 
 The original **Tustin 10U Hawks** Saturday scoring prototype remains at `/demo`. Its simplified scoring rules are demo rules; it is not ready to serve as the Angels' official scorebook.
 
-## Current implementation — September 29, 2026
+## Earlier implementation — September 29, 2026
 
 Signed-out visitors begin on the public homepage: **Great seasons. Lifelong athletes.** It introduces the current coaching tools through an interactive product tour, explains three setup steps, and connects the product to long-term player development. **Start your team** opens email sign-in; **Explore the demo** opens `/preview`. Signed-in users enter their private team workspace. See the [homepage brief](docs/homepage-brief.md) and [original image notes](docs/homepage-imagery.md).
 
@@ -42,7 +44,7 @@ Signed-in shared records remain in the existing Supabase project. A different we
 
 ## Run locally
 
-The new **Coach Desk prototype** is available at `/prototype` (for example, `http://localhost:4173/prototype` when using port 4173). It explores the Kestrel-inspired coaching command center with an interactive clubhouse, player profiles, development proposals, a calendar, illustrated drill guides, and a prepared-answer assistant. Click the dugout for Players, batting cage for Development, planning desk for Calendar, or equipment wall for Library. The Library supports step-by-step and playable stick-figure demonstrations plus saved social/video links, creator credit, coaching notes, and skill matching in Development. Video links persist in this browser; fictional team proposals and practice drafts remain session-only. See the [implementation plan](docs/research/kestrel/PLAN.md), [visual verification](design-qa.md), and [interactive library update](docs/research/kestrel/INTERACTIVE-LIBRARY.md). The current coaching app remains at `/preview`.
+The new **Coach Desk prototype** is available at `/prototype` (for example, `http://localhost:4173/prototype` when using port 4173). It explores the Kestrel-inspired coaching command center with an interactive clubhouse, player profiles, development proposals, a calendar, illustrated drill guides, and a prepared-answer assistant. Click the dugout for Players, batting cage for Development, planning desk for Calendar, or equipment wall for Library. The Library supports step-by-step and playable stick-figure demonstrations plus saved social/video links, creator credit, coaching notes, and skill matching in Development. Video links persist in this browser; fictional team proposals and practice drafts remain session-only. See the [implementation plan](docs/research/kestrel/PLAN.md), [visual verification](design-qa.md), and [interactive library update](docs/research/kestrel/INTERACTIVE-LIBRARY.md). The earlier coaching workspace remains at `/workspace`; `/preview` redirects to the current clubhouse.
 
 The prototype also has a quick-capture screen at `/prototype?capture=1`, a Drill Inbox, and an iPhone Shortcut setup guide under **Library → Video links → iPhone sharing**. The production receiver is `https://diamondliveapp.com/prototype?capture=1#` followed by the shared video URL. See [iPhone capture setup and current limits](docs/research/kestrel/IPHONE-SHARING.md). Captured links currently stay in that browser.
 
@@ -66,9 +68,10 @@ The build copies `dist/index.html` to `dist/404.html`, so a refresh on a deep li
 
 ## Routes
 
-- `/` public homepage for signed-out visitors; private coaching workspace for signed-in users
-- `/preview` explicit browser-local coaching demo with Overview, Players, Schedule, Coaching, Rules, and Scouting tabs
-- `/prototype` interactive clubhouse, player assessments, development plans, calendar, drill/video library, and source-linked rules chat
+- `/` sample clubhouse for guests; shared team clubhouse for signed-in users
+- `/preview` compatibility redirect to `/`
+- `/workspace` earlier shared coaching workspace; `/workspace/demo` earlier browser-local demo
+- `/prototype` explicit sample clubhouse, browser-local assessments, drill/video library, and source-linked rules chat
 - `/sign-in` existing email/password and email-code access, with Clerk above it when configured
 - `/auth/connect` Clerk-to-account-service connection; `/auth/callback` PKCE return route
 - `/demo` original Saturday board for the role you are viewing as
