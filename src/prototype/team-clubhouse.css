@@ -48,7 +48,8 @@
 .tc-app :is(.gl-search-panel,.gl-result,.gl-original,.gl-import-preview) { background: white; color: var(--pr-ink); border-color: var(--pr-line); }
 .tc-app :is(.gl-coverage,.gl-result:hover) { background: #eee8df; }
 .tc-app .gl-result:hover { border-color: #b2a691; }
-.tc-app .gl-search .cl-input { padding-left: 58px; }
+.tc-app .gl-search .cl-input { padding-left: 58px; background: white; color: var(--pr-ink); border-color: #c9c1b5; }
+.tc-app .gl-search .cl-input::placeholder { color: var(--pr-muted); }
 .tc-app :is(.gl-sharing,.gl-citation,.gl-document,.ts-jersey) { border-color: var(--pr-line); }
 .tc-app .gl-library mark { background: #f7df9e; color: #1b1714; }
 .tc-app .sc-meter,.tc-app .sc-eval-track { background: #e3ddd2; }
