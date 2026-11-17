@@ -11,6 +11,7 @@
     "assistant": "node server/index.mjs",
     "assistant:build": "vite build --base / --outDir dist-assistant",
     "assistant:pilot-status": "node scripts/pilot-status.mjs",
+    "assistant:status": "node scripts/pilot-status.mjs",
     "assistant:index": "node scripts/index-assistant-rules.mjs",
     "assistant:setup": "node scripts/setup-assistant.mjs"
   },

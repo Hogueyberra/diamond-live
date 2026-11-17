@@ -1,5 +1,9 @@
 # Diamond Live domain setup
 
+## Permanent assistant and DNS management — November 17, 2026
+
+DNS management now uses Cloudflare on its Free plan; the registrar remains Porkbun. All 16 original records were copied and verified against both assigned nameservers before the switch. GitHub Pages and existing Resend/Porkbun email destinations remain unchanged and DNS-only. The new assistant hostname uses a protected named tunnel to the Mac. See [permanent assistant operations](PERMANENT_ASSISTANT_SETUP.md). Historical setup details below describe the original Porkbun DNS configuration.
+
 ## Email setup — verified September 29, 2026
 
 The purchase of **diamondliveapp.com** at Porkbun was confirmed on September 29, 2026. The earlier cart quote for a one-year registration was **$11.08 USD**, with an estimated renewal of **$11.08/year**.
