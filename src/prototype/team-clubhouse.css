@@ -38,3 +38,18 @@
 @media (max-width: 760px) { .tc-main { padding: 24px 16px; } .tc-heading { align-items: flex-start; flex-direction: column; } .tc-event { align-items: flex-start; flex-direction: column; } .tc-team-select select { max-width: 200px; } .tc-app .pr-context { gap: 12px; align-items: flex-start; flex-direction: column; } }
 
 .tc-section-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+/* Keep the shared record forms legible on the clubhouse's light surfaces. */
+.tc-app { --cl-color-background: #f4f1eb; --cl-lime: #386544; --cl-text: #1b1714; }
+.tc-app .sc-workspace { --sc-dim: #766d63; }
+.tc-app .gl-library { --gl-muted: #766d63; }
+.tc-app :is(.cw-page-heading p,.ts-empty p,.ts-player-list p,.ts-next p,.sc-incomplete,.sc-table-category,.sc-goal p,.sc-rubric-inline p,.sc-rubric p,.gl-snippet,.gl-detail-citation,.gl-document p,.gl-import-review > p) { color: #6b6259; }
+.tc-app :is(.ts-eyebrow,.ts-empty > svg,.ts-jersey,.pp-done,.gl-source-badge,.gl-search > svg,.gl-citation > svg:last-child) { color: #386544; }
+.tc-app :is(.pp-block-time,.pp-audience,.pp-eyebrow,.pp-suggestion > span,.pp-unsaved,.pp-instructions a,.pp-library a,.gl-sharing strong,.gl-result-top,.gl-detail-meta,.gl-coverage > svg,.gl-document-heading > svg) { color: #305caa; }
+.tc-app :is(.gl-search-panel,.gl-result,.gl-original,.gl-import-preview) { background: white; color: var(--pr-ink); border-color: var(--pr-line); }
+.tc-app :is(.gl-coverage,.gl-result:hover) { background: #eee8df; }
+.tc-app .gl-result:hover { border-color: #b2a691; }
+.tc-app .gl-search .cl-input { padding-left: 58px; }
+.tc-app :is(.gl-sharing,.gl-citation,.gl-document,.ts-jersey) { border-color: var(--pr-line); }
+.tc-app .gl-library mark { background: #f7df9e; color: #1b1714; }
+.tc-app .sc-meter,.tc-app .sc-eval-track { background: #e3ddd2; }
+.tc-app .pp-status.is-released { color: #2d573a; background: #e7f1e5; border-color: #bed2b9; }
