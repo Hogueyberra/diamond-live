@@ -1,10 +1,10 @@
 # Diamond Live local assistant
 
-Prepared on October 19, 2026; updated November 16 after connecting the clubhouse to shared team records. The local assistant runs on Nick’s Mac mini (M4 Pro, 24 GB). Laya is not installed or required.
+Prepared on October 19, 2026; updated November 17 with the permanent assistant address. The local assistant runs on Nick’s Mac mini (M4 Pro, 24 GB). Laya is not installed or required.
 
 ## Try it
 
-Open **http://127.0.0.1:5173/** on this Mac, or the public pilot below. The new Angels clubhouse is now the default home, including after sign-in. Choose **Coach’s assistant** for the connected rules, practice, and coaching features. Sign in with an existing owner or coach account to use the assistant; the backend verifies team membership for every request. Signed-in users now enter their selected team’s real roster, detailed assessments, calendar, practice plans, and document library. The explicitly labeled sample clubhouse remains at `/prototype`; sample records are never copied to a shared team. The team selector includes season and division and remembers a membership-checked selection per account.
+Open **http://127.0.0.1:5173/** on this Mac, or **https://diamondliveapp.com/**. The new Angels clubhouse is now the default home, including after sign-in. Choose **Coach’s assistant** for the connected rules, practice, and coaching features. Sign in with an existing owner or coach account to use the assistant; the backend verifies team membership for every request. Signed-in users now enter their selected team’s real roster, detailed assessments, calendar, practice plans, and document library. The explicitly labeled sample clubhouse remains at `/prototype`; sample records are never copied to a shared team. The team selector includes season and division and remembers a membership-checked selection per account.
 
 - **League rules:** select the division and season, then ask a question. Replies show matching source passages and original PDF page links. A verified answer handles the 2026 HVLL Minor B pitching inning/reentry case. Other rule explanations primarily show source wording, because model-written interpretations failed an important eligibility test.
 - **Practice plan:** choose team priorities or one player, age, attendance, coaches, and the two session lengths. Recorded assessments select activities from a small reviewed library. A parent version uses one tennis ball on clear grass. Copying a handout does not send it to anyone. Owners can select **Review and save to team calendar**, choose a date and location, and approve a new draft. Open the saved practice to assign coaches and release its blocks; the parent version is saved in its event notes. Coaches can claim released blocks and record outcomes using the existing permissions.
@@ -22,7 +22,7 @@ The initial practice library is a beginner fundamentals pilot for ages 5–12. I
 
 Port 8787 was already used by another process and was left alone. All three listed listeners stay on this Mac’s loopback interface. The backend never forwards arbitrary Ollama requests.
 
-The per-user services `com.diamondlive.assistant` and `com.diamondlive.preview` start at login and restart after a crash. The assistant service prevents idle system sleep while it runs and checks Ollama periodically, starting a local Ollama server if it remains unavailable. The display can sleep. After a power failure or restart, macOS still needs the user to log in; FileVault and network availability can affect recovery.
+The per-user services `com.diamondlive.assistant`, `com.diamondlive.tunnel`, and `com.diamondlive.preview` start at login and restart after a crash. The assistant service prevents idle system sleep while it runs and checks Ollama periodically, starting a local Ollama server if it remains unavailable. The display can sleep. After a power failure or restart, macOS still needs the user to log in; FileVault and network availability can affect recovery.
 
 Local settings and logs are in `.assistant-local/`, which is ignored by Git. `runtime.env` is readable only by this user. Its demo access token is injected only by the local development proxy and is never included in the browser bundle. Real teams always require normal authentication.
 
@@ -118,33 +118,16 @@ node scripts/smoke-assistant.mjs
 
 Evaluation output is saved locally under `output/ai-evaluation/` and ignored by Git. Do not publish local tokens, environment files, logs, or private team questions. The server does not log prompts or authentication headers.
 
-## Protected public pilot — enabled October 20
+## Permanent protected assistant — November 17
 
-The user approved the persistent protected pilot on October 20. It is now running through the per-user `com.diamondlive.pilot` service and starts at login. The current address is:
+Coaches use **https://diamondliveapp.com/**. The app connects to **https://assistant.diamondliveapp.com/api/assistant** through the named `diamond-live-assistant` tunnel. The hostname stays fixed across process restarts and IP changes. The API requires the same verified owner/coach membership; the tunnel only routes the assistant API and its readiness check. Ollama remains private.
 
-**https://booking-java-watershed-magnet.trycloudflare.com/**
+The named service `com.diamondlive.tunnel` starts at login, reconnects after network interruptions, and restarts after a crash. **After a full Mac reboot, FileVault requires unlocking/signing in before these user services can start.** No encryption or login security settings were changed. Component restart tests verified automatic tunnel and backend recovery; a full Mac reboot was not performed.
 
-Sign in at `/sign-in` with an existing Diamond Live password or email code. The homepage, clubhouse demo, and bundled league PDFs are public. AI requests require a verified owner/coach membership; the local demo bypass is rejected on forwarded requests. Ollama stays on loopback and its raw endpoints are not published. The primary `diamondliveapp.com` frontend connects to this protected service through the `VITE_DIAMOND_ASSISTANT_URL` GitHub Actions variable; Ollama continues running only on the Mac.
-
-The public HTTPS checks passed for the homepage, prototype, capture, preview, sign-in and callback routes, clubhouse/umpire images, and league PDF. Unsigned, invalid-session, and fake-demo-token AI requests returned 401. Raw model routes and local configuration/server source paths returned 404. The user signed in manually, and the owner/coach-protected assistant completed rules, practice, copying the parent handout, and coaching requests through that session. Unit tests cover viewer and other-team denial, and GitHub's isolated database-security checks passed. No messages or sign-in codes were sent automatically.
-
-The optional Clerk setup remains disabled, as documented in `clerk-auth-setup.md`; the existing password/code account flow works without selecting a Clerk application or changing redirect settings. If Clerk is activated later, its provider and exact callback origins must be configured and verified separately.
-
-A quick tunnel changes its address on restart and has no uptime guarantee. Find the latest address with `npm run assistant:pilot-status`. For ongoing coach use, configure a named tunnel and stable domain, then repeat the access checks. Keeping the Mac awake alone does not guarantee internet or service availability. See [Cloudflare's quick-tunnel limits](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).
-
-To verify a current pilot URL, run `node scripts/verify-assistant-pilot.mjs https://CURRENT.trycloudflare.com` and `node scripts/verify-public-site.mjs https://CURRENT.trycloudflare.com`. To stop public access, run `launchctl bootout gui/$(id -u)/com.diamondlive.pilot`; moving its plist out of `~/Library/LaunchAgents/` also disables the next-login start. This does not stop the private local assistant.
+Run `npm run assistant:status` and `node scripts/verify-assistant-endpoint.mjs` to check the permanent connection. See [the permanent assistant runbook](PERMANENT_ASSISTANT_SETUP.md) for credentials, reproduction, DNS preservation, and rollback. The former temporary Cloudflare pilot is retired after the production frontend cutover; its changing address is no longer used by the app.
 
 ## GitHub and another computer
 
-The current clubhouse, shared-team integration, protected assistant, and main through `b5d3714` are included in PR #15 for the `main` release. Use updated `main` and open `/` on another computer. The complete [cross-computer setup guide](continue-on-another-computer.md) replaces the older instructions to use the AI branch or the legacy workspace route.
+The connected clubhouse and shared-team integration are on `main` following PR #15. Use updated `main` and open `/` on another computer. The [cross-computer setup guide](continue-on-another-computer.md) covers account configuration and the permanent endpoint.
 
-GitHub Pages builds with `VITE_DIAMOND_ASSISTANT_URL`, which must be the protected HTTPS endpoint ending in `/api/assistant`. The backend permits `https://diamondliveapp.com` and standard local development on port 5173 while continuing to require verified owner/coach membership for every AI request. No local bypass token is included in a public build.
-
-When the temporary tunnel restarts and its address changes, run `npm run assistant:pilot-status` on the Mac, verify the new address, then update the repository variable and rebuild Pages:
-
-```sh
-gh variable set VITE_DIAMOND_ASSISTANT_URL --repo Hogueyberra/diamond-live --body 'https://CURRENT.trycloudflare.com/api/assistant'
-gh workflow run pages.yml --repo Hogueyberra/diamond-live --ref main
-```
-
-Restart development servers on other computers after updating their matching `.env.local` value. A named tunnel with a stable hostname would remove this manual endpoint update; it is not configured by this release.
+GitHub Pages builds with `VITE_DIAMOND_ASSISTANT_URL=https://assistant.diamondliveapp.com/api/assistant`. The backend permits `https://diamondliveapp.com` and standard local development on port 5173 while requiring owner/coach membership for AI requests. Other frontend computers can use that same public endpoint in `.env.local`; the model-hosting Mac can keep using its local proxy. Ordinary restarts require no endpoint update or redeployment.

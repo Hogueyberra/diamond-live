@@ -1,6 +1,6 @@
 # Continue Diamond Live on another computer
 
-Updated November 16, 2026. The canonical repository is **https://github.com/Hogueyberra/diamond-live** and the default development/deployment branch is **`main`**. The public app is **https://diamondliveapp.com/**.
+Updated November 17, 2026. The canonical repository is **https://github.com/Hogueyberra/diamond-live** and the default development/deployment branch is **`main`**. The public app is **https://diamondliveapp.com/**.
 
 The new Diamond clubhouse is the home screen at `/`. Signed-in users enter their selected team's shared clubhouse; guests see the labeled sample clubhouse. `/prototype` is the explicit sample version, `/preview` redirects to `/`, and `/workspace` is the older coaching interface retained for compatibility. Do not open `/workspace` expecting the new design.
 
@@ -44,7 +44,7 @@ With the authenticated GitHub CLI, retrieve each value using `gh variable get VA
 
 The frontend on another computer can use the assistant running on Nick's Mac; Ollama does not need to be installed on every computer. The Mac must remain awake, online, and running its assistant and protected tunnel. The backend already allows the production origin and the standard localhost/127.0.0.1 development origin on port 5173. Keep that development port unless the backend's explicit origin list is deliberately updated.
 
-On the Mac that hosts the assistant, leave `VITE_DIAMOND_ASSISTANT_URL` blank to use Vite's local proxy. GitHub Pages reads the repository variable during its build; it cannot run Ollama or a Node backend itself. See [the assistant runbook](LOCAL_AI_SETUP.md) for setup, startup services, model details, and endpoint refresh instructions. The temporary tunnel address can change on restart; a stable named tunnel remains a future hosting improvement.
+On the Mac that hosts the assistant, leave `VITE_DIAMOND_ASSISTANT_URL` blank to use Vite's local proxy. GitHub Pages reads the repository variable during its build; it cannot run Ollama or a Node backend itself. See [the assistant runbook](LOCAL_AI_SETUP.md) for setup, startup services, model details, and endpoint refresh instructions. The permanent endpoint is `https://assistant.diamondliveapp.com/api/assistant`. Its address survives tunnel and Mac restarts; after a full restart, FileVault still requires unlocking/signing into the Mac. See [permanent assistant operations](PERMANENT_ASSISTANT_SETUP.md).
 
 Leave optional Clerk variables blank until [the Clerk setup](clerk-auth-setup.md) is deliberately completed. Existing account passwords and email codes work independently of that optional integration.
 
